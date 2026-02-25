@@ -1,0 +1,11 @@
+---
+import { readSingleton } from '../utils/singleton-utils';
+import CursoVendasTemplate from '../themes/classic/curso-vendas.astro';
+
+const cursoVendasData = await readSingleton('curso-vendas', 'classic') || {};
+---
+
+<CursoVendasTemplate 
+    cursoVendasData={cursoVendasData}
+    themeId="classic"
+/>

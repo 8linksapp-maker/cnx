@@ -1,0 +1,61 @@
+---
+title: "Como ter um formulário de contato sem banco de dados nem plugin"
+slug: "formulario-de-contato-sem-banco-de-dados"
+author: "carlos-oliveira"
+category: "tutorial"
+publishedDate: "2026-02-07"
+thumbnail: "https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=1200&h=630&fit=crop&auto=format"
+metaDescription: "No WordPress você usa Contact Form 7 ou Gravity Forms. No JAMstack você usa um serviço como Formspree ou Web3Forms — mais simples, sem banco de dados e de graça."
+---
+
+Uma das perguntas mais frequentes de quem está migrando do WordPress: **"Como vou ter um formulário de contato se não tenho banco de dados?"**
+
+É uma dúvida legítima. No WordPress, o Contact Form 7 salva as mensagens no banco de dados e envia por e-mail. No JAMstack, não há banco de dados — então como funciona?
+
+## A solução: serviços de formulário
+
+Existem serviços gratuitos que recebem os dados do formulário e encaminham para o seu e-mail. O mais simples é o **Formspree**.
+
+### Como usar o Formspree
+
+1. Acesse [formspree.io](https://formspree.io) e crie uma conta gratuita.
+2. Crie um novo formulário e copie o endpoint gerado (algo como `https://formspree.io/f/xrgjkpzq`).
+3. No seu site, o formulário HTML fica assim:
+
+```html
+<form action="https://formspree.io/f/SEU_ID" method="POST">
+  <input type="text" name="nome" placeholder="Seu nome" required />
+  <input type="email" name="email" placeholder="Seu e-mail" required />
+  <textarea name="mensagem" placeholder="Sua mensagem" required></textarea>
+  <button type="submit">Enviar</button>
+</form>
+```
+
+Quando alguém envia, o Formspree recebe os dados e encaminha para o e-mail cadastrado. **Zero configuração de servidor.**
+
+### Alternativas gratuitas
+
+| Serviço | Plano gratuito | Diferenciais |
+|---|---|---|
+| **Formspree** | 50 envios/mês | Mais simples, muito usado |
+| **Web3Forms** | 250 envios/mês | Mais generoso no free |
+| **Netlify Forms** | 100 envios/mês | Se hospedar na Netlify |
+| **Basin** | 100 envios/mês | Proteção anti-spam incluída |
+
+## E o anti-spam?
+
+No Contact Form 7, você adiciona o reCAPTCHA. Nos serviços acima, você pode usar um **honeypot** — um campo oculto que robôs preenchem e humanos não:
+
+```html
+<input type="text" name="_gotcha" style="display:none" />
+```
+
+O Formspree ignora automaticamente envios onde esse campo está preenchido.
+
+## Quando faz sentido ter um banco de dados
+
+Se você precisar de funcionalidades avançadas — como salvar os leads, filtrar, exportar CSV — aí sim compensa adicionar um banco. O Supabase oferece um PostgreSQL gratuito com API REST pronta.
+
+Mas para 90% dos casos de uso — alguém que quer entrar em contato — o Formspree resolve com três linhas de HTML.
+
+No JAMstack, a regra geral é: **use serviços externos para o que não precisa estar no seu código.** Formulários são um exemplo perfeito.

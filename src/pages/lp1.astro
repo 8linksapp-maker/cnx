@@ -1,0 +1,11 @@
+---
+import { readSingleton } from '../utils/singleton-utils';
+import Lp1Template from '../themes/classic/lp1.astro';
+
+const lp1Data = await readSingleton('lp1', 'classic') || {};
+---
+
+<Lp1Template 
+    lp1Data={lp1Data}
+    themeId="classic"
+/>

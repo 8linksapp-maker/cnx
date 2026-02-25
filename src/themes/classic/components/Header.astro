@@ -1,0 +1,91 @@
+---
+/**
+ * Header.astro (Classic Theme)
+ * 
+ * Componente de cabeçalho do tema Classic.
+ * Lê os itens do menu do singleton 'menu' para renderizar a navegação dinamicamente.
+ */
+
+import { readSingleton } from '../../../utils/singleton-utils';
+
+const { activeThemeId } = Astro.props;
+
+// Carregar menu do singleton do tema ativo
+const menuData = await readSingleton('menu', activeThemeId);
+const menuItems = menuData?.items || [];
+
+// Debug: verificar se os dados estão sendo carregados
+if (!menuData || !menuItems || menuItems.length === 0) {
+    console.warn('⚠️ Menu não encontrado ou vazio. Verifique src/content/singletons/classic/menu.yaml');
+}
+---
+
+<header class="sticky top-0 z-50 backdrop-blur-md border-b border-white/5 bg-white/5">
+    <nav class="container mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="/" class="text-2xl font-heading font-black tracking-tighter text-white hover:text-primary transition-colors">
+            CNX<span class="text-primary">.</span>AGENCY
+        </a>
+        <div class="hidden md:flex gap-10 text-sm font-bold uppercase tracking-widest items-center">
+            {menuItems.length > 0 ? (
+                menuItems.map((item: any) => (
+                    <a 
+                        href={item.href || '#'} 
+                        target={item.target || '_self'}
+                        class="hover:text-primary transition-colors"
+                    >
+                        {item.icon && <span class="mr-1">{item.icon}</span>}
+                        {item.label || 'Sem Label'}
+                    </a>
+                ))
+            ) : (
+                <span class="text-slate-500 text-xs">Menu não configurado</span>
+            )}
+        </div>
+        
+        {/* Mobile Menu Button */}
+        <button 
+            class="md:hidden p-2 text-white hover:text-primary transition-colors"
+            id="mobile-menu-button"
+            aria-label="Toggle menu"
+        >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+        
+        {/* Mobile Menu */}
+        <div 
+            id="mobile-menu" 
+            class="hidden md:hidden absolute top-full left-0 right-0 bg-[#0a0a0a] border-t border-white/5 p-6"
+        >
+            <div class="flex flex-col gap-4">
+                {menuItems.length > 0 ? (
+                    menuItems.map((item: any) => (
+                        <a 
+                            href={item.href || '#'} 
+                            target={item.target || '_self'}
+                            class="text-white hover:text-primary transition-colors py-2"
+                        >
+                            {item.icon && <span class="mr-2">{item.icon}</span>}
+                            {item.label || 'Sem Label'}
+                        </a>
+                    ))
+                ) : (
+                    <span class="text-slate-500 text-xs">Menu não configurado</span>
+                )}
+            </div>
+        </div>
+    </nav>
+</header>
+
+<script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+</script>

@@ -1,11 +1,23 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { readSingleton } from '../utils/singleton-utils';
+import HomeTemplate from '../themes/classic/Home.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const home = await readSingleton('home', 'classic') || {};
+
+const allPosts = await getCollection('posts');
+const latestPosts = allPosts
+    .filter(post => post.data.publishedDate)
+    .sort((a, b) => {
+        const dateA = new Date(a.data.publishedDate || 0).getTime();
+        const dateB = new Date(b.data.publishedDate || 0).getTime();
+        return dateB - dateA;
+    })
+    .slice(0, 9);
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<HomeTemplate 
+    homeData={home}
+    themeId="classic"
+    latestPosts={latestPosts}
+/>

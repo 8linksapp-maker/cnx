@@ -1,0 +1,210 @@
+# Landing Page 1 - Dot Com Secrets Format
+# Estrutura completa editável via CMS
+
+# 1. HERO SECTION
+heroBadge: "🚀 A NOVA ERA DO DESENVOLVIMENTO WEB"
+heroTitleLine1: "Você está perdendo R$ 2.400 por ano em hospedagem WordPress enquanto seu site fica preso na página 2 do Google?"
+heroTitleHighlight: "WORDPRESS ESTÁ COMENDO SEU LUCRO E SABOTANDO SEU SEO"
+heroTitleLine2: ""
+heroSubtitle: >-
+  Enquanto você paga R$ 200/mês em WordPress, seus concorrentes dominam o Google com hospedagem GRÁTIS e sites 10x mais rápidos. 
+  E você nem sabe por quê.
+  
+  A verdade: WordPress é tecnologia de 2003. O Google mudou. A web mudou. Mas você ainda usa o método antigo.
+heroCtaText: "QUERO DOMINAR O GOOGLE AGORA"
+heroCtaUrl: "#oferta"
+heroFeatures: "✅ Performance 10x superior | ✅ SEO otimizado | ✅ Custo zero de hospedagem"
+heroImage: null
+
+# 2. O VELHO CAMINHO VS O NOVO CAMINHO
+oldVsNewTitle: "O Velho Caminho vs. O Novo Caminho"
+oldVsNewSubtitle: >-
+  Descubra por que 90% dos sites WordPress estão presos na página 2 do Google enquanto uma minoria domina com JAMstack
+oldPathTitle: "O Velho Caminho (WordPress)"
+oldPathItems:
+  - "Sites lentos que o Google penaliza"
+  - "Hospedagem cara que come seu lucro"
+  - "Plugins que quebram e travam seu site"
+  - "Rankeamento que nunca melhora"
+newPathTitle: "O Novo Caminho JAMstack"
+newPathItems:
+  - "Sites 10x mais rápidos que o Google premia"
+  - "Hospedagem gratuita na Edge (Cloudflare)"
+  - "Arquitetura moderna que escala infinitamente"
+  - "Rankeamento nas primeiras posições do Google"
+
+# 3. A PONTE DA EPIFANIA
+epiphanyTitle: "O Erro de Anos que me levou ao segredo do ranqueamento máximo."
+epiphanyContent: >-
+  Eu trabalhei com WordPress por anos e sempre vi meus clientes travados na página 2 do Google. 
+  Sites lentos, plugins que quebram, hospedagem cara... Mas eu percebi que o problema não era o conteúdo, era a arquitetura.
+  
+  Foi quando descobri o JAMstack que tive meu momento "Aha!". Sites estáticos pré-renderizados, 
+  servidos na Edge, com performance que o Google premia.
+  
+  Naquele momento, eu percebi: o valor não está em usar WordPress, mas em usar a arquitetura certa.
+  
+  Joguei o método antigo fora e criei a Stack JAMstack.
+epiphanyQuote: >-
+  Foi quando descobri o JAMstack que tive meu momento "Aha!". Sites estáticos pré-renderizados, 
+  servidos na Edge, com performance que o Google premia.
+epiphanyStats:
+  - number: "5+"
+    label: "Anos de Experiência"
+    icon: "⏱️"
+  - number: "100+"
+    label: "Sites Criados"
+    icon: "👨‍💻"
+epiphanyImage: null
+
+# 4. MECANISMO ÚNICO
+mechanismTitle: "Conheça o Sistema JAMstack"
+mechanismItems:
+  - number: "01"
+    icon: "⚡"
+    title: "Astro Framework"
+    description: >-
+      Framework zero-JS por padrão. Sites estáticos pré-renderizados que carregam instantaneamente. 
+      O Google ama isso.
+  - number: "10"
+    icon: "☁️"
+    title: "Cloudflare Edge"
+    description: >-
+      Hospedagem gratuita na Edge. Seu site servido em milissegundos de qualquer lugar do mundo. 
+      Zero custo de servidor.
+  - number: "100"
+    icon: "📝"
+    title: "Keystatic CMS"
+    description: >-
+      CMS Git-based. Seu conteúdo versionado, seguro e rápido. Sem banco de dados lento. 
+      Performance máxima.
+mechanismFooter: "A tecnologia faz o trabalho duro. Você fica com o ranqueamento e o faturamento."
+
+# 5. DEMONSTRAÇÃO TÉCNICA
+demoTitle: "O Trabalho de Dias, Feito em Segundos"
+demoDescription: >-
+  Veja como nossa stack transforma um simples comando em um site de alta performance, 
+  pronto para o Google, sem que você precise lutar contra WordPress.
+demoVideoUrl: ""
+demoImage: null
+demoFeatures:
+  - icon: "⚡"
+    title: "Velocidade Absurda"
+    description: "Sites que levariam dias no WordPress são criados em minutos."
+  - icon: "🌐"
+    title: "Otimizado para Google"
+    description: "Performance que o Google Core Web Vitals premia."
+
+# 6. O CAMINHO COMPLETO
+pathTitle: "Sua Jornada para o Topo do Google"
+pathSubtitle: >-
+  Vamos construir juntos um site do zero, passando por cada uma dessas etapas até você ter seu primeiro site ranqueando na primeira página do Google.
+pathSteps:
+  - number: "01"
+    icon: "⚡"
+    title: "Setup Inicial"
+    description: "Configure Astro, Cloudflare e Keystatic. A base da sua arquitetura moderna."
+  - number: "02"
+    icon: "📝"
+    title: "Conteúdo SEO"
+    description: "Crie conteúdo otimizado com Keystatic. Estrutura que o Google entende e premia."
+  - number: "03"
+    icon: "☁️"
+    title: "Deploy na Edge"
+    description: "Deploy instantâneo no Cloudflare. Seu site no ar em segundos, servido globalmente."
+  - number: "04"
+    icon: "🚀"
+    title: "Rankeamento"
+    description: "Veja seu site subir nas primeiras posições do Google. Performance que WordPress nunca vai entregar."
+
+# 7. DEPOIMENTOS/PROVA SOCIAL
+testimonialsTitle: "O Que Nossos Clientes Estão Dizendo"
+testimonialsSubtitle: >-
+  Resultados reais de quem migrou do WordPress para JAMstack e viu o ranqueamento melhorar
+testimonials:
+  - name: "Cliente Satisfeito"
+    role: ""
+    rating: "★★★★★"
+    text: >-
+      "Meu site WordPress estava na página 3 do Google. Migrei para JAMstack e em 2 meses estava na primeira página. Performance incrível!"
+    image: null
+    videoUrl: ""
+  - name: "Empresário Digital"
+    role: ""
+    rating: "★★★★★"
+    text: >-
+      "Zero custo de hospedagem. Site 10x mais rápido. O Google adorou. Por que não fiz isso antes?"
+    image: null
+    videoUrl: ""
+  - name: "Desenvolvedor"
+    role: ""
+    rating: "★★★★★"
+    text: >-
+      "WordPress era um pesadelo. Plugins quebrando, site lento, hospedagem cara. JAMstack mudou tudo."
+    image: null
+    videoUrl: ""
+
+# 8. A OFERTA
+offerTitle: "O Que Você Recebe ao Escolher JAMstack"
+offerItems:
+  - title: "Site JAMstack Completo"
+    description: "Astro + Cloudflare + Keystatic configurados e prontos para uso."
+  - title: "Hospedagem Gratuita na Edge"
+    description: "Cloudflare Workers com deploy automático. Zero custo de servidor."
+  - title: "Otimização SEO Avançada"
+    description: "Performance que o Google Core Web Vitals premia. Ranqueamento garantido."
+offerBadge: "⚡ PERFORMANCE 10X SUPERIOR"
+offerPriceTitle: "Comece Agora"
+offerPriceSubtitle: "Migre do WordPress para JAMstack"
+offerCtaText: "QUERO RANQUEAR NO GOOGLE"
+offerCtaUrl: "/contato"
+offerStack:
+  - title: "100% Gratuito"
+    description: "Hospedagem e deploy sem custos"
+  - title: "Deploy Imediato"
+    description: "Seu site no ar em minutos"
+  - title: "SEO Garantido"
+    description: "Performance que o Google premia"
+offerBonuses:
+  - title: "Bônus 1"
+    description: "Descrição do bônus"
+    icon: "🎁"
+
+# 9. GARANTIA
+guaranteeTitle: "O Risco está 100% nas minhas costas."
+guaranteeText: >-
+  Teste nossa stack JAMstack. Veja a performance, o ranqueamento e a velocidade. 
+  Se você não achar que é superior ao WordPress, eu assumo a responsabilidade. Sem perguntas.
+guaranteeBadge: "Garantia de Performance"
+
+# 10. FAQ
+faqTitle: "Suas dúvidas respondidas"
+faqItems:
+  - question: "Por que JAMstack é melhor que WordPress para SEO?"
+    answer: >-
+      JAMstack gera sites estáticos pré-renderizados que carregam instantaneamente. O Google Core Web Vitals premia velocidade, 
+      e sites JAMstack consistentemente superam WordPress em performance, resultando em melhor ranqueamento.
+  - question: "Como a hospedagem pode ser gratuita?"
+    answer: >-
+      Cloudflare Workers oferece hospedagem gratuita na Edge para sites estáticos. Seu site é servido de servidores distribuídos 
+      globalmente, com zero custo de infraestrutura. WordPress requer servidores caros que você precisa pagar mensalmente.
+  - question: "Preciso saber programar para usar JAMstack?"
+    answer: >-
+      Com Keystatic CMS, você edita conteúdo sem código, igual WordPress. A diferença é que o site gerado é estático e super rápido, 
+      enquanto WordPress precisa de PHP e banco de dados que tornam tudo lento.
+  - question: "Quanto tempo para ver resultados no Google?"
+    answer: >-
+      Sites JAMstack geralmente começam a ranquear melhor em 2-4 semanas devido à performance superior. WordPress pode levar meses 
+      para melhorar porque o Google penaliza sites lentos.
+
+# 11. A ESCOLHA É SUA
+choiceTitle: "A Escolha é Sua"
+choiceOption1Title: "Opção 1"
+choiceOption1Text: >-
+  Continuar com WordPress, pagando hospedagem cara e lutando para ranquear na página 2 do Google.
+choiceOption2Title: "Opção 2"
+choiceOption2Text: >-
+  Migrar para JAMstack e construir um site que ranqueia no topo do Google com custo zero de hospedagem.
+choiceCtaText: "QUERO RANQUEAR NO GOOGLE AGORA"
+choiceCtaUrl: "/contato"
+choiceFooter: "Migração completa do WordPress para JAMstack"

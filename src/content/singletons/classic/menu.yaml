@@ -1,0 +1,17 @@
+items:
+  - label: Home
+    href: /
+    icon: 🏠
+    target: _self
+  - label: Sobre
+    href: /sobre
+    icon: 📄
+    target: _self
+  - label: Blog
+    href: /blog
+    icon: 📝
+    target: _self
+  - label: Contato
+    href: /contato
+    icon: 📧
+    target: _self

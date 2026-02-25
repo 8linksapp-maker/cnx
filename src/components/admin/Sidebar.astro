@@ -1,0 +1,68 @@
+---
+interface Props {
+    user?: { slug: string; name: string; adminRole: 'admin' | 'editor' } | undefined;
+}
+
+const { user } = Astro.props;
+const p       = Astro.url.pathname;
+const isAdmin = user?.adminRole === 'admin';
+
+const active = (href: string) =>
+    href === '/admin'
+        ? p === '/admin'
+        : p === href || p.startsWith(href + '/');
+
+const menuItems = [
+    { label: 'Dashboard',          icon: '📊', href: '/admin'                 },
+    { label: 'Posts',              icon: '📝', href: '/admin/posts'            },
+    { label: 'Autores',            icon: '👤', href: '/admin/authors'          },
+    { label: 'Categorias',         icon: '🏷️', href: '/admin/categories'       },
+    { label: 'Mídia',              icon: '📷', href: '/admin/media'            },
+    { label: 'Páginas',            icon: '⚙️', href: '/admin/pages'            },
+    ...(isAdmin ? [
+        { label: 'Analytics',          icon: '📈', href: '/admin/analytics'       },
+        { label: 'Pixels',             icon: '📡', href: '/admin/pixels'          },
+        { label: 'Importar WordPress', icon: '📥', href: '/admin/import/wordpress'},
+    ] : []),
+];
+---
+
+<aside class="w-64 bg-[#111111] border-r border-[rgba(255,255,255,0.08)] flex flex-col">
+    <!-- Logo/Brand -->
+    <div class="p-6 border-b border-[rgba(255,255,255,0.08)]">
+        <a href="/" class="flex items-center gap-3 group">
+            <div class="w-9 h-9 rounded-lg bg-[#1a1a1a] border border-[rgba(255,255,255,0.08)] flex items-center justify-center text-[#e5e5e5] font-bold text-lg group-hover:bg-[#222222] transition-colors">
+                CNX
+            </div>
+            <div>
+                <h1 class="text-white font-heading font-bold text-base leading-tight">CNX Agency</h1>
+                <p class="text-[10px] text-[#737373] uppercase tracking-wider">Admin</p>
+            </div>
+        </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 p-3 space-y-1 overflow-y-auto">
+        {menuItems.map((item) => (
+            <a
+                href={item.href}
+                class={`admin-sidebar-item ${active(item.href) ? 'active' : ''}`}
+            >
+                <span class="text-lg">{item.icon}</span>
+                <span class="font-medium text-sm flex-1">{item.label}</span>
+            </a>
+        ))}
+    </nav>
+
+    <!-- Footer Actions -->
+    <div class="p-3 border-t border-[rgba(255,255,255,0.08)] space-y-1">
+        <a 
+            href="/" 
+            target="_blank"
+            class="admin-sidebar-item"
+        >
+            <span>👁️</span>
+            <span class="text-sm">Ver Site</span>
+        </a>
+    </div>
+</aside>

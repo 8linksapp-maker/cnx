@@ -1,0 +1,48 @@
+---
+title: "JAMStack vs WordPress: Segurança sem dor de cabeça com plugins"
+slug: "jamstack-vs-wordpress-seguranca"
+author: "carlos-oliveira"
+category: "tech"
+publishedDate: "2026-02-11"
+thumbnail: "https://images.unsplash.com/photo-1510519138101-570d1dca3d66?w=1200&h=630&fit=crop&auto=format"
+metaDescription: "Veja por que a arquitetura JAMStack reduz drasticamente a superfície de ataque quando comparada ao WordPress tradicional cheio de plugins."
+---
+
+Sites em WordPress são alvo constante de ataques. O motivo é simples: **muitos componentes dinâmicos, muitos plugins, muito PHP rodando**.
+
+Na JAMStack, a lógica é o oposto: quanto menos superfície de ataque, melhor.
+
+## Onde o WordPress é vulnerável
+
+Em um stack tradicional com WordPress você tem:
+
+1. PHP exposto.
+2. Banco de dados MySQL acessível.
+3. Painel `wp-admin` visível.
+4. Dezenas de plugins (muitos sem atualização frequente).
+
+Cada um desses pontos é uma possível porta de entrada para:
+
+- Invasões.
+- Injeção de código malicioso.
+- Sequestro de SEO (hackers publicando spam no seu site).
+
+## Como a JAMStack reduz riscos
+
+Na arquitetura que você está usando:
+
+- O site é **100% estático** na borda (CDN).
+- Não há painel WordPress rodando em PHP.
+- Não existe banco de dados acessível via web.
+- Funcionalidades dinâmicas usam **APIs isoladas e bem controladas**.
+
+Isso significa que, para um invasor, **não há “porta de entrada óbvia”**.
+
+## Benefícios diretos para você e seus clientes
+
+- **Menos manutenção preventiva** (não há dezenas de plugins para atualizar).
+- **Menos chance de vazamento de dados**.
+- **Menos noites em claro tentando limpar site hackeado**.
+
+Com JAMStack, segurança deixa de ser uma guerra diária contra plugins e vira consequência da própria arquitetura.
+

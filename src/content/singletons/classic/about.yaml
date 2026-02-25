@@ -1,0 +1,23 @@
+heroTitle: Sobre Este Blog
+heroSubtitle: Um espaço para compartilhar conhecimento sobre tecnologia moderna, JAMstack e estratégias digitais para quem quer construir presença online de forma inteligente.
+missionTitle: Por Que Existe Este Blog
+missionDescription: Acredito que qualquer pessoa pode ter um site profissional, rápido e seguro sem precisar pagar fortunas em hospedagem ou depender de soluções desatualizadas. Este blog é a prova disso.
+visionTitle: O Que Você Vai Encontrar
+visionDescription: Conteúdo prático e direto ao ponto sobre desenvolvimento web moderno, SEO técnico, deploy gratuito e como transformar sua presença digital em um ativo real.
+valuesTitle: Princípios
+values:
+  - icon: ⚡
+    title: Performance Primeiro
+    description: Sites lentos perdem visitantes e ranqueamento. Aqui ensinamos a construir com velocidade desde o início.
+  - icon: 🔓
+    title: Open Source
+    description: Todo o código deste blog é público. Aprenda, adapte e use para construir o seu.
+  - icon: 💸
+    title: Custo Zero
+    description: Hospedagem gratuita na Vercel, CMS próprio, sem mensalidades. Tecnologia democratizada.
+teamTitle: O Autor
+teamMembers:
+  - name: Carlos Oliveira
+    role: Desenvolvedor & Criador de Conteúdo
+    bio: Especializado em JAMstack e performance web. Ajuda criadores e empreendedores a construírem sua presença digital com tecnologias modernas.
+    photo: https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=400&fit=crop&auto=format

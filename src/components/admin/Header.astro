@@ -1,0 +1,95 @@
+---
+interface Props {
+    user?: { slug: string; name: string; adminRole: 'admin' | 'editor' } | undefined;
+}
+
+const { user } = Astro.props;
+const firstName = user?.name?.split(' ')[0] ?? '';
+const initials  = user?.name
+    ? user.name.split(' ').slice(0, 2).map((w: string) => w[0].toUpperCase()).join('')
+    : '?';
+const isAdmin = user?.adminRole === 'admin';
+---
+
+<!-- ══ Barra WP-style ═══════════════════════════════════════════════════ -->
+<div class="h-8 bg-[#1a1a1a] border-b border-[rgba(255,255,255,0.07)] flex items-center justify-between px-4 flex-shrink-0">
+
+    <!-- Esquerda -->
+    <div class="flex items-center gap-0.5">
+        <a href="/admin"
+           class="flex items-center gap-1.5 px-2 py-1 rounded text-[#9ca3af] hover:text-white hover:bg-white/5 transition-all text-xs font-semibold">
+            <span class="text-[10px] font-black bg-white/10 px-1.5 py-0.5 rounded">CNX</span>
+            <span class="hidden sm:inline">Admin</span>
+        </a>
+
+        <span class="text-white/10 mx-1">|</span>
+
+        <a href="/" target="_blank" rel="noopener"
+           class="flex items-center gap-1 px-2 py-1 rounded text-[#6b7280] hover:text-white hover:bg-white/5 transition-all text-xs">
+            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span class="hidden sm:inline">Ver site</span>
+        </a>
+
+        <a href="/admin/posts/new"
+           class="flex items-center gap-1 px-2 py-1 rounded text-[#6b7280] hover:text-white hover:bg-white/5 transition-all text-xs">
+            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span class="hidden sm:inline">Novo post</span>
+        </a>
+    </div>
+
+    <!-- Direita: usuário + sair -->
+    <div class="flex items-center gap-1">
+        {user ? (
+            <>
+                <div class="flex items-center gap-2 px-2 py-1">
+                    <!-- Avatar com iniciais -->
+                    <div class={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold flex-shrink-0
+                        ${isAdmin ? 'bg-violet-500/30 text-violet-300 ring-1 ring-violet-500/40'
+                                  : 'bg-sky-500/30 text-sky-300 ring-1 ring-sky-500/40'}`}>
+                        {initials}
+                    </div>
+                    <!-- Nome -->
+                    <span class="text-xs text-[#9ca3af] hidden sm:inline">
+                        Olá, <strong class="text-[#e5e5e5] font-semibold">{firstName}</strong>
+                    </span>
+                    <!-- Badge de role -->
+                    <span class={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded hidden md:inline
+                        ${isAdmin ? 'text-violet-400 bg-violet-500/10 ring-1 ring-violet-500/20'
+                                  : 'text-sky-400 bg-sky-500/10 ring-1 ring-sky-500/20'}`}>
+                        {isAdmin ? 'Admin' : 'Editor'}
+                    </span>
+                </div>
+
+                <span class="text-white/10 text-sm mx-1">|</span>
+
+                <!-- Sair — link GET direto ao handler -->
+                <a href="/api/admin/auth/logout"
+                   class="flex items-center gap-1.5 px-2 py-1 rounded text-[#6b7280] hover:text-red-400 hover:bg-red-500/10 transition-all text-xs font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                        <polyline points="16 17 21 12 16 7"/>
+                        <line x1="21" y1="12" x2="9" y2="12"/>
+                    </svg>
+                    <span>Sair</span>
+                </a>
+            </>
+        ) : (
+            <a href="/admin/login"
+               class="px-2 py-1 rounded text-[#6b7280] hover:text-white hover:bg-white/5 transition-all text-xs">
+                Entrar
+            </a>
+        )}
+    </div>
+</div>
+
+<!-- ══ Header principal ════════════════════════════════════════════════ -->
+<header class="h-12 bg-[#111111] border-b border-[rgba(255,255,255,0.08)] flex items-center justify-between px-4 md:px-6 flex-shrink-0">
+    <div class="flex items-center gap-3 flex-1 min-w-0">
+        <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0a0a0a] border border-[rgba(255,255,255,0.08)] max-w-xs flex-1">
+            <span class="text-[#525252] text-xs">🔍</span>
+            <input type="text" placeholder="Buscar..." disabled
+                class="bg-transparent border-0 outline-0 flex-1 placeholder-[#525252] text-[#e5e5e5] text-xs cursor-not-allowed" />
+        </div>
+    </div>
+    <a href="/admin/posts/new" class="admin-btn admin-btn-primary text-sm">+ Novo Post</a>
+</header>

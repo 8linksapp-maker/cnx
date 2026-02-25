@@ -1,0 +1,66 @@
+---
+title: "Não existe plugin: como adicionar funcionalidades ao seu site JAMstack"
+slug: "nao-existe-plugin-como-adicionar-funcionalidades"
+author: "carlos-oliveira"
+category: "tech"
+publishedDate: "2026-02-09"
+thumbnail: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=630&fit=crop&auto=format"
+metaDescription: "Se você vem do WordPress, vai sentir falta dos plugins. Mas no JAMstack existe algo melhor: pacotes NPM, serviços externos e componentes reutilizáveis."
+---
+
+Quando alguém que usa WordPress olha para um projeto JAMstack pela primeira vez, a pergunta que não tarda é: **"Onde instalo os plugins?"**
+
+A resposta honesta: não existe plugin. E isso muda tudo — para melhor.
+
+## O que os plugins do WordPress realmente fazem
+
+No WordPress, um plugin é basicamente um código PHP que se injeta na execução do site. Ele pode:
+
+- Adicionar funcionalidades ao painel admin
+- Modificar o HTML que é gerado
+- Criar novas rotas e páginas
+- Conectar com APIs externas
+
+O problema é que quanto mais plugins, mais pesado fica o site, mais riscos de segurança, mais atualizações para gerenciar e mais chance de um conflitar com o outro.
+
+## O equivalente no JAMstack
+
+No ecossistema Astro (e no mundo JAMstack em geral), você tem três alternativas:
+
+### 1. Pacotes NPM
+
+O equivalente mais direto a um plugin. Com um único comando você adiciona uma funcionalidade:
+
+```bash
+bun add @astrojs/sitemap
+bun add @astrojs/image
+```
+
+Diferente de plugins WordPress, eles são mantidos pela comunidade de código aberto, são leves e não adicionam painel admin desnecessário.
+
+### 2. Integrações Astro
+
+O Astro tem um sistema oficial de integrações para as funcionalidades mais comuns:
+
+- **@astrojs/sitemap** — gera sitemap.xml automaticamente
+- **@astrojs/react** — adiciona suporte a componentes React
+- **@astrojs/tailwind** — integra Tailwind CSS
+- **@astrojs/partytown** — carrega scripts de terceiros sem afetar performance
+
+### 3. Serviços externos (SaaS)
+
+Para funcionalidades mais complexas, você usa serviços especializados:
+
+| Funcionalidade | WordPress | JAMstack |
+|---|---|---|
+| Formulário de contato | Contact Form 7 | Formspree, Web3Forms |
+| Comentários | Plugin nativo | Disqus, giscus |
+| Busca | Relevanssi | Algolia, Pagefind |
+| E-commerce | WooCommerce | Stripe + Loja customizada |
+| Newsletter | Mailchimp Plugin | Mailchimp API direto |
+
+## A vantagem real
+
+No WordPress, um plugin ruim pode derrubar seu site inteiro. No JAMstack, se um serviço externo cair, apenas aquela funcionalidade para — o restante do site continua no ar.
+
+Você troca a conveniência do "clique e instale" por controle, performance e estabilidade. Para a maioria dos sites, vale muito a pena.

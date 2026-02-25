@@ -1,0 +1,29 @@
+copyright: © 2025 Meu Blog. Todos os direitos reservados.
+description: Blog sobre JAMstack, desenvolvimento web moderno e empreendedorismo digital. Feito com Astro e hospedado na Vercel.
+columns:
+  - title: Navegação
+    links:
+      - label: Home
+        href: /
+      - label: Blog
+        href: /blog
+      - label: Sobre
+        href: /sobre
+      - label: Contato
+        href: /contato
+  - title: Legal
+    links:
+      - label: Política de Privacidade
+        href: /privacidade
+      - label: Termos de Uso
+        href: /termos
+socialLinks:
+  - platform: LinkedIn
+    url: https://linkedin.com
+    icon: 💼
+  - platform: GitHub
+    url: https://github.com
+    icon: 🐙
+  - platform: Twitter / X
+    url: https://twitter.com
+    icon: 🐦

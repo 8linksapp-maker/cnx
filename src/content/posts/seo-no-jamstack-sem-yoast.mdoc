@@ -1,0 +1,83 @@
+---
+title: "Como fazer SEO no seu site JAMstack sem o Yoast"
+slug: "seo-no-jamstack-sem-yoast"
+author: "carlos-oliveira"
+category: "tutorial"
+publishedDate: "2026-02-08"
+thumbnail: "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=1200&h=630&fit=crop&auto=format"
+metaDescription: "O Yoast é indispensável no WordPress. No JAMstack você tem controle total das meta tags, Open Graph, sitemap e Schema sem precisar de plugin nenhum."
+---
+
+No WordPress, o Yoast SEO é quase obrigatório. Ele cuida das meta tags, do sitemap, do breadcrumb e do título da página. Sem ele, você precisaria editar PHP diretamente — assustador para a maioria.
+
+No JAMstack com Astro, você tem esse controle por padrão. Sem plugin, sem mensalidade da versão premium, sem caixa de análise de texto cheia de semáforos verdes e amarelos.
+
+## Meta tags básicas
+
+Em qualquer arquivo `.astro` você pode definir o `<head>` completo:
+
+```astro
+---
+const { title, description, image } = Astro.props;
+---
+<head>
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={image} />
+  <meta name="twitter:card" content="summary_large_image" />
+</head>
+```
+
+Isso cobre o básico de SEO e compartilhamento em redes sociais (Open Graph).
+
+## Sitemap automático
+
+Adicione a integração oficial e o sitemap.xml é gerado automaticamente no build:
+
+```bash
+bun add @astrojs/sitemap
+```
+
+No `astro.config.mjs`:
+
+```js
+import sitemap from '@astrojs/sitemap';
+
+export default defineConfig({
+  site: 'https://seusite.com',
+  integrations: [sitemap()],
+});
+```
+
+Na próxima vez que você fizer deploy, o arquivo `/sitemap-index.xml` vai estar lá, com todas as páginas e posts listados.
+
+## Canonical URL
+
+Evita conteúdo duplicado indicando ao Google qual é a URL "oficial" de cada página:
+
+```astro
+<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).toString()} />
+```
+
+## Robots.txt
+
+Crie o arquivo `public/robots.txt` na raiz do projeto:
+
+```
+User-agent: *
+Allow: /
+
+Sitemap: https://seusite.com/sitemap-index.xml
+```
+
+## Por que funciona melhor que o Yoast
+
+O Yoast é um intermediário — ele pega o que você escreve no formulário e gera as meta tags. No Astro, você escreve as meta tags diretamente, sem intermediário. O resultado no HTML é idêntico, mas você tem:
+
+- **Controle total** sobre o que aparece em cada página
+- **Performance melhor** — sem JavaScript extra no front
+- **Sem limite de palavras-chave** ou análise de "legibilidade" que força um tom específico
+
+SEO não é sobre semáforo verde. É sobre ter as meta tags certas, conteúdo relevante e um site rápido. No JAMstack, você tem os três sem esforço extra.

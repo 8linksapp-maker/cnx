@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary-rgb: 168 85 247;
+    --secondary-rgb: 236 72 153;
+    --radius: 16px;
+  }
+
+  body {
+    @apply bg-dark text-slate-300;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

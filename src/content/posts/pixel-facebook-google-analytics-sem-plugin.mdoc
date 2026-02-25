@@ -1,0 +1,70 @@
+---
+title: "Como instalar o Pixel do Facebook e o Google Analytics sem plugin"
+slug: "pixel-facebook-google-analytics-sem-plugin"
+author: "carlos-oliveira"
+category: "tutorial"
+publishedDate: "2026-02-10"
+thumbnail: "https://images.unsplash.com/photo-1611926653458-09294b3142bf?w=1200&h=630&fit=crop&auto=format"
+metaDescription: "No WordPress você instalaria um plugin. No JAMstack é ainda mais simples: basta colar o código de rastreamento direto no HTML. Veja como fazer."
+---
+
+Uma das primeiras perguntas de quem migra do WordPress é: **"Cadê o plugin para instalar o pixel?"**
+
+No WordPress, você usaria o *PixelYourSite*, o *Insert Headers and Footers* ou alguma integração nativa. No JAMstack, não existe essa camada. E isso é uma boa notícia.
+
+## Por que é mais simples no JAMstack
+
+No WordPress, os plugins são necessários porque você não tem acesso direto ao HTML que é gerado. O PHP monta o código e você precisa de intermediários.
+
+No Astro, **você tem controle total do HTML**. Basta editar o layout principal e o código de rastreamento entra em todas as páginas automaticamente.
+
+## Google Analytics (GA4)
+
+1. Acesse [analytics.google.com](https://analytics.google.com) e crie uma propriedade.
+2. Vá em **Administrar → Fluxos de dados → Web**.
+3. Copie o **ID de medição** (começa com `G-`).
+4. Abra o arquivo `src/layouts/MainLayout.astro` do seu projeto.
+5. Cole o snippet do Google dentro da tag `<head>`:
+
+```html
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+```
+
+Substitua `G-XXXXXXXXXX` pelo seu ID real. Pronto — todas as páginas do site passam a ser rastreadas.
+
+## Meta Pixel (Facebook / Instagram Ads)
+
+1. Acesse o **Gerenciador de Eventos** do Meta Business Suite.
+2. Crie um Pixel e copie o código base.
+3. Cole dentro da tag `<head>` do mesmo arquivo `MainLayout.astro`.
+
+```html
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'SEU_PIXEL_ID');
+fbq('track', 'PageView');
+</script>
+```
+
+## Por que é melhor assim
+
+- **Sem plugin quebrando na atualização.** O código está no seu repositório — você controla.
+- **Sem dependência de terceiros.** Se o plugin sai do ar, seu rastreamento não para.
+- **Mais leve.** Plugins carregam CSS, JS e painel admin desnecessários. O snippet direto é só o que você precisa.
+
+No JAMstack, você tem mais poder, não menos. Só precisa entender que esse poder está no código, não em menus de configuração.

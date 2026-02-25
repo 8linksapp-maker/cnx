@@ -1,0 +1,21 @@
+---
+/**
+ * blog/index.astro
+ * 
+ * Página de listagem do blog - exibe apenas posts publicados, do mais novo ao mais antigo
+ */
+
+import { getCollection } from 'astro:content';
+import BlogList from '../../themes/classic/BlogList.astro';
+
+const allPosts = await getCollection('posts');
+
+const publishedPosts = allPosts
+    .filter(post => post.data.publishedDate)
+    .sort((a, b) => new Date(b.data.publishedDate!).getTime() - new Date(a.data.publishedDate!).getTime());
+---
+
+<BlogList 
+    posts={publishedPosts}
+    themeId="classic"
+/>

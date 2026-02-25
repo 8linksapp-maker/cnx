@@ -1,0 +1,89 @@
+---
+/**
+ * admin/index.astro
+ * 
+ * Página principal do dashboard administrativo.
+ * Exibe visão geral do sistema com estatísticas, posts recentes e ações rápidas.
+ * Design moderno e informativo, rival do WordPress em funcionalidade mas superior em performance.
+ * 
+ * Widgets incluídos:
+ * - Cards estatísticos (Posts, Autores, Categorias, Temas)
+ * - Lista de posts recentes
+ * - Ações rápidas para criação de conteúdo
+ * - Links diretos para o Keystatic
+ */
+
+import { getCollection } from 'astro:content';
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import StatCard from '../../components/admin/StatCard.astro';
+import RecentPosts from '../../components/admin/RecentPosts.astro';
+import { verifySession, SESSION_COOKIE } from '../../utils/auth-utils';
+
+// ─── Autenticação ─────────────────────────────────────────────────────────────
+const token = Astro.cookies.get(SESSION_COOKIE)?.value;
+const sessionUser = token ? verifySession(token) : null;
+if (!sessionUser) return Astro.redirect('/admin/login');
+
+// ─── Dados do dashboard ───────────────────────────────────────────────────────
+const posts      = await getCollection('posts');
+const authors    = await getCollection('authors');
+const categories = await getCollection('categories');
+
+const publishedPosts = posts.filter(p => p.data.publishedDate);
+const draftPosts     = posts.length - publishedPosts.length;
+const isAdmin        = sessionUser.adminRole === 'admin';
+---
+
+<AdminLayout title="Dashboard">
+    <div class="mb-8">
+        <h1 class="text-3xl font-heading font-bold text-[#e5e5e5] mb-1">Dashboard</h1>
+        <p class="text-[#a3a3a3] text-sm">Olá, <strong class="text-white">{sessionUser.name}</strong> — visão geral do seu site</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <StatCard title="Total de Posts"    value={posts.length}      icon="📝" link="/admin/posts"      />
+        <StatCard title="Posts Publicados"  value={publishedPosts.length} icon="✅" link="/admin/posts"  />
+        <StatCard title="Rascunhos"         value={draftPosts}        icon="📄" link="/admin/posts"      />
+        <StatCard title="Autores"           value={authors.length}    icon="👤" link="/admin/authors"    />
+    </div>
+
+    <!-- Grid principal -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2">
+            <RecentPosts posts={posts} />
+        </div>
+
+        <!-- Ações rápidas -->
+        <div class="admin-card p-6">
+            <h3 class="text-base font-heading font-bold text-[#e5e5e5] mb-4">⚡ Ações Rápidas</h3>
+            <div class="space-y-2">
+                <a href="/admin/posts/new"   class="admin-btn admin-btn-primary  text-sm w-full justify-center">+ Novo Post</a>
+                <a href="/admin/pages"       class="admin-btn admin-btn-ghost    text-sm w-full justify-start">✏️ Editar Páginas</a>
+                <a href="/admin/authors"     class="admin-btn admin-btn-ghost    text-sm w-full justify-start">👤 Gerenciar Autores</a>
+                <a href="/admin/categories"  class="admin-btn admin-btn-ghost    text-sm w-full justify-start">🏷️ Categorias</a>
+                {isAdmin && (
+                    <>
+                        <hr class="border-white/10 my-2" />
+                        <a href="/admin/pixels"    class="admin-btn admin-btn-ghost text-sm w-full justify-start">📡 Pixels & Analytics</a>
+                        <a href="/admin/analytics" class="admin-btn admin-btn-ghost text-sm w-full justify-start">📈 Ver Analytics</a>
+                    </>
+                )}
+                <hr class="border-white/10 my-2" />
+                <a href="/" target="_blank"  class="admin-btn admin-btn-ghost    text-sm w-full justify-start">👁️ Ver Site Público</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status -->
+    <div class="mt-6 admin-card p-5">
+        <div class="flex items-center gap-6 flex-wrap text-sm text-[#a3a3a3]">
+            <span>📝 <strong class="text-white">{posts.length}</strong> posts</span>
+            <span>👤 <strong class="text-white">{authors.length}</strong> autores</span>
+            <span>🏷️ <strong class="text-white">{categories.length}</strong> categorias</span>
+            <span class="ml-auto text-xs text-[#525252]">
+                Role: <span class={isAdmin ? 'text-violet-400' : 'text-sky-400'}>{sessionUser.adminRole}</span>
+            </span>
+        </div>
+    </div>
+</AdminLayout>

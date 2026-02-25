@@ -1,0 +1,46 @@
+heroBadge: "✨ Blog de Tecnologia & Empreendedorismo"
+heroTitle: Conteúdo que Educa, Inspira e Gera Resultados
+heroSubtitle: Artigos práticos sobre JAMstack, desenvolvimento web moderno e estratégias digitais para empreendedores que querem crescer online com performance e custo zero.
+heroCtaText: Ler os Artigos
+heroCtaUrl: /blog
+heroImage: https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200&h=700&fit=crop&auto=format
+socialProofTitle: Tecnologias que Utilizamos
+clientLogos: []
+aboutTitle: Sobre Este Blog
+aboutSubtitle: Feito com Astro, hospedado na Vercel — rápido, seguro e de graça.
+aboutContent: Este blog foi construído com a stack JAMstack moderna — Astro como framework, Vercel para deploy e um CMS customizado para gerenciar o conteúdo. O resultado é um site que carrega em milissegundos, está seguro por padrão e custa zero de hospedagem. Aqui você encontra conteúdo sobre como construir sua presença digital da mesma forma.
+aboutImage: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop&auto=format
+aboutStats:
+  - number: "8+"
+    label: Artigos Publicados
+  - number: "100%"
+    label: Open Source
+  - number: "< 1s"
+    label: Tempo de Carregamento
+servicesTitle: O Que Você Vai Encontrar
+servicesSubtitle: Conteúdo prático sobre tecnologia moderna e estratégia digital
+services:
+  - title: JAMstack & Astro
+    description: Como construir sites ultrarrápidos com a arquitetura moderna que está substituindo o WordPress.
+    icon: ⚡
+    url: /blog
+  - title: Performance Web
+    description: Core Web Vitals, otimização de imagens e tudo que precisa saber para ranquear no Google.
+    icon: 🚀
+    url: /blog
+  - title: Deploy Gratuito
+    description: Como hospedar seu site na Vercel, Cloudflare Pages ou Netlify sem pagar nada.
+    icon: ☁️
+    url: /blog
+  - title: CMS Moderno
+    description: Gerencie seu conteúdo sem banco de dados, com arquivos Markdown e Git como fonte da verdade.
+    icon: 📝
+    url: /blog
+  - title: SEO Técnico
+    description: Sitemap, meta tags, Open Graph e tudo que um site moderno precisa para aparecer no Google.
+    icon: 🔍
+    url: /blog
+  - title: Empreendedorismo Digital
+    description: Estratégias para monetizar sua presença online e transformar conteúdo em negócio.
+    icon: 💡
+    url: /blog

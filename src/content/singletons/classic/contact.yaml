@@ -1,0 +1,21 @@
+heroTitle: Entre em Contato
+heroSubtitle: Tem uma dúvida, sugestão ou quer trocar uma ideia? Manda uma mensagem — respondo todos os contatos.
+email: seuemail@exemplo.com
+phone: +55 (11) 9 9999-9999
+address: |-
+  Sua Cidade, seu Estado
+  Brasil
+socialLinks:
+  - platform: LinkedIn
+    url: https://linkedin.com
+    icon: 💼
+  - platform: GitHub
+    url: https://github.com
+    icon: 🐙
+  - platform: Twitter / X
+    url: https://twitter.com
+    icon: 🐦
+formTitle: Envie sua Mensagem
+formSubmitText: Enviar Mensagem
+formSuccessMessage: Mensagem enviada com sucesso! Entrarei em contato em breve. Obrigado!
+ctaTitle: Vamos conversar?

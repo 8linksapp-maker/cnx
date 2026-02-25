@@ -1,0 +1,192 @@
+---
+/**
+ * admin/pages/index.astro
+ * 
+ * Página de listagem de páginas (singletons) no painel administrativo.
+ * Agora mostra apenas as páginas do tema ativo.
+ */
+
+import { getEntry } from 'astro:content';
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+
+// Obter tema ativo
+const settings = await getEntry('siteSettings', 'settings');
+const activeThemeId = settings?.data?.activeTheme || 'classic';
+const theme = await getEntry('siteThemes', activeThemeId);
+const themeName = theme?.data?.name || activeThemeId;
+
+// Verificar se o tema foi alterado
+const themeChanged = Astro.url.searchParams.get('themeChanged') === 'true';
+const successMessage = Astro.url.searchParams.get('success');
+---
+
+<AdminLayout title="Configurações - CNX Agency Admin">
+    <div class="space-y-6">
+        <!-- Theme Changed Notification -->
+        {themeChanged && (
+            <div class="admin-card p-4 bg-blue-500/10 border border-blue-500/30">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">🔄</span>
+                    <div class="flex-1">
+                        <p class="text-blue-400 font-semibold mb-1">Tema alterado com sucesso!</p>
+                        {successMessage && (
+                            <p class="text-blue-300 text-sm">{decodeURIComponent(successMessage)}</p>
+                        )}
+                        <p class="text-blue-200 text-xs mt-2">
+                            As configurações abaixo agora mostram as páginas do tema <strong>{themeName}</strong>. 
+                            Clique em qualquer página para editar.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        )}
+
+        <!-- Header -->
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-heading font-bold text-[#e5e5e5] mb-2">
+                    Configurações
+                </h1>
+                <p class="text-[#a3a3a3]">
+                    Gerencie o conteúdo das páginas do seu site
+                </p>
+            </div>
+            <a 
+                href="/" 
+                target="_blank"
+                class="admin-btn admin-btn-secondary text-sm"
+            >
+                👁️ Ver Site
+            </a>
+        </div>
+
+        <!-- Pages Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Home -->
+            <a 
+                href="/admin/pages/home"
+                class="admin-card p-6 hover:border-primary/50 transition-all group"
+            >
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-[#1a1a1a] flex items-center justify-center text-2xl">
+                        🏠
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-heading font-bold text-[#e5e5e5] group-hover:text-white transition-colors">
+                            Home
+                        </h3>
+                        <p class="text-xs text-[#a3a3a3]">Página inicial</p>
+                    </div>
+                </div>
+                <p class="text-sm text-[#a3a3a3]">
+                    Edite o conteúdo da página inicial, hero, features e CTA
+                </p>
+            </a>
+
+            <!-- Sobre -->
+            <a 
+                href="/admin/pages/about"
+                class="admin-card p-6 hover:border-primary/50 transition-all group"
+            >
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-[#1a1a1a] flex items-center justify-center text-2xl">
+                        📄
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-heading font-bold text-[#e5e5e5] group-hover:text-white transition-colors">
+                            Sobre
+                        </h3>
+                        <p class="text-xs text-[#a3a3a3]">Sobre Nós</p>
+                    </div>
+                </div>
+                <p class="text-sm text-[#a3a3a3]">
+                    Missão, visão, valores e equipe
+                </p>
+            </a>
+
+            <!-- Contato -->
+            <a 
+                href="/admin/pages/contact"
+                class="admin-card p-6 hover:border-primary/50 transition-all group"
+            >
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-[#1a1a1a] flex items-center justify-center text-2xl">
+                        📧
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-heading font-bold text-[#e5e5e5] group-hover:text-white transition-colors">
+                            Contato
+                        </h3>
+                        <p class="text-xs text-[#a3a3a3]">Página de contato</p>
+                    </div>
+                </div>
+                <p class="text-sm text-[#a3a3a3]">
+                    Informações de contato e formulário
+                </p>
+            </a>
+
+            <!-- Menu -->
+            <a 
+                href="/admin/pages/menu"
+                class="admin-card p-6 hover:border-primary/50 transition-all group"
+            >
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-[#1a1a1a] flex items-center justify-center text-2xl">
+                        ☰
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-heading font-bold text-[#e5e5e5] group-hover:text-white transition-colors">
+                            Menu
+                        </h3>
+                        <p class="text-xs text-[#a3a3a3]">Navegação principal</p>
+                    </div>
+                </div>
+                <p class="text-sm text-[#a3a3a3]">
+                    Itens do menu de navegação
+                </p>
+            </a>
+
+            <!-- Rodapé -->
+            <a 
+                href="/admin/pages/footer"
+                class="admin-card p-6 hover:border-primary/50 transition-all group"
+            >
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-[#1a1a1a] flex items-center justify-center text-2xl">
+                        📋
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-heading font-bold text-[#e5e5e5] group-hover:text-white transition-colors">
+                            Rodapé
+                        </h3>
+                        <p class="text-xs text-[#a3a3a3]">Rodapé do site</p>
+                    </div>
+                </div>
+                <p class="text-sm text-[#a3a3a3]">
+                    Copyright, links e redes sociais
+                </p>
+            </a>
+
+            <!-- Landing Page 1 -->
+            <a 
+                href="/admin/pages/lp1"
+                class="admin-card p-6 hover:border-primary/50 transition-all group"
+            >
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-12 h-12 rounded-lg bg-[#1a1a1a] flex items-center justify-center text-2xl">
+                        🚀
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-heading font-bold text-[#e5e5e5] group-hover:text-white transition-colors">
+                            Landing Page 1
+                        </h3>
+                        <p class="text-xs text-[#a3a3a3]">LP1 - Dot Com Secrets</p>
+                    </div>
+                </div>
+                <p class="text-sm text-[#a3a3a3]">
+                    Edite todo o conteúdo da landing page
+                </p>
+            </a>
+        </div>
+    </div>
+</AdminLayout>
