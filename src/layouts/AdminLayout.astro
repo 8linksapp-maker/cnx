@@ -81,10 +81,24 @@ const secondaryRGB = hexToRgb(secondaryColor);
                 --radius: var(--borderRadius);
             }
         </style>
+
+        <!-- Anti-flash: aplica o tema salvo ANTES de renderizar qualquer pixel -->
+        <script is:inline>
+            (function () {
+                try {
+                    var saved = localStorage.getItem('cnx-theme');
+                    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    var theme = saved || (prefersDark ? 'dark' : 'light');
+                    var html = document.documentElement;
+                    html.classList.remove('dark', 'light');
+                    html.classList.add(theme);
+                } catch (e) {}
+            })();
+        </script>
     </head>
-    <body class="bg-[#0a0a0a] text-[#e5e5e5] font-sans antialiased min-h-screen">
-        <!-- Subtle Background -->
-        <div class="fixed inset-0 -z-10 h-full w-full bg-[#0a0a0a]"></div>
+    <body class="font-sans antialiased min-h-screen" style="background: var(--admin-bg); color: var(--admin-text);">
+        <!-- Background -->
+        <div class="fixed inset-0 -z-10 h-full w-full" style="background: var(--admin-bg);"></div>
 
         <div class="flex h-screen overflow-hidden">
             <!-- Sidebar -->

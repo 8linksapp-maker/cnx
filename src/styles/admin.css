@@ -1,22 +1,70 @@
 /**
  * admin.css
- * 
+ *
  * Estilos específicos para o painel administrativo.
- * Design sofisticado, minimalista e funcional inspirado em Linear, Vercel e Stripe.
+ * Suporta modo claro (html.light) e modo escuro (html.dark — padrão).
  */
 
-/* Admin Color Palette */
-:root {
-    --admin-bg: #0a0a0a;
-    --admin-surface: #111111;
-    --admin-surface-hover: #1a1a1a;
-    --admin-border: rgba(255, 255, 255, 0.08);
-    --admin-border-hover: rgba(255, 255, 255, 0.12);
-    --admin-text: #e5e5e5;
-    --admin-text-muted: #a3a3a3;
-    --admin-text-subtle: #737373;
-    --admin-accent: #3b82f6;
-    --admin-accent-hover: #2563eb;
+/* ─── Modo Escuro (padrão) ────────────────────────────────────────────────── */
+html, html.dark {
+    --admin-bg:              #0a0a0a;
+    --admin-surface:         #111111;
+    --admin-surface-hover:   #1a1a1a;
+    --admin-border:          rgba(255, 255, 255, 0.08);
+    --admin-border-hover:    rgba(255, 255, 255, 0.12);
+    --admin-text:            #e5e5e5;
+    --admin-text-muted:      #a3a3a3;
+    --admin-text-subtle:     #737373;
+    --admin-accent:          #3b82f6;
+    --admin-accent-hover:    #2563eb;
+    /* componentes específicos */
+    --admin-bar-bg:          #1a1a1a;
+    --admin-bar-border:      rgba(255, 255, 255, 0.07);
+    --admin-bar-text:        #9ca3af;
+    --admin-bar-text-hover:  #ffffff;
+    --admin-bar-hover-bg:    rgba(255, 255, 255, 0.05);
+    --admin-search-bg:       #0a0a0a;
+    --admin-logo-bg:         #1a1a1a;
+    --admin-modal-bg:        rgba(15, 23, 42, 0.98);
+    --admin-modal-body-text: #e5e7eb;
+    --admin-modal-small:     #9ca3af;
+    --admin-toast-bg:        rgba(15, 23, 42, 0.98);
+    --admin-toast-text:      #e5e5e5;
+    --admin-input-text:      #e5e5e5;
+    --admin-input-ph:        #525252;
+    --admin-toggle-bg:       #1a1a1a;
+    --admin-toggle-icon:     🌙;
+}
+
+/* ─── Modo Claro ─────────────────────────────────────────────────────────── */
+html.light {
+    --admin-bg:              #f4f4f5;
+    --admin-surface:         #ffffff;
+    --admin-surface-hover:   #f0f0f1;
+    --admin-border:          rgba(0, 0, 0, 0.08);
+    --admin-border-hover:    rgba(0, 0, 0, 0.15);
+    --admin-text:            #18181b;
+    --admin-text-muted:      #52525b;
+    --admin-text-subtle:     #a1a1aa;
+    --admin-accent:          #3b82f6;
+    --admin-accent-hover:    #2563eb;
+    /* componentes específicos */
+    --admin-bar-bg:          #18181b;
+    --admin-bar-border:      rgba(0, 0, 0, 0.12);
+    --admin-bar-text:        #9ca3af;
+    --admin-bar-text-hover:  #ffffff;
+    --admin-bar-hover-bg:    rgba(255, 255, 255, 0.08);
+    --admin-search-bg:       #f4f4f5;
+    --admin-logo-bg:         #f4f4f5;
+    --admin-modal-bg:        #ffffff;
+    --admin-modal-body-text: #374151;
+    --admin-modal-small:     #6b7280;
+    --admin-toast-bg:        #ffffff;
+    --admin-toast-text:      #18181b;
+    --admin-input-text:      #18181b;
+    --admin-input-ph:        #a1a1aa;
+    --admin-toggle-bg:       #f4f4f5;
+    --admin-toggle-icon:     ☀️;
 }
 
 /* Admin Cards */
@@ -98,9 +146,9 @@
     max-width: 480px;
     border-radius: 1rem;
     background: radial-gradient(circle at top left, rgba(248, 113, 113, 0.18), transparent 55%),
-                rgba(15, 23, 42, 0.98);
+                var(--admin-modal-bg);
     border: 1px solid rgba(248, 113, 113, 0.4);
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
 }
 
 .admin-modal-header {
@@ -134,7 +182,7 @@
 
 .admin-modal-body {
     padding: 0 1.5rem 1.25rem;
-    color: #e5e7eb;
+    color: var(--admin-modal-body-text);
     font-size: 0.9rem;
 }
 
@@ -144,7 +192,7 @@
 
 .admin-modal-body small {
     display: block;
-    color: #9ca3af;
+    color: var(--admin-modal-small);
     margin-top: 0.5rem;
 }
 
@@ -153,7 +201,7 @@
     justify-content: flex-end;
     gap: 0.5rem;
     padding: 0.75rem 1.5rem 1.25rem;
-    background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 1));
+    background: var(--admin-modal-bg);
     border-top: 1px solid rgba(248, 113, 113, 0.25);
     border-radius: 0 0 1rem 1rem;
 }
@@ -170,13 +218,13 @@
 
 .admin-modal-btn-cancel {
     background: transparent;
-    color: #e5e5e5;
-    border-color: rgba(148, 163, 184, 0.5);
+    color: var(--admin-text);
+    border-color: var(--admin-border-hover);
 }
 
 .admin-modal-btn-cancel:hover {
-    background: rgba(15, 23, 42, 0.9);
-    border-color: rgba(148, 163, 184, 0.9);
+    background: var(--admin-surface-hover);
+    border-color: var(--admin-text-subtle);
 }
 
 .admin-modal-btn-danger {
@@ -205,32 +253,32 @@
     display: flex;
     align-items: flex-start;
     gap: 0.75rem;
-    background: rgba(15, 23, 42, 0.98);
-    border: 1px solid rgba(148, 163, 184, 0.4);
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
-    color: #e5e5e5;
+    background: var(--admin-toast-bg);
+    border: 1px solid var(--admin-border-hover);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    color: var(--admin-toast-text);
     font-size: 0.8rem;
     animation: toastIn 0.2s ease;
 }
 
 .admin-toast--error {
     border-color: rgba(248, 113, 113, 0.7);
-    background: radial-gradient(circle at top left, rgba(248, 113, 113, 0.08), transparent 60%), rgba(15, 23, 42, 0.98);
+    background: radial-gradient(circle at top left, rgba(248, 113, 113, 0.08), transparent 60%), var(--admin-toast-bg);
 }
 
 .admin-toast--success {
     border-color: rgba(74, 222, 128, 0.6);
-    background: radial-gradient(circle at top left, rgba(74, 222, 128, 0.08), transparent 60%), rgba(15, 23, 42, 0.98);
+    background: radial-gradient(circle at top left, rgba(74, 222, 128, 0.08), transparent 60%), var(--admin-toast-bg);
 }
 
 .admin-toast--info {
     border-color: rgba(96, 165, 250, 0.6);
-    background: radial-gradient(circle at top left, rgba(96, 165, 250, 0.08), transparent 60%), rgba(15, 23, 42, 0.98);
+    background: radial-gradient(circle at top left, rgba(96, 165, 250, 0.08), transparent 60%), var(--admin-toast-bg);
 }
 
 .admin-toast--warning {
     border-color: rgba(251, 191, 36, 0.6);
-    background: radial-gradient(circle at top left, rgba(251, 191, 36, 0.08), transparent 60%), rgba(15, 23, 42, 0.98);
+    background: radial-gradient(circle at top left, rgba(251, 191, 36, 0.08), transparent 60%), var(--admin-toast-bg);
 }
 
 .admin-toast-icon {
@@ -254,7 +302,7 @@
 .admin-toast-close {
     margin-left: auto;
     cursor: pointer;
-    color: #9ca3af;
+    color: var(--admin-text-muted);
     flex-shrink: 0;
     background: none;
     border: none;
@@ -264,7 +312,7 @@
 }
 
 .admin-toast-close:hover {
-    color: #e5e5e5;
+    color: var(--admin-text);
 }
 
 /* Admin Inputs */

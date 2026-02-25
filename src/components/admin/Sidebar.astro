@@ -1,4 +1,11 @@
 ---
+/**
+ * Sidebar.astro
+ *
+ * Barra lateral de navegação do painel admin.
+ * Usa variáveis CSS do sistema de temas (dark/light) para todas as cores.
+ */
+
 interface Props {
     user?: { slug: string; name: string; adminRole: 'admin' | 'editor' } | undefined;
 }
@@ -27,16 +34,22 @@ const menuItems = [
 ];
 ---
 
-<aside class="w-64 bg-[#111111] border-r border-[rgba(255,255,255,0.08)] flex flex-col">
+<aside
+    class="w-64 flex flex-col"
+    style="background: var(--admin-surface); border-right: 1px solid var(--admin-border);"
+>
     <!-- Logo/Brand -->
-    <div class="p-6 border-b border-[rgba(255,255,255,0.08)]">
+    <div class="p-6" style="border-bottom: 1px solid var(--admin-border);">
         <a href="/" class="flex items-center gap-3 group">
-            <div class="w-9 h-9 rounded-lg bg-[#1a1a1a] border border-[rgba(255,255,255,0.08)] flex items-center justify-center text-[#e5e5e5] font-bold text-lg group-hover:bg-[#222222] transition-colors">
+            <div
+                class="w-9 h-9 rounded-lg flex items-center justify-center font-bold text-lg transition-colors"
+                style="background: var(--admin-logo-bg); border: 1px solid var(--admin-border); color: var(--admin-text);"
+            >
                 CNX
             </div>
             <div>
-                <h1 class="text-white font-heading font-bold text-base leading-tight">CNX Agency</h1>
-                <p class="text-[10px] text-[#737373] uppercase tracking-wider">Admin</p>
+                <h1 class="font-heading font-bold text-base leading-tight" style="color: var(--admin-text);">CNX Agency</h1>
+                <p class="text-[10px] uppercase tracking-wider" style="color: var(--admin-text-subtle);">Admin</p>
             </div>
         </a>
     </div>
@@ -54,10 +67,10 @@ const menuItems = [
         ))}
     </nav>
 
-    <!-- Footer Actions -->
-    <div class="p-3 border-t border-[rgba(255,255,255,0.08)] space-y-1">
-        <a 
-            href="/" 
+    <!-- Footer -->
+    <div class="p-3 space-y-1" style="border-top: 1px solid var(--admin-border);">
+        <a
+            href="/"
             target="_blank"
             class="admin-sidebar-item"
         >
