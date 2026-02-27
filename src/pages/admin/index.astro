@@ -17,6 +17,7 @@ import { getCollection } from 'astro:content';
 import AdminLayout from '../../layouts/AdminLayout.astro';
 import StatCard from '../../components/admin/StatCard.astro';
 import RecentPosts from '../../components/admin/RecentPosts.astro';
+import ConfigStatus from '../../components/admin/ConfigStatus.astro';
 import { verifySession, SESSION_COOKIE } from '../../utils/auth-utils';
 
 // ─── Autenticação ─────────────────────────────────────────────────────────────
@@ -46,7 +47,7 @@ const isDefaultAccount = sessionUser.slug === 'admin';
             <div>
                 <p style="font-size: 0.875rem; font-weight: 600; color: #fbbf24; margin-bottom: 0.25rem;">Você está usando a conta padrão do template</p>
                 <p style="font-size: 0.8rem; color: #a3a3a3; margin-bottom: 0.5rem;">
-                    Por segurança, altere o e-mail e a senha padrão (<strong style="color: #e5e5e5;">cnx@cnx.com / padrao123</strong>) o quanto antes.
+                    Por segurança, altere o e-mail e a senha padrão (<strong style="color: #e5e5e5;">admin@admin.com</strong>) o quanto antes.
                 </p>
                 <a href="/admin/authors" style="font-size: 0.78rem; font-weight: 600; color: #fbbf24; text-decoration: underline;">
                     → Ir para Autores e editar minha conta
@@ -55,9 +56,44 @@ const isDefaultAccount = sessionUser.slug === 'admin';
         </div>
     )}
 
-    <div class="mb-8">
-        <h1 class="text-3xl font-heading font-bold text-[#e5e5e5] mb-1">Dashboard</h1>
-        <p class="text-[#a3a3a3] text-sm">Olá, <strong class="text-white">{sessionUser.name}</strong> — visão geral do seu site</p>
+    <div class="flex items-start justify-between flex-wrap gap-4 mb-6">
+        <div>
+            <h1 class="text-3xl font-heading font-bold text-[#e5e5e5] mb-1">Dashboard</h1>
+            <p class="text-[#a3a3a3] text-sm">Olá, <strong class="text-white">{sessionUser.name}</strong> — visão geral do seu site</p>
+        </div>
+        <!-- Badge de versão (compacto, visível sempre) -->
+        <div id="version-badge" class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs" style="background: var(--admin-surface); border: 1px solid var(--admin-border);">
+            <span id="version-badge-icon">⏳</span>
+            <span id="version-badge-text" class="text-[#737373]">Verificando versão...</span>
+        </div>
+    </div>
+
+    <!-- Banner de atualização disponível (aparece só quando há update) -->
+    <div id="version-update-banner" class="hidden mb-6 rounded-xl overflow-hidden" style="border: 1px solid rgba(234,179,8,0.4); background: linear-gradient(135deg, rgba(234,179,8,0.08) 0%, rgba(234,179,8,0.04) 100%);">
+        <div class="flex items-center justify-between flex-wrap gap-4 p-4">
+            <div class="flex items-center gap-3">
+                <div class="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center text-lg" style="background: rgba(234,179,8,0.15);">🔔</div>
+                <div>
+                    <div class="text-sm font-bold" style="color: #fbbf24;" id="update-banner-title">Nova versão disponível</div>
+                    <div class="text-xs mt-0.5" style="color: #a3a3a3;" id="update-banner-subtitle">Clique em "Aplicar agora" para atualizar com 1 clique</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 flex-shrink-0">
+                <a id="update-banner-changelog" href="#" target="_blank" class="hidden text-xs px-3 py-1.5 rounded-lg transition-all" style="border: 1px solid rgba(234,179,8,0.25); color: #fbbf24; text-decoration: none;">
+                    Ver novidades →
+                </a>
+                <button
+                    id="version-update-btn"
+                    class="text-xs px-5 py-2 rounded-lg font-bold transition-all flex items-center gap-2"
+                    style="background: rgba(234,179,8,0.2); border: 1px solid rgba(234,179,8,0.45); color: #fbbf24;"
+                >
+                    🔄 Aplicar agora
+                </button>
+            </div>
+        </div>
+        <div id="version-update-status" class="hidden px-4 pb-4">
+            <div id="version-update-status-inner" class="text-xs px-3 py-2 rounded-lg"></div>
+        </div>
     </div>
 
     <!-- Stats -->
@@ -141,26 +177,8 @@ const isDefaultAccount = sessionUser.slug === 'admin';
         </div>
     </div>
 
-    <!-- Card de Versão do Template -->
-    <div class="mt-4 admin-card p-5" id="version-card">
-        <div class="flex items-center justify-between flex-wrap gap-3">
-            <div class="flex items-center gap-3">
-                <span class="text-lg" id="version-icon">⏳</span>
-                <div>
-                    <div class="text-sm font-semibold text-[#e5e5e5]" id="version-title">Verificando versão...</div>
-                    <div class="text-xs text-[#737373]" id="version-subtitle">Aguarde um momento</div>
-                </div>
-            </div>
-            <a
-                id="version-link"
-                href="#"
-                target="_blank"
-                class="hidden text-xs px-3 py-1.5 rounded-lg border border-white/10 text-[#a3a3a3] hover:text-white hover:border-white/20 transition-all"
-            >
-                Ver o que mudou →
-            </a>
-        </div>
-    </div>
+    <!-- Status de Configuração -->
+    <ConfigStatus />
 </AdminLayout>
 
 <script is:inline>
@@ -225,41 +243,105 @@ const isDefaultAccount = sessionUser.slug === 'admin';
 <script is:inline>
 /* ── Versão do Template ────────────────────────────────────────── */
 (function () {
+    var badgeIcon    = document.getElementById('version-badge-icon');
+    var badgeText    = document.getElementById('version-badge-text');
+    var badge        = document.getElementById('version-badge');
+    var banner       = document.getElementById('version-update-banner');
+    var bannerTitle  = document.getElementById('update-banner-title');
+    var bannerSub    = document.getElementById('update-banner-subtitle');
+    var changelog    = document.getElementById('update-banner-changelog');
+    var updateBtn    = document.getElementById('version-update-btn');
+    var statusWrap   = document.getElementById('version-update-status');
+    var statusInner  = document.getElementById('version-update-status-inner');
+
     fetch('/api/admin/version')
         .then(function (r) { return r.json(); })
         .then(function (data) {
-            var icon     = document.getElementById('version-icon');
-            var title    = document.getElementById('version-title');
-            var subtitle = document.getElementById('version-subtitle');
-            var link     = document.getElementById('version-link');
-            var card     = document.getElementById('version-card');
-
             if (data.upToDate) {
-                if (icon)     icon.textContent     = '✅';
-                if (title)    title.textContent     = 'Template CNX v' + data.installed + ' — Atualizado';
-                if (subtitle) subtitle.textContent  = 'Você está usando a versão mais recente.';
-            } else {
-                if (icon)     icon.textContent     = '🔔';
-                if (title)    title.textContent     = 'Atualização disponível: v' + data.installed + ' → v' + data.latest;
-                if (subtitle) subtitle.textContent  = 'Acesse GitHub → Actions → "Atualizar Template CNX" → Run workflow';
-                if (card) {
-                    card.style.borderColor = 'rgba(234, 179, 8, 0.3)';
-                    card.style.background  = 'rgba(234, 179, 8, 0.05)';
+                if (badgeIcon) badgeIcon.textContent = '✅';
+                if (badgeText) {
+                    badgeText.textContent = 'v' + data.installed + ' — atualizado';
+                    badgeText.style.color = '#6b7280';
                 }
-            }
+            } else {
+                /* ── Badge no título ── */
+                if (badgeIcon) badgeIcon.textContent = '🔔';
+                if (badgeText) {
+                    badgeText.textContent = 'v' + data.installed + ' → v' + data.latest;
+                    badgeText.style.color = '#fbbf24';
+                    badgeText.style.fontWeight = '600';
+                }
+                if (badge) {
+                    badge.style.borderColor = 'rgba(234,179,8,0.35)';
+                    badge.style.background  = 'rgba(234,179,8,0.08)';
+                }
 
-            if (link && data.changelog) {
-                link.href = data.changelog;
-                link.classList.remove('hidden');
+                /* ── Banner de atualização ── */
+                if (bannerTitle) bannerTitle.textContent = '🔔 Nova versão disponível: v' + data.installed + ' → v' + data.latest;
+                if (banner) banner.classList.remove('hidden');
+
+                if (changelog && data.changelog) {
+                    changelog.href = data.changelog;
+                    changelog.classList.remove('hidden');
+                }
             }
         })
         .catch(function () {
-            var title    = document.getElementById('version-title');
-            var subtitle = document.getElementById('version-subtitle');
-            var icon     = document.getElementById('version-icon');
-            if (icon)     icon.textContent     = '❓';
-            if (title)    title.textContent     = 'Versão não identificada';
-            if (subtitle) subtitle.textContent  = 'Não foi possível verificar atualizações agora.';
+            if (badgeIcon) badgeIcon.textContent = '❓';
+            if (badgeText) badgeText.textContent  = 'versão desconhecida';
         });
+
+    /* ── Botão Aplicar agora ───────────────────────────── */
+    if (updateBtn) {
+        updateBtn.addEventListener('click', function () {
+            updateBtn.disabled      = true;
+            updateBtn.innerHTML     = '⏳ Iniciando...';
+            updateBtn.style.opacity = '0.6';
+            updateBtn.style.cursor  = 'not-allowed';
+
+            fetch('/api/admin/version/update', { method: 'POST' })
+                .then(function (r) { return r.json(); })
+                .then(function (res) {
+                    if (statusWrap)  statusWrap.classList.remove('hidden');
+                    if (res.success) {
+                        if (statusInner) {
+                            statusInner.style.background = 'rgba(74,222,128,0.08)';
+                            statusInner.style.border     = '1px solid rgba(74,222,128,0.2)';
+                            statusInner.style.color      = '#86efac';
+                            statusInner.textContent      = '✅ ' + res.message;
+                        }
+                        if (updateBtn)   updateBtn.classList.add('hidden');
+                        if (bannerTitle) bannerTitle.textContent = '⏳ Atualização em andamento...';
+                        if (bannerSub)   bannerSub.textContent   = 'Aguarde ~2 minutos. O site será reconstruído automaticamente.';
+                        if (badgeIcon)   badgeIcon.textContent   = '⏳';
+                        if (badgeText)   badgeText.textContent   = 'atualizando...';
+                    } else {
+                        if (statusInner) {
+                            statusInner.style.background = 'rgba(239,68,68,0.08)';
+                            statusInner.style.border     = '1px solid rgba(239,68,68,0.2)';
+                            statusInner.style.color      = '#fca5a5';
+                            statusInner.textContent      = '❌ ' + (res.error || 'Erro desconhecido.');
+                        }
+                        updateBtn.disabled      = false;
+                        updateBtn.innerHTML     = '🔄 Tentar novamente';
+                        updateBtn.style.opacity = '1';
+                        updateBtn.style.cursor  = 'pointer';
+                    }
+                })
+                .catch(function () {
+                    if (statusWrap)  statusWrap.classList.remove('hidden');
+                    if (statusInner) {
+                        statusInner.style.background = 'rgba(239,68,68,0.08)';
+                        statusInner.style.border     = '1px solid rgba(239,68,68,0.2)';
+                        statusInner.style.color      = '#fca5a5';
+                        statusInner.textContent      = '❌ Erro de rede. Tente novamente.';
+                    }
+                    updateBtn.disabled      = false;
+                    updateBtn.innerHTML     = '🔄 Tentar novamente';
+                    updateBtn.style.opacity = '1';
+                    updateBtn.style.cursor  = 'pointer';
+                });
+        });
+    }
 })();
 </script>

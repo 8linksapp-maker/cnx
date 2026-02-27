@@ -128,10 +128,21 @@ jobs:
           commit-message: 'chore: sync com template cnx v${{ steps.version.outputs.new_version }}'
           author: 'CNX Updates <noreply@cnx.app>'
 
+      - name: 🔀 Aplicar atualização automaticamente
+        if: steps.changes.outputs.has_changes == 'true' && steps.create_pr.outputs.pull-request-number != ''
+        run: |
+          PR_NUMBER="${{ steps.create_pr.outputs.pull-request-number }}"
+          echo "🔀 Aplicando PR #${PR_NUMBER} automaticamente..."
+          gh pr merge "${PR_NUMBER}" --merge --auto --delete-branch \
+            --body "✅ Aplicado automaticamente pelo CNX Updater" \
+            || echo "⚠️ Auto-merge não disponível agora — o PR permanece aberto para revisão manual."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: ✅ Resumo
         run: |
           if [ "${{ steps.changes.outputs.has_changes }}" == "true" ]; then
-            echo "🚀 Pull Request criado/atualizado com as novidades do template."
+            echo "🚀 Atualização aplicada automaticamente. A Vercel reconstruirá o site em ~1 min."
           else
             echo "✅ Nenhuma atualização disponível no momento."
           fi
