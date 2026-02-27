@@ -1,0 +1,7 @@
+name: "Administrador"
+slug: "admin"
+role: "Administrador"
+bio: ""
+email: "cnx@cnx.com"
+adminRole: "admin"
+adminPasswordHash: "12012d266810d20c2b7ecb69da49021be18f89e5f21db770b4b6c02e78962dd0"

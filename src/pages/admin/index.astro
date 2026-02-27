@@ -32,9 +32,29 @@ const categories = await getCollection('categories');
 const publishedPosts = posts.filter(p => p.data.publishedDate);
 const draftPosts     = posts.length - publishedPosts.length;
 const isAdmin        = sessionUser.adminRole === 'admin';
+
+// Detecta se está usando a conta/senha padrão do template
+const isDefaultAccount = sessionUser.slug === 'admin';
 ---
 
 <AdminLayout title="Dashboard">
+
+    <!-- Aviso de conta padrão -->
+    {isDefaultAccount && (
+        <div style="margin-bottom: 1.5rem; padding: 1rem 1.25rem; border-radius: 0.75rem; background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.35); display: flex; align-items: flex-start; gap: 0.75rem;">
+            <span style="font-size: 1.25rem; flex-shrink: 0;">⚠️</span>
+            <div>
+                <p style="font-size: 0.875rem; font-weight: 600; color: #fbbf24; margin-bottom: 0.25rem;">Você está usando a conta padrão do template</p>
+                <p style="font-size: 0.8rem; color: #a3a3a3; margin-bottom: 0.5rem;">
+                    Por segurança, altere o e-mail e a senha padrão (<strong style="color: #e5e5e5;">cnx@cnx.com / padrao123</strong>) o quanto antes.
+                </p>
+                <a href="/admin/authors" style="font-size: 0.78rem; font-weight: 600; color: #fbbf24; text-decoration: underline;">
+                    → Ir para Autores e editar minha conta
+                </a>
+            </div>
+        </div>
+    )}
+
     <div class="mb-8">
         <h1 class="text-3xl font-heading font-bold text-[#e5e5e5] mb-1">Dashboard</h1>
         <p class="text-[#a3a3a3] text-sm">Olá, <strong class="text-white">{sessionUser.name}</strong> — visão geral do seu site</p>
