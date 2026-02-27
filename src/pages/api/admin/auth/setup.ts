@@ -26,7 +26,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
 
     const finalSlug = authors.some(a => a.data.slug === slug) ? `${slug}-admin` : slug;
 
-    await writeAuthor(finalSlug, {
+    const saved = await writeAuthor(finalSlug, {
         name,
         slug: finalSlug,
         email,
@@ -35,6 +35,11 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
         adminRole: 'admin',
         adminPasswordHash: hashPassword(password),
     });
+
+    if (!saved) {
+        console.error('❌ Setup: falha ao salvar autor. Verifique se GITHUB_TOKEN, GITHUB_OWNER e GITHUB_REPO estão configurados na Vercel.');
+        return redirect('/admin/setup?error=save_failed');
+    }
 
     const token = createSession({ slug: finalSlug, name, adminRole: 'admin' });
     cookies.set(SESSION_COOKIE, token, COOKIE_OPTIONS);

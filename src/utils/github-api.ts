@@ -49,6 +49,20 @@ export async function githubReadFile(
     return { content, sha: data.sha };
 }
 
+/** Lista arquivos em um diretório do repositório */
+export async function githubListDirectory(
+    dirPath: string,
+): Promise<Array<{ name: string; path: string }>> {
+    try {
+        const res = await fetch(`${apiUrl(dirPath)}?ref=${BRANCH}`, { headers: headers() });
+        if (!res.ok) return [];
+        const data = await res.json() as Array<{ name: string; path: string; type: string }>;
+        return Array.isArray(data) ? data.filter(f => f.type === 'file') : [];
+    } catch {
+        return [];
+    }
+}
+
 /** SHA atual do arquivo (necessário para updates/deletes) */
 export async function githubGetSha(path: string): Promise<string | null> {
     const file = await githubReadFile(path);

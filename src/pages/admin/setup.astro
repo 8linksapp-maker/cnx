@@ -12,10 +12,11 @@ if (hasAdmin) return Astro.redirect('/admin/login');
 
 const error = Astro.url.searchParams.get('error');
 const errorMessages: Record<string, string> = {
-    mismatch: 'As senhas não coincidem.',
-    short: 'A senha deve ter pelo menos 6 caracteres.',
-    required: 'Preencha todos os campos obrigatórios.',
-    exists: 'Já existe um admin cadastrado.',
+    mismatch:    'As senhas não coincidem.',
+    short:       'A senha deve ter pelo menos 6 caracteres.',
+    required:    'Preencha todos os campos obrigatórios.',
+    exists:      'Já existe um admin cadastrado.',
+    save_failed: 'Não foi possível salvar a conta. Para usar em produção, configure as variáveis GITHUB_TOKEN, GITHUB_OWNER e GITHUB_REPO na Vercel (Settings → Environment Variables) e aguarde o redeploy.',
 };
 ---
 

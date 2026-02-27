@@ -1,5 +1,5 @@
-heroBadge: "✨ Blog de Tecnologia & Empreendedorismo"
-heroTitle: Conteúdo que Educa, Inspira e Gera Resultados
+heroBadge: "✨ Blog de Tecnologia "
+heroTitle: Conteúdo que Educa
 heroSubtitle: Artigos práticos sobre JAMstack, desenvolvimento web moderno e estratégias digitais para empreendedores que querem crescer online com performance e custo zero.
 heroCtaText: Ler os Artigos
 heroCtaUrl: /blog
@@ -11,11 +11,11 @@ aboutSubtitle: Feito com Astro, hospedado na Vercel — rápido, seguro e de gra
 aboutContent: Este blog foi construído com a stack JAMstack moderna — Astro como framework, Vercel para deploy e um CMS customizado para gerenciar o conteúdo. O resultado é um site que carrega em milissegundos, está seguro por padrão e custa zero de hospedagem. Aqui você encontra conteúdo sobre como construir sua presença digital da mesma forma.
 aboutImage: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop&auto=format
 aboutStats:
-  - number: "8+"
+  - number: 8+
     label: Artigos Publicados
-  - number: "100%"
+  - number: 100%
     label: Open Source
-  - number: "< 1s"
+  - number: < 1s
     label: Tempo de Carregamento
 servicesTitle: O Que Você Vai Encontrar
 servicesSubtitle: Conteúdo prático sobre tecnologia moderna e estratégia digital
