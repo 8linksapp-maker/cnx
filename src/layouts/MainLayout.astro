@@ -2,6 +2,7 @@
 import { getEntry } from 'astro:content';
 import Header from '../themes/classic/components/Header.astro';
 import Footer from '../themes/classic/components/Footer.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 import { readSingleton } from '../utils/singleton-utils';
 import '../styles/global.css';
 import '@fontsource/inter';
@@ -62,31 +63,7 @@ const secondaryRGB = hexToRgb(secondaryColor);
         <meta property="og:description" content={description} />
         {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.url)} />}
 
-        <!-- Google Analytics GA4 -->
-        {gaId && (
-            <>
-                <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
-                <script define:vars={{ gaId }} is:inline>
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-                    gtag('config', gaId);
-                </script>
-            </>
-        )}
-
-        <!-- Meta Pixel (Facebook) -->
-        {fbPixelId && (
-            <script define:vars={{ fbPixelId }} is:inline>
-                !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-                n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-                t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-                document,'script','https://connect.facebook.net/en_US/fbevents.js');
-                fbq('init', fbPixelId);
-                fbq('track', 'PageView');
-            </script>
-        )}
+        <!-- GA e Meta Pixel são injetados via CookieConsent apenas após consentimento -->
 
         <!-- Theme Engine: Injected Variables -->
         <style is:global define:vars={{ primaryRGB, secondaryRGB, borderRadius }}>
@@ -112,5 +89,8 @@ const secondaryRGB = hexToRgb(secondaryColor);
         </main>
 
         <Footer activeThemeId="classic" />
+
+        <!-- Banner de consentimento de cookies (LGPD/GDPR) -->
+        <CookieConsent gaId={gaId} fbPixelId={fbPixelId} />
 	</body>
 </html>
