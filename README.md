@@ -9,6 +9,8 @@ Sem banco de dados. Sem servidor. Você é dono de tudo.
 
 Clique no botão abaixo para começar — seu site estará no ar em menos de 5 minutos.
 
+> 📖 **Dúvidas?** Consulte a [Central de Ajuda com FAQ completo →](https://8linksapp-maker.github.io/cnx)
+
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2F8linksapp-maker%2Fcnx&env=ADMIN_SECRET,GITHUB_TOKEN,GITHUB_OWNER,GITHUB_REPO&envDescription=ADMIN_SECRET%3A%20sua%20senha%20(login%3A%20admin%40admin.com%20%2B%20este%20valor)%20%7C%20GITHUB_TOKEN%3A%20gere%20em%20github.com%2Fsettings%2Ftokens%20marcando%20%22repo%22%20%7C%20GITHUB_OWNER%3A%20seu%20usu%C3%A1rio%20do%20GitHub%20%7C%20GITHUB_REPO%3A%20nome%20do%20projeto%20escolhido%20acima&envLink=https%3A%2F%2Fgithub.com%2F8linksapp-maker%2Fcnx%23-vari%C3%A1veis-de-ambiente&project-name=meu-site-cnx&repository-name=meu-site-cnx)
 
 ---

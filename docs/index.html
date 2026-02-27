@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Central de Ajuda — CNX CMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:         #0a0a0a;
+            --surface:    #111111;
+            --surface2:   #1a1a1a;
+            --border:     rgba(255,255,255,0.08);
+            --text:       #e5e5e5;
+            --muted:      #a3a3a3;
+            --subtle:     #525252;
+            --accent:     #a855f7;
+            --accent-dim: rgba(168,85,247,0.15);
+            --green:      #4ade80;
+            --green-dim:  rgba(74,222,128,0.1);
+            --yellow:     #fbbf24;
+            --yellow-dim: rgba(251,191,36,0.1);
+            --red:        #f87171;
+            --red-dim:    rgba(248,113,113,0.1);
+            --blue:       #60a5fa;
+            --blue-dim:   rgba(96,165,250,0.1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 15px;
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        /* ── Header ── */
+        header {
+            border-bottom: 1px solid var(--border);
+            background: rgba(17,17,17,0.95);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            text-decoration: none;
+        }
+        .logo-badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(168,85,247,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -0.5px;
+        }
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .logo-sub {
+            font-size: 12px;
+            color: var(--subtle);
+            font-weight: 400;
+            font-family: 'Inter', sans-serif;
+        }
+        .header-badge {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(168,85,247,0.25);
+            color: var(--accent);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem 2.5rem;
+            text-align: center;
+        }
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            background: var(--accent-dim);
+            border: 1px solid rgba(168,85,247,0.2);
+            padding: 4px 12px;
+            border-radius: 999px;
+            margin-bottom: 1.25rem;
+        }
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 0.875rem;
+        }
+        .hero p {
+            font-size: 15px;
+            color: var(--muted);
+            max-width: 480px;
+            margin: 0 auto 2rem;
+        }
+
+        /* ── Search ── */
+        .search-wrap {
+            max-width: 480px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .search-wrap svg {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--subtle);
+            flex-shrink: 0;
+        }
+        #search {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+        #search::placeholder { color: var(--subtle); }
+        #search:focus { border-color: rgba(168,85,247,0.4); }
+
+        /* ── Category nav ── */
+        .cat-nav {
+            max-width: 900px;
+            margin: 2rem auto 0;
+            padding: 0 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .cat-btn {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: 'Inter', sans-serif;
+        }
+        .cat-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+        .cat-btn.active {
+            background: var(--accent-dim);
+            border-color: rgba(168,85,247,0.35);
+            color: var(--accent);
+        }
+
+        /* ── Main layout ── */
+        main {
+            max-width: 900px;
+            margin: 2rem auto 5rem;
+            padding: 0 1.5rem;
+        }
+
+        /* ── Section ── */
+        .faq-section { margin-bottom: 2.5rem; }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            margin-bottom: 0.875rem;
+        }
+        .section-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--subtle);
+        }
+
+        /* ── FAQ Item ── */
+        .faq-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 6px;
+            overflow: hidden;
+            transition: border-color 0.15s;
+        }
+        .faq-item:hover { border-color: rgba(255,255,255,0.12); }
+        .faq-item.open { border-color: rgba(168,85,247,0.25); }
+
+        .faq-question {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem 1.125rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.5;
+        }
+        .faq-question:hover { color: #fff; }
+        .faq-chevron {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: var(--subtle);
+            transition: transform 0.2s, background 0.15s;
+        }
+        .faq-item.open .faq-chevron {
+            transform: rotate(180deg);
+            background: var(--accent-dim);
+            border-color: rgba(168,85,247,0.25);
+            color: var(--accent);
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 1.125rem 1.125rem;
+            border-top: 1px solid var(--border);
+        }
+        .faq-item.open .faq-answer { display: block; }
+
+        .faq-answer p {
+            font-size: 13.5px;
+            color: var(--muted);
+            margin-bottom: 0.75rem;
+            line-height: 1.7;
+        }
+        .faq-answer p:last-child { margin-bottom: 0; }
+        .faq-answer strong { color: var(--text); font-weight: 600; }
+
+        .faq-answer ol,
+        .faq-answer ul {
+            padding-left: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        .faq-answer li {
+            font-size: 13.5px;
+            color: var(--muted);
+            margin-bottom: 0.35rem;
+            line-height: 1.65;
+        }
+        .faq-answer li strong { color: var(--text); }
+
+        .faq-answer code {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 12px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            padding: 1px 6px;
+            border-radius: 4px;
+            color: #c084fc;
+        }
+
+        /* Callouts */
+        .tip, .warn, .info, .success {
+            display: flex;
+            gap: 0.625rem;
+            align-items: flex-start;
+            padding: 0.75rem 0.875rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .tip    { background: var(--green-dim);  border: 1px solid rgba(74,222,128,0.15);  color: #86efac; }
+        .warn   { background: var(--yellow-dim); border: 1px solid rgba(251,191,36,0.15);  color: #fcd34d; }
+        .info   { background: var(--blue-dim);   border: 1px solid rgba(96,165,250,0.15);  color: #93c5fd; }
+        .callout-icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+        /* ── No results ── */
+        #no-results {
+            display: none;
+            text-align: center;
+            padding: 4rem 1rem;
+            color: var(--subtle);
+        }
+        #no-results svg { margin: 0 auto 1rem; opacity: 0.3; }
+        #no-results p { font-size: 14px; }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            text-align: center;
+        }
+        footer p {
+            font-size: 12px;
+            color: var(--subtle);
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .hero { padding: 2.5rem 1.25rem 1.5rem; }
+            main { padding: 0 1rem; }
+            .cat-nav { padding: 0 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <a class="logo" href="https://github.com/8linksapp-maker/cnx">
+            <div class="logo-badge">CNX</div>
+            <div>
+                <div class="logo-text">CNX CMS</div>
+            </div>
+        </a>
+        <span class="header-badge">🔒 Área de Suporte</span>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-eyebrow">📖 Central de Ajuda</div>
+    <h1>Dúvidas Frequentes</h1>
+    <p>Respostas detalhadas para as perguntas mais comuns sobre o CNX CMS.</p>
+    <div class="search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="search" id="search" placeholder="Buscar pergunta..." autocomplete="off" />
+    </div>
+</section>
+
+<nav class="cat-nav" id="cat-nav">
+    <button class="cat-btn active" data-cat="all">Todas</button>
+    <button class="cat-btn" data-cat="token">🔗 Token e Variáveis</button>
+    <button class="cat-btn" data-cat="login">🔑 Login e Senha</button>
+    <button class="cat-btn" data-cat="conteudo">📝 Conteúdo</button>
+    <button class="cat-btn" data-cat="atualizacoes">🔄 Atualizações</button>
+    <button class="cat-btn" data-cat="dominio">🌐 Domínio e Hospedagem</button>
+    <button class="cat-btn" data-cat="actions">⚙️ GitHub Actions</button>
+</nav>
+
+<main>
+
+    <!-- ── Token e Variáveis ─────────────────────────────────── -->
+    <div class="faq-section" data-section="token">
+        <div class="section-header">
+            <div class="section-icon" style="background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.2);">🔗</div>
+            <span class="section-title">Token e Variáveis de Ambiente</span>
+        </div>
+
+        <div class="faq-item" data-cat="token">
+            <button class="faq-question">
+                Posso usar o mesmo token em vários projetos?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <div class="tip"><span class="callout-icon">✅</span> Sim! Você pode usar o mesmo token em quantos projetos quiser.</div>
+                <p>O token do GitHub funciona como uma <strong>"chave mestra" da sua conta</strong> — ele representa você como usuário, não está preso a um repositório específico.</p>
+                <p><strong>Exemplo prático:</strong> se você tem 3 sites na Vercel, pode colocar o mesmo <code>GITHUB_TOKEN</code> nos 3. Cada um tem seu próprio <code>GITHUB_REPO</code>, então cada site salva no repositório certo.</p>
+                <div class="warn"><span class="callout-icon">⚠️</span> Se o token for revogado, todos os projetos que o usam param de salvar ao mesmo tempo. Nesse caso, gere um novo e atualize em cada projeto na Vercel.</div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="token">
+            <button class="faq-question">
+                Meu token expirou — o que faço?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>Quando o token expira, você verá um erro ao tentar salvar posts ou páginas pelo painel. A solução é gerar um novo token e atualizar na Vercel:</p>
+                <ol>
+                    <li>Acesse <strong>github.com/settings/tokens</strong></li>
+                    <li>Clique em <strong>"Generate new token (classic)"</strong></li>
+                    <li>Em "Note", escreva: <code>CNX Token</code></li>
+                    <li>Marque a permissão <code>repo</code></li>
+                    <li>Clique em <strong>Generate token</strong> e <strong>copie o valor</strong> — você só verá uma vez</li>
+                    <li>Acesse <strong>Vercel → seu projeto → Settings → Environment Variables</strong></li>
+                    <li>Clique em <code>GITHUB_TOKEN</code> para editar e cole o novo valor</li>
+                    <li>Clique em <strong>Save</strong> e aguarde o redeploy (~1 min)</li>
+                </ol>
+                <div class="tip"><span class="callout-icon">💡</span> Para não expirar, ao criar o token deixe o campo "Expiration" como <strong>"No expiration"</strong>.</div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="token">
+            <button class="faq-question">
+                Onde encontro meu GITHUB_OWNER?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>É o seu <strong>nome de usuário do GitHub</strong> — aquele que aparece na URL quando você acessa seu perfil.</p>
+                <p>Exemplo: se a URL do seu perfil é <code>github.com/joao-silva</code>, então <code>GITHUB_OWNER=joao-silva</code>.</p>
+                <div class="info"><span class="callout-icon">💡</span> Você também vê seu usuário clicando na foto de perfil no canto superior direito do GitHub — aparece logo abaixo do seu nome.</div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="token">
+            <button class="faq-question">
+                Como sei qual é o GITHUB_REPO correto?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>É o <strong>nome exato do repositório</strong> que aparece na URL do GitHub — não o nome com espaços, mas o nome técnico.</p>
+                <p>Exemplo: se o repositório fica em <code>github.com/joao-silva/meu-site-cnx</code>, então <code>GITHUB_REPO=meu-site-cnx</code>.</p>
+                <div class="warn"><span class="callout-icon">⚠️</span> Atenção com maiúsculas e minúsculas. Se o repositório se chama <code>Meu-Site-CNX</code>, o valor precisa ser exatamente assim.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Login e Senha ─────────────────────────────────────── -->
+    <div class="faq-section" data-section="login">
+        <div class="section-header">
+            <div class="section-icon" style="background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.2);">🔑</div>
+            <span class="section-title">Login e Senha</span>
+        </div>
+
+        <div class="faq-item" data-cat="login">
+            <button class="faq-question">
+                Qual é o login padrão depois do deploy?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>Logo após o deploy, as credenciais padrão são:</p>
+                <ul>
+                    <li><strong>E-mail:</strong> <code>admin@admin.com</code></li>
+                    <li><strong>Senha:</strong> o valor que você colocou em <code>ADMIN_SECRET</code> durante o deploy</li>
+                </ul>
+                <div class="tip"><span class="callout-icon">✅</span> Após entrar, vá em <strong>Autores</strong> e altere o e-mail e a senha para os seus dados reais.</div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="login">
+            <button class="faq-question">
+                Esqueci minha senha — como recupero o acesso?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>Você tem duas opções:</p>
+                <p><strong>Opção 1 — Mais fácil (trocar pelo ADMIN_SECRET):</strong></p>
+                <ol>
+                    <li>Acesse <strong>Vercel → seu projeto → Settings → Environment Variables</strong></li>
+                    <li>Edite <code>ADMIN_SECRET</code> com uma nova senha</li>
+                    <li>Clique em <strong>Save</strong> e aguarde o redeploy (~1 min)</li>
+                    <li>Faça login com <code>admin@admin.com</code> + a nova senha</li>
+                </ol>
+                <p><strong>Opção 2 — Pelo GitHub (para contas personalizadas):</strong></p>
+                <ol>
+                    <li>Acesse seu repositório no GitHub</li>
+                    <li>Navegue até <code>src/content/authors/</code></li>
+                    <li>Abra o arquivo <code>.yaml</code> do seu usuário</li>
+                    <li>Remova a linha <code>adminPasswordHash: ...</code></li>
+                    <li>Salve e faça commit</li>
+                    <li>Acesse <code>/admin/setup</code> para criar uma nova senha</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="login">
+            <button class="faq-question">
+                O login diz "credenciais inválidas" mesmo com a senha certa
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>Isso geralmente acontece por um desses motivos:</p>
+                <ul>
+                    <li>O <code>ADMIN_SECRET</code> foi configurado na Vercel mas o redeploy ainda não completou — aguarde 1-2 minutos e tente de novo</li>
+                    <li>Você está usando a senha antiga antes de ter alterado o <code>ADMIN_SECRET</code></li>
+                    <li>O e-mail não está exatamente como <code>admin@admin.com</code> (verifique espaços ou letras maiúsculas)</li>
+                </ul>
+                <div class="info"><span class="callout-icon">💡</span> Para confirmar se o redeploy completou, acesse <strong>Vercel → seu projeto → Deployments</strong> — o último deve mostrar "Ready" em verde.</div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="login">
+            <button class="faq-question">
+                Posso ter mais de um administrador?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>Sim! Você pode criar quantos usuários quiser. Existem dois níveis de acesso:</p>
+                <ul>
+                    <li><strong>Admin</strong> — acesso completo: posts, páginas, configurações, pixels, analytics</li>
+                    <li><strong>Editor</strong> — acesso apenas a posts e autores</li>
+                </ul>
+                <p>Para criar um novo usuário: <strong>Admin → Autores → Novo Autor</strong>. Preencha o e-mail, crie uma senha e escolha o nível de acesso.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Conteúdo ──────────────────────────────────────────── -->
+    <div class="faq-section" data-section="conteudo">
+        <div class="section-header">
+            <div class="section-icon" style="background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.2);">📝</div>
+            <span class="section-title">Conteúdo e Posts</span>
+        </div>
+
+        <div class="faq-item" data-cat="conteudo">
+            <button class="faq-question">
+                Salvei um post mas ele não apareceu no site
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>Isso é normal! O CNX salva o conteúdo no GitHub e a Vercel precisa reconstruir o site com os novos dados. <strong>Esse processo leva entre 1 e 2 minutos.</strong></p>
+                <p>O que fazer:</p>
+                <ol>
+                    <li>Aguarde 2 minutos após salvar</li>
+                    <li>Recarregue a página do blog (Ctrl+F5 ou Cmd+Shift+R para forçar sem cache)</li>
+                    <li>Se ainda não aparecer, acesse <strong>Vercel → Deployments</strong> e verifique se o último deploy está "Ready"</li>
+                </ol>
+                <div class="warn"><span class="callout-icon">⚠️</span> Se o post não aparecer após 5 minutos, verifique se as variáveis <code>GITHUB_TOKEN</code>, <code>GITHUB_OWNER</code> e <code>GITHUB_REPO</code> estão configuradas corretamente.</div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="conteudo">
+            <button class="faq-question">
+                Deletei um post mas ele voltou após um tempo
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>O mesmo processo de reconstrução se aplica. Após deletar, aguarde 1-2 minutos para o site ser reconstruído sem o post.</p>
+                <p>Se o post continuar aparecendo mesmo após 5 minutos, provavelmente as variáveis <code>GITHUB_TOKEN</code>, <code>GITHUB_OWNER</code> e <code>GITHUB_REPO</code> não estão configuradas — o sistema está salvando apenas localmente (memória temporária) sem gravar no GitHub.</p>
+                <div class="info"><span class="callout-icon">💡</span> Verifique o painel da Vercel → seu projeto → Settings → Environment Variables para confirmar que as 3 variáveis estão presentes.</div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="conteudo">
+            <button class="faq-question">
+                Como faço upload de imagens?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>Acesse <strong>Admin → Mídia</strong>. Você pode arrastar arquivos ou clicar para selecionar.</p>
+                <p>As imagens são salvas na pasta <code>public/images/</code> do repositório via GitHub API. Após o upload, a URL da imagem estará disponível para usar em posts e páginas.</p>
+                <div class="tip"><span class="callout-icon">💡</span> Formatos suportados: JPG, PNG, WebP, GIF, SVG. Para melhor performance, prefira WebP e imagens com menos de 500KB.</div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="conteudo">
+            <button class="faq-question">
+                Posso importar posts do WordPress?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>Sim! Acesse <strong>Admin → Importar WordPress</strong>.</p>
+                <p>O processo é:</p>
+                <ol>
+                    <li>No seu WordPress, vá em <strong>Ferramentas → Exportar → Posts</strong> e baixe o arquivo XML</li>
+                    <li>No painel CNX, acesse <strong>Importar WordPress</strong> e faça o upload do arquivo</li>
+                    <li>O sistema converte os posts automaticamente para o formato Markdown do CNX</li>
+                </ol>
+                <div class="warn"><span class="callout-icon">⚠️</span> Imagens hospedadas no WordPress precisam ser re-enviadas pelo painel de Mídia — elas não são importadas automaticamente.</div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="conteudo">
+            <button class="faq-question">
+                Tem limite de posts ou de visitantes?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p><strong>Posts:</strong> sem limite. Você pode criar quantos posts quiser — o conteúdo fica no GitHub que tem armazenamento generoso no plano gratuito.</p>
+                <p><strong>Visitantes:</strong> o plano gratuito da Vercel inclui <strong>100 GB de banda por mês</strong>, o que é suficiente para a maioria dos sites com até dezenas de milhares de visitas mensais.</p>
+                <div class="info"><span class="callout-icon">💡</span> Se você ultrapassar o limite de banda, a Vercel notifica por e-mail antes de suspender o site. Nesse caso, o plano Pro custa $20/mês.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Atualizações ──────────────────────────────────────── -->
+    <div class="faq-section" data-section="atualizacoes">
+        <div class="section-header">
+            <div class="section-icon" style="background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2);">🔄</div>
+            <span class="section-title">Atualizações do Template</span>
+        </div>
+
+        <div class="faq-item" data-cat="atualizacoes">
+            <button class="faq-question">
+                O que muda quando aplico uma atualização?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <div class="tip"><span class="callout-icon">✅</span> Seus posts, páginas, imagens e configurações <strong>nunca são alterados</strong>. Apenas os arquivos de código do template são atualizados.</div>
+                <p>O que pode ser atualizado:</p>
+                <ul>
+                    <li>Componentes do painel admin (melhorias visuais, novos recursos)</li>
+                    <li>Correções de bugs</li>
+                    <li>Novos temas disponíveis</li>
+                    <li>Melhorias de performance</li>
+                </ul>
+                <p>O que <strong>nunca é tocado</strong>:</p>
+                <ul>
+                    <li><code>src/content/</code> — seus posts, autores, categorias e páginas</li>
+                    <li><code>public/images/</code> — suas imagens</li>
+                    <li>Suas variáveis de ambiente na Vercel</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="atualizacoes">
+            <button class="faq-question">
+                Como aplico uma atualização pelo painel?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>É simples — você não precisa abrir o GitHub:</p>
+                <ol>
+                    <li>Acesse <strong>Admin → Dashboard</strong></li>
+                    <li>Se houver atualização disponível, aparecerá um banner amarelo no topo</li>
+                    <li>Clique no botão <strong>"🔄 Aplicar agora"</strong></li>
+                    <li>Aguarde ~2 minutos — o site será reconstruído automaticamente</li>
+                </ol>
+                <div class="info"><span class="callout-icon">💡</span> As atualizações também são aplicadas automaticamente toda segunda-feira às 9h (horário de Brasília).</div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="atualizacoes">
+            <button class="faq-question">
+                Posso reverter uma atualização que deu errado?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>Sim! O GitHub guarda todo o histórico de alterações. Para reverter:</p>
+                <ol>
+                    <li>Acesse seu repositório no GitHub</li>
+                    <li>Clique em <strong>"Commits"</strong> (histórico de alterações)</li>
+                    <li>Encontre o commit <em>anterior</em> à atualização</li>
+                    <li>Clique nos três pontos <strong>→ Revert</strong></li>
+                    <li>Confirme — a Vercel rebuild automaticamente com a versão anterior</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Domínio e Hospedagem ──────────────────────────────── -->
+    <div class="faq-section" data-section="dominio">
+        <div class="section-header">
+            <div class="section-icon" style="background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.2);">🌐</div>
+            <span class="section-title">Domínio e Hospedagem</span>
+        </div>
+
+        <div class="faq-item" data-cat="dominio">
+            <button class="faq-question">
+                Posso usar meu próprio domínio (ex: meusite.com.br)?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>Sim! A Vercel suporta domínios personalizados gratuitamente:</p>
+                <ol>
+                    <li>Acesse <strong>Vercel → seu projeto → Settings → Domains</strong></li>
+                    <li>Clique em <strong>"Add Domain"</strong> e digite seu domínio</li>
+                    <li>A Vercel mostrará um registro DNS para você adicionar no seu provedor de domínio</li>
+                    <li>Adicione o registro DNS no painel de onde você comprou o domínio (Registro.br, GoDaddy, etc.)</li>
+                    <li>Aguarde a propagação DNS — pode levar de 5 minutos a 48 horas</li>
+                </ol>
+                <div class="tip"><span class="callout-icon">✅</span> HTTPS (cadeado verde) é configurado automaticamente pela Vercel sem custo adicional.</div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="dominio">
+            <button class="faq-question">
+                O site fica fora do ar durante uma atualização ou rebuild?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <div class="tip"><span class="callout-icon">✅</span> Não! A Vercel mantém a versão anterior no ar até o novo build ser concluído com sucesso. Seus visitantes nunca veem o site fora do ar durante rebuilds.</div>
+                <p>Só há indisponibilidade se o novo build <strong>falhar</strong> — nesse caso a Vercel mantém a versão anterior e você recebe um e-mail de erro.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="dominio">
+            <button class="faq-question">
+                Posso mudar o nome do subdomínio .vercel.app?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>O subdomínio <code>.vercel.app</code> é baseado no nome do projeto que você escolheu no deploy. Para mudar:</p>
+                <ol>
+                    <li>Acesse <strong>Vercel → seu projeto → Settings → General</strong></li>
+                    <li>Edite o campo <strong>"Project Name"</strong></li>
+                    <li>O novo subdomínio será <code>nome-escolhido.vercel.app</code></li>
+                </ol>
+                <div class="warn"><span class="callout-icon">⚠️</span> A URL antiga deixa de funcionar imediatamente. Atualize qualquer link que você tenha compartilhado.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── GitHub Actions ────────────────────────────────────── -->
+    <div class="faq-section" data-section="actions">
+        <div class="section-header">
+            <div class="section-icon" style="background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.2);">⚙️</div>
+            <span class="section-title">GitHub Actions</span>
+        </div>
+
+        <div class="faq-item" data-cat="actions">
+            <button class="faq-question">
+                A atualização automática falhou com erro de permissão
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>Esse é o erro mais comum. O GitHub Actions precisa de permissão para criar Pull Requests no seu repositório. Para corrigir:</p>
+                <ol>
+                    <li>Acesse seu repositório no GitHub</li>
+                    <li>Clique em <strong>Settings</strong> (aba no menu superior)</li>
+                    <li>No menu lateral, clique em <strong>Actions → General</strong></li>
+                    <li>Role até <strong>"Workflow permissions"</strong></li>
+                    <li>Marque <strong>"Read and write permissions"</strong></li>
+                    <li>Marque <strong>"Allow GitHub Actions to create and approve pull requests"</strong></li>
+                    <li>Clique em <strong>Save</strong></li>
+                </ol>
+                <div class="tip"><span class="callout-icon">✅</span> Após salvar, a próxima atualização funcionará normalmente.</div>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="actions">
+            <button class="faq-question">
+                As Actions estão desabilitadas no meu repositório
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>Em alguns casos o GitHub pede confirmação para ativar Actions em repositórios criados a partir de templates:</p>
+                <ol>
+                    <li>Acesse seu repositório no GitHub</li>
+                    <li>Clique na aba <strong>"Actions"</strong></li>
+                    <li>Se aparecer uma mensagem pedindo para ativar, clique em <strong>"I understand my workflows, go ahead and enable them"</strong></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="faq-item" data-cat="actions">
+            <button class="faq-question">
+                Posso desativar as atualizações automáticas?
+                <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-answer">
+                <p>Sim. Para desativar:</p>
+                <ol>
+                    <li>Acesse seu repositório no GitHub</li>
+                    <li>Clique na aba <strong>Actions</strong></li>
+                    <li>No menu lateral, clique em <strong>"🔄 Atualizar Template CNX"</strong></li>
+                    <li>Clique nos três pontos <strong>→ Disable workflow</strong></li>
+                </ol>
+                <p>Para reativar, siga os mesmos passos e clique em <strong>"Enable workflow"</strong>.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="no-results">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <p>Nenhuma pergunta encontrada para "<span id="search-term"></span>".</p>
+    </div>
+
+</main>
+
+<footer>
+    <p>CNX CMS — Central de Ajuda &nbsp;·&nbsp; <a href="https://github.com/8linksapp-maker/cnx">GitHub</a> &nbsp;·&nbsp; <a href="https://github.com/8linksapp-maker/cnx/blob/main/README.md">Documentação</a></p>
+</footer>
+
+<script>
+(function () {
+    /* ── Accordion ── */
+    document.querySelectorAll('.faq-question').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var item = btn.closest('.faq-item');
+            var isOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item.open').forEach(function (el) { el.classList.remove('open'); });
+            if (!isOpen) item.classList.add('open');
+        });
+    });
+
+    /* ── Filtro por categoria ── */
+    document.querySelectorAll('.cat-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            document.querySelectorAll('.cat-btn').forEach(function (b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            var cat = btn.dataset.cat;
+            document.querySelectorAll('.faq-item').forEach(function (item) {
+                item.style.display = (cat === 'all' || item.dataset.cat === cat) ? '' : 'none';
+            });
+            document.querySelectorAll('.faq-section').forEach(function (section) {
+                var visible = Array.from(section.querySelectorAll('.faq-item')).some(function (i) { return i.style.display !== 'none'; });
+                section.style.display = visible ? '' : 'none';
+            });
+            document.getElementById('no-results').style.display = 'none';
+        });
+    });
+
+    /* ── Busca ── */
+    document.getElementById('search').addEventListener('input', function () {
+        var q = this.value.toLowerCase().trim();
+        var found = 0;
+        document.querySelectorAll('.cat-btn').forEach(function (b) { b.classList.remove('active'); });
+        document.querySelector('.cat-btn[data-cat="all"]').classList.add('active');
+
+        document.querySelectorAll('.faq-item').forEach(function (item) {
+            var text = item.textContent.toLowerCase();
+            var match = !q || text.includes(q);
+            item.style.display = match ? '' : 'none';
+            if (match) found++;
+        });
+
+        document.querySelectorAll('.faq-section').forEach(function (section) {
+            var visible = Array.from(section.querySelectorAll('.faq-item')).some(function (i) { return i.style.display !== 'none'; });
+            section.style.display = visible ? '' : 'none';
+        });
+
+        var noRes = document.getElementById('no-results');
+        document.getElementById('search-term').textContent = this.value;
+        noRes.style.display = (q && found === 0) ? 'block' : 'none';
+    });
+})();
+</script>
+</body>
+</html>
