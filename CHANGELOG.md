@@ -4,6 +4,15 @@ Todas as mudanças relevantes do template são documentadas aqui.
 
 ---
 
+## [1.0.8] — 05/03/2026
+
+### Teste de atualização
+
+- Atualização de teste para validar o fluxo no painel (banner "Aplicar agora" e workflow).
+- Instruções completas em Configurações → Atualizações (permissões GitHub, fallback manual).
+
+---
+
 ## [1.0.7] — 05/03/2026
 
 ### Correções
