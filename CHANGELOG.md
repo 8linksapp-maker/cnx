@@ -4,6 +4,14 @@ Todas as mudanças relevantes do template são documentadas aqui.
 
 ---
 
+## [1.0.9] — 05/03/2026
+
+### Melhorias
+
+- **Atualizações**: link direto para Settings → Actions → General no GitHub em Configurações → Atualizações (facilita configurar as permissões)
+
+---
+
 ## [1.0.8] — 05/03/2026
 
 ### Teste de atualização

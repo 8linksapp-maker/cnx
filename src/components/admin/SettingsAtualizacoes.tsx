@@ -21,20 +21,24 @@ export default function SettingsAtualizacoes() {
   const [loaded, setLoaded] = useState(false);
   const [manualFallback, setManualFallback] = useState<FallbackData | null>(null);
   const [copied, setCopied] = useState(false);
+  const [actionsSettingsUrl, setActionsSettingsUrl] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    fetch('/api/admin/site-settings')
-      .then((r) => r.json())
-      .then((res) => {
-        if (!cancelled && res.success && typeof res.data?.autoUpdateEnabled === 'boolean') {
-          setAutoUpdateEnabled(res.data.autoUpdateEnabled);
-        }
-        if (!cancelled) setLoaded(true);
-      })
-      .catch(() => {
-        if (!cancelled) setLoaded(true);
-      });
+    Promise.all([
+      fetch('/api/admin/site-settings').then((r) => r.json()),
+      fetch('/api/admin/github-actions-url').then((r) => r.json()),
+    ]).then(([siteRes, githubRes]) => {
+      if (!cancelled && siteRes.success && typeof siteRes.data?.autoUpdateEnabled === 'boolean') {
+        setAutoUpdateEnabled(siteRes.data.autoUpdateEnabled);
+      }
+      if (!cancelled && githubRes.success && githubRes.actionsSettingsUrl) {
+        setActionsSettingsUrl(githubRes.actionsSettingsUrl);
+      }
+      if (!cancelled) setLoaded(true);
+    }).catch(() => {
+      if (!cancelled) setLoaded(true);
+    });
     return () => { cancelled = true; };
   }, []);
 
@@ -53,7 +57,7 @@ export default function SettingsAtualizacoes() {
 
     try {
       const res = await fetch('/api/admin/ensure-workflow', { method: 'POST' });
-      let data: { success?: boolean; error?: string };
+      let data: { success?: boolean; error?: string; manualFallback?: boolean };
       try {
         data = await res.json();
       } catch {
@@ -172,9 +176,17 @@ export default function SettingsAtualizacoes() {
             lineHeight: 1.8,
           }}
         >
-          <li>Acesse o repositório no <a href="https://github.com" target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', textDecoration: 'underline' }}>GitHub</a></li>
-          <li>Clique em <strong style={{ color: '#e5e5e5' }}>Settings</strong> (Configurações) — aba no topo</li>
-          <li>Menu esquerdo: <strong style={{ color: '#e5e5e5' }}>Actions</strong> → <strong style={{ color: '#e5e5e5' }}>General</strong></li>
+          <li>
+            {actionsSettingsUrl ? (
+              <>
+                <a href={actionsSettingsUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', textDecoration: 'underline', wordBreak: 'break-all' }}>
+                  Abra Actions → General no GitHub
+                </a>
+              </>
+            ) : (
+              <>Acesse o repositório no <a href="https://github.com" target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', textDecoration: 'underline' }}>GitHub</a>, depois Settings → Actions → General</>
+            )}
+          </li>
           <li>Em <strong style={{ color: '#e5e5e5' }}>Workflow permissions</strong>: marque <strong style={{ color: '#86efac' }}>Read and write permissions</strong></li>
           <li>Marque <strong style={{ color: '#86efac' }}>Allow GitHub Actions to create and approve pull requests</strong></li>
           <li>Clique em <strong style={{ color: '#86efac' }}>Save</strong></li>
@@ -335,9 +347,19 @@ export default function SettingsAtualizacoes() {
               <strong style={{ color: '#86efac' }}>Commit new file</strong>
             </li>
             <li>
-              Configure as permissões no GitHub: <strong style={{ color: '#e5e5e5' }}>Settings → Actions → General</strong> →
-              marque <strong style={{ color: '#86efac' }}>Read and write permissions</strong> e{' '}
-              <strong style={{ color: '#86efac' }}>Allow GitHub Actions to create and approve pull requests</strong> → <strong>Save</strong>
+              Configure as permissões: {actionsSettingsUrl ? (
+                <>
+                  <a href={actionsSettingsUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', textDecoration: 'underline' }}>abra este link</a>
+                  {' '}→ marque <strong style={{ color: '#86efac' }}>Read and write permissions</strong> e{' '}
+                  <strong style={{ color: '#86efac' }}>Allow GitHub Actions to create and approve pull requests</strong> → <strong>Save</strong>
+                </>
+              ) : (
+                <>
+                  <strong style={{ color: '#e5e5e5' }}>Settings → Actions → General</strong> →
+                  marque <strong style={{ color: '#86efac' }}>Read and write permissions</strong> e{' '}
+                  <strong style={{ color: '#86efac' }}>Allow GitHub Actions to create and approve pull requests</strong> → <strong>Save</strong>
+                </>
+              )}
             </li>
             <li>Volte aqui e clique em Ativar novamente</li>
           </ol>
