@@ -16,7 +16,7 @@ const TEMPLATE_RAW =
 export type EnsureWorkflowResult =
   | { ok: true; status: 'already_exists' }
   | { ok: true; status: 'created' }
-  | { ok: false; error: string };
+  | { ok: false; error: string; manualFallback?: boolean };
 
 const h = (token: string) => ({
   Authorization: `Bearer ${token}`,
@@ -169,6 +169,7 @@ async function ensureWorkflowViaGitData(
     }
 
     // 4) POST tree (base_tree + nosso arquivo)
+    // NOTA: GitHub tem bug conhecido — paths com .github retornam 404 (community/discussions/144360)
     const treeRes = await fetch(`${base}/git/trees`, {
       method: 'POST',
       headers,
@@ -187,7 +188,11 @@ async function ensureWorkflowViaGitData(
     if (!treeRes.ok) {
       const t = await treeRes.text();
       console.error('\x1b[31m✗ [X] Git Data: tree:\x1b[0m', treeRes.status, t);
-      return { ok: false, error: `Erro ao criar árvore. GitHub retornou ${treeRes.status}.` };
+      return {
+        ok: false,
+        error: `Erro ao criar árvore. GitHub retornou ${treeRes.status}.`,
+        manualFallback: treeRes.status === 404,
+      };
     }
     const treeResultJson = (await treeRes.json()) as { sha?: string };
     const newTreeSha = treeResultJson?.sha;

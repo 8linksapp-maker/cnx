@@ -5,10 +5,13 @@
  * Quando o usuário marca a opção e salva, o arquivo .github/workflows/sync-cnx.yml
  * é criado no repositório via GitHub API (o Deploy da Vercel não copia .github ao clonar).
  *
- * Isso permite que o botão "Aplicar agora" no painel funcione.
+ * Em caso de falha (bug do GitHub: 404 em paths .github), exibe fallback manual com
+ * link para criar o arquivo no GitHub e botão para copiar o conteúdo.
  */
 
 import { useState, useEffect } from 'react';
+
+type FallbackData = { createUrl: string; content: string } | null;
 
 export default function SettingsAtualizacoes() {
   const [autoUpdateEnabled, setAutoUpdateEnabled] = useState(false);
@@ -16,6 +19,8 @@ export default function SettingsAtualizacoes() {
   const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [loaded, setLoaded] = useState(false);
+  const [manualFallback, setManualFallback] = useState<FallbackData | null>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -61,6 +66,7 @@ export default function SettingsAtualizacoes() {
 
       if (data.success) {
         setSaveStatus('success');
+        setManualFallback(null);
         await saveSettings(true);
       } else {
         setSaveStatus('error');
@@ -71,6 +77,18 @@ export default function SettingsAtualizacoes() {
             : err
         );
         setAutoUpdateEnabled(false);
+        if (data.manualFallback || (err && /404/.test(err))) {
+          fetch('/api/admin/workflow-fallback')
+            .then((r) => r.json())
+            .then((fb) => {
+              if (fb.success && fb.createUrl && fb.content) {
+                setManualFallback({ createUrl: fb.createUrl, content: fb.content });
+              }
+            })
+            .catch(() => {});
+        } else {
+          setManualFallback(null);
+        }
       }
     } catch (e) {
       setSaveStatus('error');
@@ -79,7 +97,7 @@ export default function SettingsAtualizacoes() {
     } finally {
       setLoading(false);
       setTimeout(() => {
-        setSaveStatus('idle');
+        setSaveStatus((s) => (s === 'error' ? 'idle' : s));
         setErrorMessage('');
       }, 8000);
     }
@@ -211,7 +229,7 @@ export default function SettingsAtualizacoes() {
           }}
         >
           ❌ {errorMessage}
-          {errorMessage.includes('Ajuda') && (
+          {errorMessage.includes('Ajuda') && !manualFallback && (
             <a
               href="/admin/ajuda"
               style={{
@@ -224,6 +242,74 @@ export default function SettingsAtualizacoes() {
               Abrir Ajuda →
             </a>
           )}
+        </div>
+      )}
+
+      {manualFallback && (
+        <div
+          style={{
+            padding: '1rem 1.25rem',
+            borderRadius: '10px',
+            background: 'rgba(251,191,36,0.08)',
+            border: '1px solid rgba(251,191,36,0.25)',
+          }}
+        >
+          <p style={{ margin: '0 0 0.75rem', color: '#fcd34d', fontWeight: 600, fontSize: '0.9rem' }}>
+            O GitHub não permite criar este arquivo automaticamente. Crie manualmente em 3 passos:
+          </p>
+          <ol
+            style={{
+              margin: 0,
+              paddingLeft: '1.25rem',
+              lineHeight: 1.8,
+              color: '#e5e5e5',
+              fontSize: '0.85rem',
+            }}
+          >
+            <li>
+              <a
+                href={manualFallback.createUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: '#60a5fa',
+                  textDecoration: 'underline',
+                  wordBreak: 'break-all',
+                }}
+              >
+                Abra este link no GitHub
+              </a>
+            </li>
+            <li>
+              Clique em <strong style={{ color: '#86efac' }}>📋 Copiar conteúdo</strong> abaixo,
+              cole no editor do GitHub e clique em{' '}
+              <strong style={{ color: '#86efac' }}>Commit new file</strong>
+            </li>
+            <li>Volte aqui e clique em Ativar novamente</li>
+          </ol>
+          <div style={{ marginTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <button
+              type="button"
+              onClick={() => {
+                navigator.clipboard.writeText(manualFallback.content);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              style={{
+                padding: '0.5rem 1rem',
+                borderRadius: '6px',
+                background: 'var(--primary, #6366f1)',
+                color: '#fff',
+                fontWeight: 600,
+                fontSize: '0.85rem',
+                border: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              📋 Copiar conteúdo
+            </button>
+            {copied && <span style={{ color: '#86efac', fontSize: '0.85rem' }}>Copiado!</span>}
+          </div>
         </div>
       )}
     </div>

@@ -4,11 +4,19 @@ Todas as mudanças relevantes do template são documentadas aqui.
 
 ---
 
+## [1.0.7] — 05/03/2026
+
+### Correções
+
+- **Atualizações**: bug do GitHub (404 em paths .github) — ao falhar a criação automática, exibe instruções manuais com link direto para criar o arquivo no GitHub e botão para copiar o conteúdo (3 passos simples)
+
+---
+
 ## [1.0.6] — 05/03/2026
 
 ### Correções
 
-- **Atualizações**: fallback via Git Data API quando a Contents API retorna 404 ao criar `.github/workflows/sync-cnx.yml` — resolve o erro "GitHub retornou 404" no painel Configurações → Atualizações em repositórios recém-deployados
+- **Atualizações**: fallback via Git Data API quando a Contents API retorna 404 ao criar `.github/workflows/sync-cnx.yml` (Git Data também falha no path .github por bug conhecido)
 
 ---
 

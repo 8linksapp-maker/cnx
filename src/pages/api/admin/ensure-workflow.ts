@@ -40,6 +40,7 @@ export const POST: APIRoute = async ({ cookies }) => {
     JSON.stringify({
       success: false,
       error: result.error,
+      manualFallback: 'manualFallback' in result && result.manualFallback,
       helpUrl: 'https://github.com/8linksapp-maker/cnx#-variáveis-de-ambiente-referência',
     }),
     { status: 400, headers: { 'Content-Type': 'application/json' } }
