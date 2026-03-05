@@ -4,6 +4,14 @@ Todas as mudanças relevantes do template são documentadas aqui.
 
 ---
 
+## [1.0.6] — 05/03/2026
+
+### Correções
+
+- **Atualizações**: fallback via Git Data API quando a Contents API retorna 404 ao criar `.github/workflows/sync-cnx.yml` — resolve o erro "GitHub retornou 404" no painel Configurações → Atualizações em repositórios recém-deployados
+
+---
+
 ## [1.0.3] — 06/03/2026
 
 ### Teste de atualização
