@@ -19,6 +19,7 @@ type AIProvider = 'openai' | 'gemini';
 interface AISettings {
     aiProvider: AIProvider;
     aiApiKey: string;
+    pexelsApiKey?: string;
 }
 
 interface TestResult {
@@ -54,7 +55,9 @@ const PROVIDERS = [
 export default function SettingsAI() {
     const [provider, setProvider]       = useState<AIProvider>('gemini');
     const [apiKey, setApiKey]           = useState('');
+    const [pexelsApiKey, setPexelsApiKey] = useState('');
     const [showKey, setShowKey]         = useState(false);
+    const [showPexelsKey, setShowPexelsKey] = useState(false);
     const [saving, setSaving]           = useState(false);
     const [testing, setTesting]         = useState(false);
     const [testResult, setTestResult]   = useState<TestResult | null>(null);
@@ -68,6 +71,7 @@ export default function SettingsAI() {
                 if (res.success) {
                     setProvider(res.data.aiProvider || 'gemini');
                     setApiKey(res.data.aiApiKey || '');
+                    setPexelsApiKey(res.data.pexelsApiKey || '');
                 }
                 setLoaded(true);
             })
@@ -82,7 +86,7 @@ export default function SettingsAI() {
             const res = await fetch('/api/admin/site-settings', {
                 method:  'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body:    JSON.stringify({ aiProvider: provider, aiApiKey: apiKey }),
+                body:    JSON.stringify({ aiProvider: provider, aiApiKey: apiKey, pexelsApiKey: pexelsApiKey }),
             });
             const data = await res.json();
             setSaveStatus(data.success ? 'success' : 'error');
@@ -254,6 +258,68 @@ export default function SettingsAI() {
                 )}
             </div>
 
+            {/* Campo Pexels API Key — imagens em posts gerados por IA */}
+            <div style={{
+                padding: '1rem 1.25rem',
+                borderRadius: '10px',
+                background: 'rgba(5,160,129,0.06)',
+                border: '1px solid rgba(5,160,129,0.2)',
+            }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <label style={{ fontSize: '0.875rem', fontWeight: 600, color: '#a3a3a3', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        API Key — Pexels (imagens)
+                    </label>
+                    <a
+                        href="https://www.pexels.com/api/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ fontSize: '0.75rem', color: '#05a081', textDecoration: 'none' }}
+                    >
+                        Obter chave gratuita no Pexels ↗
+                    </a>
+                </div>
+                <div style={{ position: 'relative' }}>
+                    <input
+                        type={showPexelsKey ? 'text' : 'password'}
+                        value={pexelsApiKey}
+                        onChange={e => setPexelsApiKey(e.target.value)}
+                        placeholder="Chave da API Pexels (opcional)"
+                        style={{
+                            width: '100%',
+                            padding: '0.75rem 3rem 0.75rem 1rem',
+                            borderRadius: '8px',
+                            border: '1px solid rgba(255,255,255,0.1)',
+                            background: 'rgba(255,255,255,0.04)',
+                            color: '#e5e5e5',
+                            fontSize: '0.9rem',
+                            fontFamily: 'monospace',
+                            boxSizing: 'border-box',
+                        }}
+                    />
+                    <button
+                        onClick={() => setShowPexelsKey(v => !v)}
+                        title={showPexelsKey ? 'Ocultar' : 'Mostrar'}
+                        style={{
+                            position: 'absolute',
+                            right: '0.75rem',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            color: '#71717a',
+                            fontSize: '1rem',
+                            padding: '0.25rem',
+                        }}
+                    >
+                        {showPexelsKey ? '🙈' : '👁️'}
+                    </button>
+                </div>
+                <p style={{ fontSize: '0.75rem', color: '#52525b', marginTop: '0.35rem' }}>
+                    Usada para inserir imagens automaticamente nos posts gerados por IA (1 a cada ~400 palavras, máx. 5).
+                </p>
+            </div>
+
             {/* Resultado do teste */}
             {testResult && (
                 <div style={{
@@ -337,9 +403,15 @@ export default function SettingsAI() {
                         <span style={{ color: '#e5e5e5', fontWeight: 600 }}>{currentProvider.name}</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem' }}>
-                        <span style={{ color: '#71717a' }}>API Key</span>
+                        <span style={{ color: '#71717a' }}>API Key IA</span>
                         <span style={{ color: apiKey ? '#4ade80' : '#f87171', fontWeight: 600 }}>
                             {apiKey ? '● Configurada' : '○ Não configurada'}
+                        </span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem' }}>
+                        <span style={{ color: '#71717a' }}>Pexels (imagens)</span>
+                        <span style={{ color: pexelsApiKey ? '#4ade80' : '#71717a', fontWeight: 600 }}>
+                            {pexelsApiKey ? '● Configurada' : '○ Opcional'}
                         </span>
                     </div>
                 </div>

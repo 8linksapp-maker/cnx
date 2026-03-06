@@ -75,7 +75,7 @@ export default function ServiceEditorConteudo({ serviceSlug, initialOutline, ini
                 setMsg({
                     text: data.usedAI
                         ? '✨ Conteúdo gerado! Leia o texto abaixo, ajuste se quiser e clique em Salvar.'
-                        : '⚠️ OPENAI_API_KEY não configurada. Configure a chave nas variáveis de ambiente para usar IA.',
+                        : '⚠️ Configure a API Key em Configurações → Inteligência Artificial (OpenAI ou Gemini) para gerar com IA.',
                     type: data.usedAI ? 'ok' : 'warn',
                 });
             } else {

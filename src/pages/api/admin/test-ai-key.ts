@@ -17,13 +17,30 @@ import type { APIRoute } from 'astro';
 
 async function testOpenAI(apiKey: string): Promise<{ ok: boolean; message: string }> {
     try {
-        const res = await fetch('https://api.openai.com/v1/models', {
-            headers: { 'Authorization': `Bearer ${apiKey}` },
+        // Usa chat/completions (mesmo endpoint da geração) — /v1/models pode falhar com chaves sk-proj-
+        const headers: Record<string, string> = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+        };
+        const orgId = (process.env.OPENAI_ORGANIZATION_ID || '').trim();
+        const projId = (process.env.OPENAI_PROJECT_ID || '').trim();
+        if (orgId) headers['OpenAI-Organization'] = orgId;
+        if (projId) headers['OpenAI-Project'] = projId;
+
+        const res = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({
+                model: 'gpt-4o-mini',
+                max_tokens: 5,
+                messages: [{ role: 'user', content: 'Hi' }],
+            }),
         });
         if (res.status === 200) return { ok: true,  message: 'Chave OpenAI válida! Conexão estabelecida com sucesso.' };
-        if (res.status === 401) return { ok: false, message: 'Chave inválida ou expirada. Verifique sua API Key na plataforma OpenAI.' };
+        if (res.status === 401) return { ok: false, message: 'Chave inválida ou expirada. Verifique na plataforma OpenAI. Chaves sk-proj- podem exigir OPENAI_ORGANIZATION_ID e OPENAI_PROJECT_ID no .env.' };
         if (res.status === 429) return { ok: true,  message: 'Chave válida, mas limite de requisições atingido. Aguarde alguns minutos.' };
-        return { ok: false, message: `OpenAI retornou status ${res.status}. Verifique sua chave.` };
+        const errBody = await res.text();
+        return { ok: false, message: `OpenAI ${res.status}: ${errBody.slice(0, 150)}` };
     } catch (err: any) {
         return { ok: false, message: `Erro de conexão com OpenAI: ${err.message}` };
     }

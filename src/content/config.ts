@@ -117,6 +117,8 @@ const siteSettings = defineCollection({
         siteMode: z.enum(['blog', 'local']).default('blog'),
         aiProvider: z.enum(['openai', 'gemini']).default('gemini').optional(),
         aiApiKey: z.string().optional(),
+        // Pexels API — imagens em posts gerados por IA (1 a cada ~400 palavras, máx 5)
+        pexelsApiKey: z.string().optional(),
         // SEO Técnico (sitemap, robots.txt) — configurável no admin
         canonicalUrl: z.string().optional(),
         generateSitemap: z.boolean().default(true),

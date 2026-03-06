@@ -24,14 +24,10 @@
  */
 
 import type { APIRoute } from 'astro';
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import yaml from 'js-yaml';
 import { readService, writeService } from '../../../../../utils/service-utils';
-import { isGitHubConfigured, githubReadFile } from '../../../../../utils/github-api';
+import { loadAISettings, resolveApiKey, callAI } from '../../../../../utils/ai-provider';
 
-type AIProvider = 'openai' | 'gemini';
-type Tone       = 'profissional' | 'amigavel' | 'tecnico' | 'casual';
+type Tone = 'profissional' | 'amigavel' | 'tecnico' | 'casual';
 interface OutlineItem { level: 'h1' | 'h2' | 'h3' | 'h4'; text: string; }
 
 const TONE_DESCRIPTIONS: Record<Tone, string> = {
@@ -41,91 +37,7 @@ const TONE_DESCRIPTIONS: Record<Tone, string> = {
     casual:       'tom casual e descontraído. Use linguagem leve, com expressões do dia a dia.',
 };
 
-// ── Carrega configurações de IA do settings.yaml ─────────────────────────────
-
-async function loadAISettings(): Promise<{ provider: AIProvider; apiKey: string }> {
-    try {
-        const SETTINGS_PATH    = path.resolve('./src/content/singletons/settings.yaml');
-        const SETTINGS_GH_PATH = 'src/content/singletons/settings.yaml';
-
-        let raw = '';
-        if (isGitHubConfigured()) {
-            const file = await githubReadFile(SETTINGS_GH_PATH);
-            raw = file?.content || '';
-        } else {
-            raw = await fs.readFile(SETTINGS_PATH, 'utf-8').catch(() => '');
-        }
-
-        const data = (yaml.load(raw) as Record<string, any>) || {};
-        const provider = (data.aiProvider as AIProvider) || 'gemini';
-        const apiKey   = (data.aiApiKey as string) || '';
-        return { provider, apiKey };
-    } catch {
-        return { provider: 'gemini', apiKey: '' };
-    }
-}
-
-// ── Chamada OpenAI ────────────────────────────────────────────────────────────
-
-async function callOpenAI(prompt: string, apiKey: string): Promise<string> {
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
-        method:  'POST',
-        headers: {
-            'Content-Type':  'application/json',
-            'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-            model:       'gpt-4o-mini',
-            temperature: 0.7,
-            max_tokens:  4096,
-            messages: [
-                {
-                    role:    'system',
-                    content: 'Você é um redator especializado em SEO local para o mercado brasileiro. Escreve conteúdo de alta qualidade que ranqueia no Google e converte visitantes em clientes.',
-                },
-                { role: 'user', content: prompt },
-            ],
-        }),
-    });
-
-    if (!res.ok) {
-        const err = await res.text();
-        throw new Error(`OpenAI ${res.status}: ${err.slice(0, 200)}`);
-    }
-
-    const data = await res.json();
-    return data.choices[0]?.message?.content?.trim() || '';
-}
-
-// ── Chamada Gemini ────────────────────────────────────────────────────────────
-
-async function callGemini(prompt: string, apiKey: string): Promise<string> {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-    const res = await fetch(url, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            contents: [{
-                parts: [{
-                    text: `Você é um redator especializado em SEO local para o mercado brasileiro. Escreve conteúdo de alta qualidade que ranqueia no Google e converte visitantes em clientes.\n\n${prompt}`,
-                }],
-            }],
-            generationConfig: {
-                temperature:     0.7,
-                maxOutputTokens: 4096,
-            },
-        }),
-    });
-
-    if (!res.ok) {
-        const err = await res.text();
-        throw new Error(`Gemini ${res.status}: ${err.slice(0, 200)}`);
-    }
-
-    const data = await res.json();
-    return data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || '';
-}
+const SEO_SYSTEM_PROMPT = 'Você é um redator especializado em SEO local para o mercado brasileiro. Escreve conteúdo de alta qualidade que ranqueia no Google e converte visitantes em clientes.';
 
 // ── Prompt unificado ──────────────────────────────────────────────────────────
 
@@ -225,26 +137,19 @@ export const POST: APIRoute = async ({ params, request, locals }) => {
 
         // Carrega configurações de IA (settings.yaml → env vars → placeholder)
         const aiSettings = await loadAISettings();
-        const apiKey = aiSettings.apiKey
-            || (aiSettings.provider === 'openai' ? process.env.OPENAI_API_KEY : process.env.GEMINI_API_KEY)
-            || '';
+        const apiKey = resolveApiKey(aiSettings);
 
         let content = '';
         let usedAI  = false;
-        let providerUsed = '';
+        let providerUsed = aiSettings.provider === 'gemini' ? 'Gemini' : 'OpenAI';
 
         if (apiKey) {
             try {
                 const prompt = buildPrompt(serviceFile.data.title, outline, tone, extras, includeFaq);
-
-                if (aiSettings.provider === 'gemini') {
-                    content      = await callGemini(prompt, apiKey);
-                    providerUsed = 'Gemini';
-                } else {
-                    content      = await callOpenAI(prompt, apiKey);
-                    providerUsed = 'OpenAI';
-                }
-
+                content = await callAI(prompt, aiSettings, apiKey, {
+                    systemPrompt: SEO_SYSTEM_PROMPT,
+                    maxTokens: 4096,
+                });
                 usedAI = true;
             } catch (aiErr: any) {
                 console.warn('\x1b[33m⚠ IA falhou, usando placeholder:\x1b[0m', aiErr.message);
@@ -267,7 +172,7 @@ export const POST: APIRoute = async ({ params, request, locals }) => {
             success: true,
             content,
             usedAI,
-            provider: providerUsed || null,
+            provider: usedAI ? providerUsed : null,
             message: usedAI
                 ? `Conteúdo gerado com ${providerUsed} e salvo com sucesso!`
                 : 'Configure sua API Key em Configurações → Inteligência Artificial para gerar com IA.',
