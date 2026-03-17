@@ -8,22 +8,15 @@
 import yaml from 'js-yaml';
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import { getEntry } from 'astro:content';
 import { isGitHubConfigured, githubWriteFile } from './github-api';
 
 const SINGLETONS_BASE_DIR = path.resolve('./src/content/singletons');
 
 /**
- * Obtém o tema ativo
+ * Retorna o ID do tema para singletons. Sem sistema de temas, sempre usa 'classic'.
  */
 async function getActiveThemeId(): Promise<string> {
-    try {
-        const settings = await getEntry('siteSettings', 'settings');
-        return settings?.data?.activeTheme || 'classic';
-    } catch (error) {
-        console.error('❌ Erro ao obter tema ativo:', error);
-        return 'classic';
-    }
+    return 'classic';
 }
 
 /**

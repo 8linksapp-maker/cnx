@@ -1,0 +1,6 @@
+logoText: "Site"
+items:
+  - label: Início
+    url: /
+  - label: Contato
+    url: /contato

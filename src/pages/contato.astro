@@ -14,7 +14,7 @@ import { readSingleton } from '../utils/singleton-utils';
 import { getSiteContactInfo } from '../utils/site-contact';
 
 const settings = await getEntry('siteSettings', 'settings').catch(() => null);
-const siteMode = settings?.data?.siteMode || 'blog';
+const siteMode = (settings?.data?.siteMode || 'blog') as 'blog' | 'local';
 const isLocal = siteMode === 'local';
 
 let data: Record<string, unknown> | null;
@@ -36,8 +36,7 @@ if (isLocal) {
         };
     }
 } else {
-    const activeThemeId = settings?.data?.activeTheme || 'classic';
-    data = await readSingleton('contact', activeThemeId);
+    data = await readSingleton('contact', 'classic');
 }
 
 const siteName = isLocal ? ((await readSingleton('home', 'local'))?.companyName || 'Site') : 'CNX Agency';

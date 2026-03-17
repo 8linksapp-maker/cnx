@@ -111,7 +111,6 @@ const siteSettings = defineCollection({
         generateId: ({ entry }) => entry.replace(/\.yaml$/, ''), // id = 'settings'
     }),
     schema: z.object({
-        activeTheme: z.string().optional(),
         siteName: z.string(),
         colorScheme: z.enum(['dark', 'light']).default('dark'),
         siteMode: z.enum(['blog', 'local']).default('blog'),

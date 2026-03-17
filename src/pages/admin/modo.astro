@@ -13,10 +13,10 @@
 
 import AdminLayout from '../../layouts/AdminLayout.astro';
 import { getEntry } from 'astro:content';
-import { getAdminSiteMode } from '../../utils/admin-site-mode';
+import { getEffectiveSiteMode } from '../../utils/admin-site-mode';
 
 const settings = await getEntry('siteSettings', 'settings').catch(() => null);
-const currentMode = getAdminSiteMode(Astro.cookies, settings);
+const currentMode = getEffectiveSiteMode(Astro.cookies, settings);
 ---
 
 <AdminLayout title="Modo do Site - CNX Agency Admin">
@@ -27,6 +27,7 @@ const currentMode = getAdminSiteMode(Astro.cookies, settings);
             <p class="text-[#a3a3a3]">Escolha como a página inicial e a estrutura do site se comportam.</p>
         </div>
 
+        <>
         <!-- Status atual -->
         <div class="admin-card p-5 flex items-center gap-4">
             <div class="text-3xl">{currentMode === 'local' ? '📍' : '📝'}</div>
@@ -126,6 +127,7 @@ const currentMode = getAdminSiteMode(Astro.cookies, settings);
                 <li>Visite o site para ver o resultado.</li>
             </ol>
         </div>
+        </>
 
     </div>
 </AdminLayout>

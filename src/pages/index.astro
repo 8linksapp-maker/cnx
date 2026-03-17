@@ -2,11 +2,9 @@
 /**
  * index.astro — Página inicial
  *
- * Renderiza condicionalmente o modo do site:
- *   siteMode === 'local' → Modo Local (rank and rent) via LocalHome
- *   siteMode === 'blog'  → Modo Blog/Agência (padrão) via ClassicHome
- *
- * O modo é definido em src/content/singletons/settings.yaml (campo siteMode).
+ * Renderiza condicionalmente:
+ *   siteMode === 'local' → LocalHome (modo rank-and-rent)
+ *   siteMode === 'blog'  → ClassicHome
  */
 import { getCollection, getEntry } from 'astro:content';
 import { readSingleton } from '../utils/singleton-utils';
@@ -14,7 +12,7 @@ import ClassicHome from '../themes/classic/Home.astro';
 import LocalHome   from '../themes/local/Home.astro';
 
 const settings = await getEntry('siteSettings', 'settings').catch(() => null);
-const siteMode = settings?.data?.siteMode || 'blog';
+const siteMode = (settings?.data?.siteMode || 'blog') as 'blog' | 'local';
 
 const localData = siteMode === 'local'
     ? await readSingleton('home', 'local') || {}

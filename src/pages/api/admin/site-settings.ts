@@ -19,7 +19,7 @@ const SETTINGS_PATH     = path.resolve('./src/content/singletons/settings.yaml')
 const SETTINGS_GH_PATH  = 'src/content/singletons/settings.yaml';
 
 async function readSettings(): Promise<Record<string, unknown>> {
-    const defaults = { activeTheme: 'classic', siteName: 'CNX Agency', colorScheme: 'dark', siteMode: 'blog' };
+    const defaults = { siteName: 'CNX Agency', colorScheme: 'dark', siteMode: 'blog' };
     try {
         // Priorizar sempre o arquivo local — assim API e getEntry (content layer) leem a mesma fonte.
         // Só usar GitHub quando o disco não está disponível (ex.: Vercel serverless).

@@ -13,7 +13,7 @@ import LocalSobre from '../themes/local/Sobre.astro';
 import { readSingleton } from '../utils/singleton-utils';
 
 const settings = await getEntry('siteSettings', 'settings').catch(() => null);
-const siteMode = settings?.data?.siteMode || 'blog';
+const siteMode = (settings?.data?.siteMode || 'blog') as 'blog' | 'local';
 const isLocal = siteMode === 'local';
 
 let data: Record<string, unknown> | null;
@@ -55,8 +55,7 @@ if (isLocal) {
         };
     }
 } else {
-    const activeThemeId = settings?.data?.activeTheme || 'classic';
-    data = await readSingleton('about', activeThemeId);
+    data = await readSingleton('about', 'classic');
 }
 
 const siteName = isLocal ? ((await readSingleton('home', 'local'))?.companyName || 'Site') : 'CNX Agency';

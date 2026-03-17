@@ -1,4 +1,9 @@
 ---
+/**
+ * admin/pixels.astro - Configuração de GA e Meta Pixel
+ *
+ * Salva pixels no singleton classic.
+ */
 import AdminLayout from '../../layouts/AdminLayout.astro';
 import PixelEditor from '../../components/admin/PixelEditor';
 ---
@@ -13,5 +18,5 @@ import PixelEditor from '../../components/admin/PixelEditor';
         </p>
     </div>
 
-    <PixelEditor client:load />
+    <PixelEditor client:load themeId="classic" />
 </AdminLayout>

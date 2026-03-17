@@ -11,7 +11,7 @@ import BlogList from '../../themes/classic/BlogList.astro';
 import type { BlogPermalinkStructure, BlogUrlPrefix } from '../../utils/blog-permalink';
 
 const settings = await getEntry('siteSettings', 'settings').catch(() => null);
-const siteMode = settings?.data?.siteMode || 'blog';
+const siteMode = (settings?.data?.siteMode || 'blog') as 'blog' | 'local';
 const layoutType = siteMode === 'local' ? 'local' : 'main';
 const blogPermalinkStructure = (settings?.data?.blogPermalinkStructure as BlogPermalinkStructure) || 'postname';
 const blogUrlPrefix = (settings?.data?.blogUrlPrefix as BlogUrlPrefix) || 'blog';

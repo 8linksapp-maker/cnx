@@ -42,7 +42,7 @@ const wordCount = postFile?.content ? postFile.content.replace(/<[^>]+>/g, ' ').
 const readingTimeMinutes = Math.max(1, Math.ceil(wordCount / 200));
 
 const settings = await getEntry('siteSettings', 'settings').catch(() => null);
-const siteMode = settings?.data?.siteMode || 'blog';
+const siteMode = (settings?.data?.siteMode || 'blog') as 'blog' | 'local';
 const layoutType = siteMode === 'local' ? 'local' : 'main';
 ---
 

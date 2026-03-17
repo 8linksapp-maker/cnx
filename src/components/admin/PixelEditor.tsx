@@ -15,14 +15,18 @@ const EMPTY: PixelData = {
     facebookPixelId: '',
 };
 
-export default function PixelEditor() {
+interface Props {
+    themeId?: string;
+}
+
+export default function PixelEditor({ themeId = 'classic' }: Props) {
     const [data, setData] = useState<PixelData>(EMPTY);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const { toasts, showToast, removeToast } = useToast();
 
     useEffect(() => {
-        fetch('/api/admin/singletons/pixels?themeId=classic')
+        fetch(`/api/admin/singletons/pixels?themeId=${encodeURIComponent(themeId)}`)
             .then(r => r.json())
             .then(res => {
                 if (res.success && res.data) {
@@ -36,7 +40,7 @@ export default function PixelEditor() {
             })
             .catch(() => showToast('error', 'Erro', 'Não foi possível carregar as configurações.'))
             .finally(() => setLoading(false));
-    }, []);
+    }, [themeId]);
 
     const handleSave = async () => {
         if (data.googleServiceAccount) {
@@ -48,7 +52,7 @@ export default function PixelEditor() {
             const res = await fetch('/api/admin/singletons/pixels', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ data, themeId: 'classic' }),
+                body: JSON.stringify({ data, themeId }),
             });
             const json = await res.json();
             if (json.success) {

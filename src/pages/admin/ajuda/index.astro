@@ -8,11 +8,11 @@
  */
 
 import AdminLayout from '../../../layouts/AdminLayout.astro';
-import { getAdminSiteMode } from '../../../utils/admin-site-mode';
+import { getEffectiveSiteMode } from '../../../utils/admin-site-mode';
 import { getEntry } from 'astro:content';
 
 const settings = await getEntry('siteSettings', 'settings').catch(() => null);
-const siteMode = getAdminSiteMode(Astro.cookies, settings);
+const siteMode = getEffectiveSiteMode(Astro.cookies, settings);
 const isLocal = siteMode === 'local';
 ---
 

@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { getEntry } from 'astro:content';
 import { readSingleton } from '../../../utils/singleton-utils';
 import crypto from 'node:crypto';
 
@@ -71,7 +72,9 @@ export const GET: APIRoute = async ({ url }) => {
         const days = parseInt(url.searchParams.get('days') || '30');
         const dateRange = `${days}daysAgo`;
 
-        const pixels = await readSingleton('pixels', 'classic');
+        const settings = await getEntry('siteSettings', 'settings').catch(() => null);
+        const activeThemeId = (settings?.data?.activeTheme as string) || 'classic';
+        const pixels = await readSingleton('pixels', activeThemeId);
 
         if (!pixels?.googleAnalyticsPropertyId) {
             return json({ success: false, error: 'ID da propriedade GA4 não configurado.' }, 400);

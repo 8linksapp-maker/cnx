@@ -15,7 +15,7 @@
 
 import { getCollection, getEntry } from 'astro:content';
 import AdminLayout from '../../layouts/AdminLayout.astro';
-import { getAdminSiteMode } from '../../utils/admin-site-mode';
+import { getEffectiveSiteMode } from '../../utils/admin-site-mode';
 import StatCard from '../../components/admin/StatCard.astro';
 import RecentPosts from '../../components/admin/RecentPosts.astro';
 import ConfigStatus from '../../components/admin/ConfigStatus.astro';
@@ -43,7 +43,7 @@ try {
 }
 
 const settings   = await getEntry('siteSettings', 'settings').catch(() => null);
-const isLocalMode = getAdminSiteMode(Astro.cookies, settings) === 'local';
+const isLocalMode = getEffectiveSiteMode(Astro.cookies, settings) === 'local';
 
 const publishedPosts = posts.filter(p => p.data.publishedDate);
 const draftPosts     = posts.length - publishedPosts.length;

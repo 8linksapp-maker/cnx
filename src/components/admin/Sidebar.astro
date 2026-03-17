@@ -3,13 +3,12 @@
  * Sidebar.astro
  *
  * Barra lateral de navegação do painel admin.
- * Usa variáveis CSS do sistema de temas (dark/light) para todas as cores.
- * Exibe seção Modo Local (Keywords, Bairros, etc.) apenas quando siteMode === 'local'.
- * Configurações é expandível com Pixels e Importar WordPress como sub-itens.
+ * Usa variáveis CSS do sistema dark/light para todas as cores.
+ * Exibe seção Modo Local (Keywords, Bairros, etc.) quando siteMode === 'local'.
  */
 
 import { getEntry } from 'astro:content';
-import { getAdminSiteMode } from '../../utils/admin-site-mode';
+import { getEffectiveSiteMode } from '../../utils/admin-site-mode';
 
 interface Props {
     user?: { slug: string; name: string; adminRole: 'admin' | 'editor' } | undefined;
@@ -20,7 +19,7 @@ const p       = Astro.url.pathname;
 const isAdmin = user?.adminRole === 'admin';
 
 const settings  = await getEntry('siteSettings', 'settings').catch(() => null);
-const siteMode  = getAdminSiteMode(Astro.cookies, settings);
+const siteMode  = getEffectiveSiteMode(Astro.cookies, settings);
 const isLocal   = siteMode === 'local';
 
 const active = (href: string) =>

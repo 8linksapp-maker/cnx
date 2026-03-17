@@ -4,6 +4,20 @@ Todas as mudanças relevantes do template são documentadas aqui.
 
 ---
 
+## [1.0.15] — 17/03/2026
+
+### Melhorias
+
+- **Gerador de Páginas**: adicionado botão para excluir cidade inteira (junto com todos os bairros vinculados) diretamente na lista de localizações — operação em cascata com modal de confirmação personalizado
+- **Modal de confirmação**: substituído o `confirm()` nativo do navegador por um modal visual estilizado com backdrop blur, ícone de alerta e botões de ação — aplicado tanto para exclusão de bairros quanto de cidades
+
+### Removido
+
+- **Sistema de Temas**: removida toda a infraestrutura de temas múltiplos (upload de temas ZIP, seleção de tema ativo, página `/admin/temas`). O template agora opera exclusivamente com o tema Classic, simplificando manutenção e deploy
+- **Localizações padrão**: removidas as localizações de exemplo do template (Rio de Janeiro e bairros: Barra da Tijuca, Botafogo, Centro, Copacabana, Flamengo, Ipanema, Leblon, Leme)
+
+---
+
 ## [1.0.14] — 06/03/2026
 
 ### Melhorias

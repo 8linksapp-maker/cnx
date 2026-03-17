@@ -10,11 +10,11 @@ import { getEntry } from 'astro:content';
 import AdminLayout from '../../../layouts/AdminLayout.astro';
 import BlogPageEditor from '../../../components/admin/BlogPageEditor.tsx';
 import { readSingleton } from '../../../utils/singleton-utils';
-import { getAdminSiteMode } from '../../../utils/admin-site-mode';
+import { getEffectiveSiteMode } from '../../../utils/admin-site-mode';
 
 const settings = await getEntry('siteSettings', 'settings').catch(() => null);
-const siteMode = getAdminSiteMode(Astro.cookies, settings);
-const themeId = siteMode === 'local' ? 'local' : (settings?.data?.activeTheme || 'classic');
+const siteMode = getEffectiveSiteMode(Astro.cookies, settings);
+const themeId = siteMode === 'local' ? 'local' : 'classic';
 const initialData = await readSingleton('blog', themeId) || await readSingleton('blog', 'classic');
 ---
 

@@ -1,0 +1,28 @@
+heroTitle: Bem-vindo à 8links
+heroSubtitle: Transformamos ideias em experiências digitais que conectam marcas e pessoas.
+heroCtaText: Conheça o que fazemos
+heroCtaUrl: /sobre
+heroImage: https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1920&h=800&fit=crop
+aboutParagraph: Acreditamos em inovação, colaboração e design orientado a dados para ajudar clientes a se destacarem no mundo digital.
+aboutStatNumber: 10M+
+aboutStatLabel: Captados para clientes
+aboutImage: https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop
+aboutQuote: O progresso verdadeiro é feito em parceria—com quem confia em nós, nos desafia e cresce conosco.
+aboutBlocks:
+  - icon: ⚡
+    title: Conteúdo Criativo & Design
+    description: Desenvolvemos conteúdo e identidades visuais que conectam marcas e audiências.
+  - icon: 📊
+    title: Estratégia & Consultoria
+    description: Consultoria especializada para alavancar seus resultados no digital.
+aboutCtaText: Saiba mais sobre nós
+aboutCtaUrl: /sobre
+featuresBadge: Nossos diferenciais
+featuresTitle: Transformando Sites e blogs em
+featuresHighlight: histórias de sucesso digital
+features:
+  - title: Estratégia de Marca
+  - title: Web Design
+  - title: Marketing Digital
+  - title: Criação de Conteúdo
+  - title: Automação de E-mail

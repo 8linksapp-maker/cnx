@@ -65,6 +65,15 @@ export default function BairrosManager({ onLocationsUpdated }: Props) {
 
     const [expandedCity, setExpandedCity] = useState<string | null>(null);
     const [deletingSlug, setDeletingSlug] = useState<string | null>(null);
+    const [deletingCity, setDeletingCity] = useState<string | null>(null);
+
+    // Modal de confirmação
+    const [confirmModal, setConfirmModal] = useState<{
+        title: string;
+        description: string;
+        label: string;
+        onConfirm: () => void;
+    } | null>(null);
     const [selectedBairros, setSelectedBairros] = useState<Set<string>>(new Set());
     const [activatingBulk, setActivatingBulk] = useState(false);
 
@@ -258,15 +267,57 @@ export default function BairrosManager({ onLocationsUpdated }: Props) {
         await fetchLocations();
     }
 
+    function confirmAction(opts: { title: string; description: string; label: string; onConfirm: () => void }) {
+        setConfirmModal(opts);
+    }
+
     async function handleDelete(slug: string, name: string) {
-        if (!confirm(`Remover "${name}"?`)) return;
-        setDeletingSlug(slug);
-        try {
-            await fetch(`/api/admin/locations/${slug}`, { method: 'DELETE' });
-            await fetchLocations();
-        } finally {
-            setDeletingSlug(null);
-        }
+        confirmAction({
+            title: 'Excluir bairro',
+            description: `Tem certeza que deseja excluir o bairro "${name}"? Esta ação não pode ser desfeita.`,
+            label: 'Excluir bairro',
+            onConfirm: async () => {
+                setConfirmModal(null);
+                setDeletingSlug(slug);
+                try {
+                    await fetch(`/api/admin/locations/${slug}`, { method: 'DELETE' });
+                    await fetchLocations();
+                } finally {
+                    setDeletingSlug(null);
+                }
+            },
+        });
+    }
+
+    /** Exclui cidade e todos os seus bairros (em cascata). */
+    function handleDeleteCity(cityName: string, items: LocationData[]) {
+        const cidade = items.find(l => l.type === 'cidade');
+        const bairros = items.filter(l => l.type !== 'cidade');
+        confirmAction({
+            title: `Excluir "${cityName}"`,
+            description: bairros.length > 0
+                ? `Esta ação irá excluir a cidade e ${bairros.length} bairro(s) cadastrado(s). Esta ação não pode ser desfeita.`
+                : `Tem certeza que deseja excluir a cidade "${cityName}"? Esta ação não pode ser desfeita.`,
+            label: bairros.length > 0 ? `Excluir cidade e ${bairros.length} bairro(s)` : 'Excluir cidade',
+            onConfirm: async () => {
+                setConfirmModal(null);
+                setDeletingCity(cityName);
+                try {
+                    for (const loc of bairros) {
+                        await fetch(`/api/admin/locations/${loc.slug}`, { method: 'DELETE' });
+                    }
+                    if (cidade) {
+                        await fetch(`/api/admin/locations/${cidade.slug}`, { method: 'DELETE' });
+                    }
+                    setMsg({ text: `✅ Cidade "${cityName}" e bairros removidos.`, type: 'ok' });
+                    await fetchLocations();
+                } catch {
+                    setMsg({ text: '❌ Erro ao excluir. Tente novamente.', type: 'err' });
+                } finally {
+                    setDeletingCity(null);
+                }
+            },
+        });
     }
 
     const inactiveBairros = locations.filter(l => l.type !== 'cidade' && !l.active);
@@ -323,6 +374,7 @@ export default function BairrosManager({ onLocationsUpdated }: Props) {
                 <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--admin-text)', margin: 0 }}>📍 Cidades e Bairros</h1>
                 <p style={{ color: 'var(--admin-text-subtle)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
                     Cadastre cidades e bairros para gerar páginas locais (/{'{'}bairro{'}'}/{'{'}serviço{'}'}).
+                    Para excluir uma cidade e seus bairros, clique no ícone 🗑️ ao lado do nome da cidade.
                 </p>
             </div>
 
@@ -548,30 +600,52 @@ export default function BairrosManager({ onLocationsUpdated }: Props) {
                         const ativosCount = bairrosOnly.filter(b => b.active).length;
 
                         return (
-                            <div key={city} className="admin-card" style={{ overflow: 'hidden' }}>
+                            <div key={city} className="admin-card" style={{ overflow: 'visible' }}>
                                 <div
-                                    style={{ padding: '0.85rem 1rem', borderBottom: isExpanded ? '1px solid var(--admin-border)' : 'none', display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'rgba(255,255,255,0.02)', cursor: 'pointer' }}
+                                    style={{ padding: '0.85rem 1rem', borderBottom: isExpanded ? '1px solid var(--admin-border)' : 'none', display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'rgba(255,255,255,0.02)', cursor: 'pointer', flexWrap: 'wrap' }}
                                     onClick={() => setExpandedCity(isExpanded ? null : city)}
                                 >
-                                    <span style={{ fontSize: '0.9rem', transition: 'transform 0.2s', transform: isExpanded ? 'rotate(90deg)' : 'none' }}>▶</span>
-                                    <span style={{ fontSize: '1rem' }}>🏙️</span>
-                                    <div style={{ flex: 1 }}>
+                                    <span style={{ fontSize: '0.9rem', transition: 'transform 0.2s', transform: isExpanded ? 'rotate(90deg)' : 'none', flexShrink: 0 }}>▶</span>
+                                    <span style={{ fontSize: '1rem', flexShrink: 0 }}>🏙️</span>
+                                    <div style={{ flex: 1, minWidth: 100 }}>
                                         <span style={{ fontWeight: 700, color: 'var(--admin-text)', fontSize: '0.95rem' }}>{city}</span>
                                         <span style={{ marginLeft: '0.5rem', fontSize: '0.75rem', color: 'var(--admin-text-subtle)' }}>{state}</span>
                                     </div>
-                                    <span style={{ fontSize: '0.75rem', color: 'var(--admin-text-subtle)' }}>{ativosCount}/{bairrosOnly.length} bairros ativos</span>
-                                    <button
-                                        type="button"
-                                        onClick={(e) => { e.stopPropagation(); setSelectedCity(city); setBulkCity(city); setPanel('add'); setBairroNames(''); setExpandedCity(city); }}
-                                        className="admin-btn admin-btn-ghost"
-                                        style={{ fontSize: '0.75rem', padding: '0.35rem 0.65rem' }}
-                                    >
-                                        ➕ Bairros
-                                    </button>
+                                    <span style={{ fontSize: '0.75rem', color: 'var(--admin-text-subtle)', flexShrink: 0 }}>{ativosCount}/{bairrosOnly.length} bairros ativos</span>
+                                    <div style={{ display: 'flex', gap: '0.5rem', flexShrink: 0 }} onClick={e => e.stopPropagation()}>
+                                        <button
+                                            type="button"
+                                            onClick={(e) => { e.stopPropagation(); handleDeleteCity(city, items); }}
+                                            disabled={deletingCity === city}
+                                            title={`Excluir ${city} e todos os bairros`}
+                                            style={{ fontSize: '0.75rem', padding: '0.35rem 0.65rem', fontWeight: 600, background: 'rgba(239,68,68,0.2)', border: '1px solid rgba(239,68,68,0.5)', color: '#f87171', borderRadius: '6px', cursor: deletingCity === city ? 'wait' : 'pointer' }}
+                                        >
+                                            {deletingCity === city ? '⏳' : '🗑️ Excluir'}
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={(e) => { e.stopPropagation(); setSelectedCity(city); setBulkCity(city); setPanel('add'); setBairroNames(''); setExpandedCity(city); }}
+                                            className="admin-btn admin-btn-ghost"
+                                            style={{ fontSize: '0.75rem', padding: '0.35rem 0.65rem' }}
+                                        >
+                                            ➕ Bairros
+                                        </button>
+                                    </div>
                                 </div>
 
                                 {isExpanded && (
                                     <div>
+                                        <div style={{ padding: '0.75rem 1rem 0.75rem 2.5rem', borderBottom: '1px solid var(--admin-border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(239,68,68,0.05)' }}>
+                                            <span style={{ fontSize: '0.8rem', color: 'var(--admin-text-subtle)' }}>Excluir esta cidade e todos os {bairrosOnly.length} bairro(s)?</span>
+                                            <button
+                                                type="button"
+                                                onClick={(e) => { e.stopPropagation(); handleDeleteCity(city, items); }}
+                                                disabled={deletingCity === city}
+                                                style={{ fontSize: '0.8rem', padding: '0.4rem 0.8rem', fontWeight: 600, background: 'rgba(239,68,68,0.2)', border: '1px solid rgba(239,68,68,0.5)', color: '#f87171', borderRadius: '6px', cursor: deletingCity === city ? 'wait' : 'pointer' }}
+                                            >
+                                                {deletingCity === city ? '⏳ Excluindo...' : '🗑️ Excluir cidade e bairros'}
+                                            </button>
+                                        </div>
                                         {bairrosOnly.length === 0 ? (
                                             <div style={{ padding: '1rem 1rem 1rem 2.5rem', color: 'var(--admin-text-subtle)', fontSize: '0.85rem' }}>
                                                 Nenhum bairro ainda. Clique em <strong>➕ Bairros</strong> para adicionar.
@@ -596,7 +670,7 @@ export default function BairrosManager({ onLocationsUpdated }: Props) {
                                                     <button onClick={() => toggleActive(loc)} style={{ fontSize: '0.72rem', fontWeight: 700, padding: '0.2rem 0.6rem', borderRadius: '999px', border: 'none', cursor: 'pointer', background: loc.active ? 'rgba(74,222,128,0.15)' : 'rgba(148,163,184,0.12)', color: loc.active ? '#4ade80' : '#94a3b8' }}>
                                                         {loc.active ? 'Ativo' : 'Inativo'}
                                                     </button>
-                                                    <button onClick={() => handleDelete(loc.slug, loc.name)} disabled={deletingSlug === loc.slug} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ef4444', fontSize: '0.85rem', opacity: 0.6 }}>
+                                                    <button onClick={() => handleDelete(loc.slug, loc.name)} disabled={deletingSlug === loc.slug} title="Excluir bairro" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ef4444', fontSize: '0.85rem', opacity: 0.8 }}>
                                                         {deletingSlug === loc.slug ? '⏳' : '🗑️'}
                                                     </button>
                                                 </div>
@@ -609,6 +683,52 @@ export default function BairrosManager({ onLocationsUpdated }: Props) {
                     })}
                 </div>
             )}
+        {/* Modal de confirmação */}
+        {confirmModal && (
+            <div
+                style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}
+                onClick={() => setConfirmModal(null)}
+            >
+                {/* Overlay */}
+                <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }} />
+
+                {/* Caixa */}
+                <div
+                    style={{ position: 'relative', background: 'var(--admin-surface)', border: '1px solid var(--admin-border)', borderRadius: '14px', padding: '1.75rem', maxWidth: 420, width: '100%', boxShadow: '0 25px 50px rgba(0,0,0,0.5)' }}
+                    onClick={e => e.stopPropagation()}
+                >
+                    {/* Ícone */}
+                    <div style={{ width: 48, height: 48, borderRadius: '12px', background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', marginBottom: '1rem' }}>
+                        🗑️
+                    </div>
+
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--admin-text)', margin: '0 0 0.5rem 0' }}>
+                        {confirmModal.title}
+                    </h3>
+                    <p style={{ fontSize: '0.875rem', color: 'var(--admin-text-subtle)', margin: '0 0 1.5rem 0', lineHeight: 1.55 }}>
+                        {confirmModal.description}
+                    </p>
+
+                    <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
+                        <button
+                            type="button"
+                            onClick={() => setConfirmModal(null)}
+                            className="admin-btn admin-btn-ghost"
+                            style={{ fontSize: '0.875rem' }}
+                        >
+                            Cancelar
+                        </button>
+                        <button
+                            type="button"
+                            onClick={confirmModal.onConfirm}
+                            style={{ fontSize: '0.875rem', padding: '0.5rem 1.1rem', fontWeight: 700, background: '#ef4444', border: 'none', color: '#fff', borderRadius: '8px', cursor: 'pointer' }}
+                        >
+                            {confirmModal.label}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )}
         </div>
     );
 }

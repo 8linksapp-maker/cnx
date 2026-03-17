@@ -41,6 +41,7 @@ const contact      = await getSiteContactInfo();
 const siteSettings = await getEntry('siteSettings', 'settings').catch(() => null);
 const siteConfig   = await readSiteSettings();
 const colorScheme  = (siteSettings?.data?.colorScheme as 'dark' | 'light') || 'light';
+const themeId = 'classic';
 
 // Canonical URL: preferir settings, fallback para URL da requisição
 const canonicalBase = (siteConfig.canonicalUrl as string)?.trim() || '';
@@ -48,7 +49,7 @@ const pathname      = Astro.url.pathname.replace(/\/$/, '') || '/';
 const canonicalHref = canonicalBase
     ? `${canonicalBase.replace(/\/$/, '')}${pathname === '/' ? '' : pathname}`
     : Astro.url.origin + pathname;
-const pixelSettings = await readSingleton('pixels', 'classic').catch(() => null);
+const pixelSettings = await readSingleton('pixels', themeId).catch(() => null);
 const gaId     = pixelSettings?.googleAnalyticsId || '';
 const fbPixelId = pixelSettings?.facebookPixelId  || '';
 
