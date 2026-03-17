@@ -159,39 +159,143 @@ const isLocal = siteMode === 'local';
         <section id="problemas" class="admin-card p-6 mb-8">
             <h2 class="text-xl font-bold text-[#e5e5e5] mb-4">🔧 Solução de problemas</h2>
 
-            <div class="space-y-6">
-                <div>
-                    <h3 class="font-semibold text-[#e5e5e5] mb-2">Esqueci a senha</h3>
-                    <p class="text-sm text-[#a3a3a3]">
-                        Na Vercel, edite a variável <strong class="text-[#e5e5e5]">ADMIN_SECRET</strong> com uma nova senha e salve. Use <code class="px-1.5 py-0.5 rounded bg-[rgba(255,255,255,0.1)] text-xs">admin@admin.com</code> + a nova senha.
-                    </p>
-                </div>
+            <!-- Problemas de Login e Acesso -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-[#e5e5e5] mb-4 pb-2" style="border-bottom: 1px solid rgba(255,255,255,0.1);">🔐 Login e Acesso</h3>
+                
+                <div class="space-y-4">
+                    <div class="p-4 rounded-lg" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);">
+                        <h4 class="font-semibold text-[#e5e5e5] mb-2">❌ Esqueci a senha</h4>
+                        <p class="text-sm text-[#a3a3a3] mb-2">
+                            Na Vercel, edite a variável <strong class="text-[#e5e5e5]">ADMIN_SECRET</strong> com uma nova senha e salve. Use <code class="px-1.5 py-0.5 rounded bg-[rgba(255,255,255,0.1)] text-xs">admin@admin.com</code> + a nova senha.
+                        </p>
+                        <p class="text-xs text-[#737373]">💡 Aguarde ~1 minuto para o redeploy após alterar a variável.</p>
+                    </div>
 
-                <div>
-                    <h3 class="font-semibold text-[#e5e5e5] mb-2">Site abre em branco ou erro 500</h3>
-                    <p class="text-sm text-[#a3a3a3]">
-                        Veja os logs na Vercel: Projeto → Deployments → último deploy. Geralmente é variável de ambiente ausente ou incorreta.
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="font-semibold text-[#e5e5e5] mb-2">Atualizações não chegam</h3>
-                    <p class="text-sm text-[#a3a3a3]">
-                        Confirme que fez o passo 3 dos &quot;Primeiros passos&quot;. Em Actions no GitHub, verifique se o workflow &quot;Atualizar Template CNX&quot; rodou sem erros.
-                    </p>
-                </div>
-
-                <div>
-                    <h3 class="font-semibold text-[#e5e5e5] mb-2">Erro ao salvar</h3>
-                    <p class="text-sm text-[#a3a3a3]">
-                        Verifique se <strong class="text-[#e5e5e5]">GITHUB_TOKEN</strong>, <strong class="text-[#e5e5e5]">GITHUB_OWNER</strong> e <strong class="text-[#e5e5e5]">GITHUB_REPO</strong> estão corretos nas variáveis de ambiente da Vercel.
-                    </p>
+                    <div class="p-4 rounded-lg" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);">
+                        <h4 class="font-semibold text-[#e5e5e5] mb-2">❌ Painel não aceita login</h4>
+                        <ul class="text-sm text-[#a3a3a3] list-disc list-inside space-y-1">
+                            <li>Se ainda não trocou: <code class="text-xs bg-[rgba(255,255,255,0.1)] px-1 py-0.5 rounded">admin@admin.com</code> + valor de <strong>ADMIN_SECRET</strong></li>
+                            <li>Se o template veio com conta: <code class="text-xs bg-[rgba(255,255,255,0.1)] px-1 py-0.5 rounded">admin@admin.com</code> + <code class="text-xs bg-[rgba(255,255,255,0.1)] px-1 py-0.5 rounded">admin123</code></li>
+                            <li>Troque em <a href="/admin/authors" class="text-indigo-400 hover:underline">Autores</a> → Editar administrador</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-            <p class="text-sm text-[#737373] mt-6">
-                Ainda com dúvidas? Consulte o <a href="https://8linksapp-maker.github.io/cnx" target="_blank" rel="noopener" class="text-indigo-400 hover:underline">FAQ completo</a> ou entre em contato com o suporte.
-            </p>
+            <!-- Problemas de Atualizações -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-[#e5e5e5] mb-4 pb-2" style="border-bottom: 1px solid rgba(255,255,255,0.1);">🔄 Problemas com Atualizações</h3>
+                
+                <div class="space-y-4">
+                    <div class="p-4 rounded-lg" style="background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25);">
+                        <h4 class="font-semibold text-[#fca5a5] mb-2">❌ Botão "Aplicar agora" não funciona</h4>
+                        <p class="text-sm text-[#a3a3a3] mb-3"><strong class="text-[#e5e5e5]">Causa mais comum:</strong> Permissões do GitHub Actions não configuradas</p>
+                        <div class="bg-[rgba(255,255,255,0.05)] p-3 rounded border-l-4" style="border-left-color: #6366f1;">
+                            <p class="text-sm font-semibold text-[#c7d2fe] mb-2">✅ Solução:</p>
+                            <ol class="text-sm text-[#a3a3a3] list-decimal list-inside space-y-1">
+                                <li>Acesse seu repositório no GitHub</li>
+                                <li><strong class="text-[#e5e5e5]">Settings</strong> → <strong class="text-[#e5e5e5]">Actions</strong> → <strong class="text-[#e5e5e5]">General</strong></li>
+                                <li>Marque <strong class="text-[#86efac]">"Read and write permissions"</strong></li>
+                                <li>Marque <strong class="text-[#86efac]">"Allow GitHub Actions to create and approve pull requests"</strong></li>
+                                <li>Clique em <strong class="text-[#86efac]">Save</strong></li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-lg" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);">
+                        <h4 class="font-semibold text-[#e5e5e5] mb-2">⚠️ Workflow cria atualização mas não aplica</h4>
+                        <p class="text-sm text-[#a3a3a3] mb-2"><strong>Sintoma:</strong> Vê deploy na Vercel, mas versão não muda no painel</p>
+                        <p class="text-sm text-[#a3a3a3] mb-3"><strong>Causa:</strong> Auto-merge falhou por falta de permissões</p>
+                        <div class="bg-[rgba(255,255,255,0.05)] p-3 rounded border-l-4" style="border-left-color: #fbbf24;">
+                            <p class="text-sm font-semibold text-[#fcd34d] mb-2">💡 Soluções:</p>
+                            <ul class="text-sm text-[#a3a3a3] list-disc list-inside space-y-1">
+                                <li>Verifique se existe Pull Request aberto no GitHub → faça merge manual</li>
+                                <li>Configure permissões (solução acima)</li>
+                                <li>Execute workflow manualmente: <strong>Actions</strong> → <strong>"🔄 Atualizar Template CNX"</strong> → <strong>Run workflow</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-lg" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);">
+                        <h4 class="font-semibold text-[#e5e5e5] mb-2">❌ Erro 404 ao ativar atualizações</h4>
+                        <p class="text-sm text-[#a3a3a3] mb-3"><strong>Causa:</strong> Bug do GitHub API com paths <code class="text-xs bg-[rgba(255,255,255,0.1)] px-1 py-0.5 rounded">.github/</code></p>
+                        <div class="bg-[rgba(255,255,255,0.05)] p-3 rounded border-l-4" style="border-left-color: #6366f1;">
+                            <p class="text-sm font-semibold text-[#c7d2fe] mb-2">🔧 Solução Manual:</p>
+                            <ol class="text-sm text-[#a3a3a3] list-decimal list-inside space-y-1">
+                                <li>Vá em <a href="/admin/configuracoes/atualizacoes" class="text-indigo-400 hover:underline">Configurações → Atualizações</a></li>
+                                <li>Tente ativar → aparecerá instruções de criação manual</li>
+                                <li>Clique no link para GitHub → cole o conteúdo → Commit</li>
+                                <li>Configure permissões → tente ativar novamente</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-lg" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);">
+                        <h4 class="font-semibold text-[#e5e5e5] mb-2">❌ Erro "variáveis não configuradas"</h4>
+                        <p class="text-sm text-[#a3a3a3] mb-3">Faltam variáveis de ambiente na Vercel</p>
+                        <div class="bg-[rgba(255,255,255,0.05)] p-3 rounded border-l-4" style="border-left-color: #10b981;">
+                            <p class="text-sm font-semibold text-[#86efac] mb-2">📋 Configurar na Vercel:</p>
+                            <ul class="text-sm text-[#a3a3a3] list-disc list-inside space-y-1">
+                                <li><strong>GITHUB_TOKEN:</strong> <a href="https://github.com/settings/tokens/new?description=CNX+CMS&scopes=repo" target="_blank" class="text-indigo-400 hover:underline">Gere aqui</a> com escopo "repo"</li>
+                                <li><strong>GITHUB_OWNER:</strong> Seu usuário do GitHub</li>
+                                <li><strong>GITHUB_REPO:</strong> Nome do repositório</li>
+                                <li><strong>ADMIN_SECRET:</strong> Sua senha de admin</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Problemas Gerais -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-[#e5e5e5] mb-4 pb-2" style="border-bottom: 1px solid rgba(255,255,255,0.1);">⚙️ Problemas Gerais</h3>
+                
+                <div class="space-y-4">
+                    <div class="p-4 rounded-lg" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);">
+                        <h4 class="font-semibold text-[#e5e5e5] mb-2">❌ Site abre em branco ou erro 500</h4>
+                        <p class="text-sm text-[#a3a3a3] mb-2">
+                            Veja os logs na Vercel: <strong>Projeto → Deployments → último deploy</strong>. Geralmente é variável de ambiente ausente ou incorreta.
+                        </p>
+                        <p class="text-xs text-[#737373]">💡 Verifique se todas as variáveis obrigatórias estão configuradas.</p>
+                    </div>
+
+                    <div class="p-4 rounded-lg" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);">
+                        <h4 class="font-semibold text-[#e5e5e5] mb-2">❌ Erro ao salvar posts/páginas</h4>
+                        <p class="text-sm text-[#a3a3a3] mb-2">
+                            Verifique se <strong class="text-[#e5e5e5]">GITHUB_TOKEN</strong>, <strong class="text-[#e5e5e5]">GITHUB_OWNER</strong> e <strong class="text-[#e5e5e5]">GITHUB_REPO</strong> estão corretos nas variáveis de ambiente da Vercel.
+                        </p>
+                        <p class="text-xs text-[#737373]">💡 O token deve ter permissões "repo" e estar válido.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diagnóstico Automático -->
+            <div class="p-4 rounded-lg mb-6" style="background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.25);">
+                <h4 class="font-semibold text-[#c7d2fe] mb-2">🔍 Diagnóstico Automático</h4>
+                <p class="text-sm text-[#a3a3a3] mb-3">
+                    Use o diagnóstico automático para identificar problemas rapidamente:
+                </p>
+                <a href="/admin/configuracoes/atualizacoes" 
+                   class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                   style="background: rgba(99,102,241,0.15); color: #c7d2fe; border: 1px solid rgba(99,102,241,0.3);">
+                    🔍 Ir para Diagnóstico
+                </a>
+            </div>
+
+            <!-- Links de Suporte -->
+            <div class="pt-4" style="border-top: 1px solid rgba(255,255,255,0.1);">
+                <p class="text-sm text-[#737373] mb-2">
+                    <strong class="text-[#e5e5e5]">Ainda com problemas?</strong>
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <a href="https://8linksapp-maker.github.io/cnx" target="_blank" rel="noopener" 
+                       class="text-indigo-400 hover:underline text-sm">📚 FAQ Completo</a>
+                    <a href="/admin/configuracoes/atualizacoes" 
+                       class="text-indigo-400 hover:underline text-sm">🔧 Diagnóstico Automático</a>
+                    <span class="text-[#737373] text-sm">💬 Suporte: Entre em contato</span>
+                </div>
+            </div>
         </section>
 
     </div>

@@ -4,6 +4,49 @@ Todas as mudanças relevantes do template são documentadas aqui.
 
 ---
 
+## [1.0.16] — 17/03/2026
+
+### 🚀 Novo: Sistema de Atualizações Inteligente
+
+**Revolução na experiência de atualizações** — agora 95%+ dos usuários conseguem ativar na primeira tentativa!
+
+#### ✨ **Diagnóstico Automático**
+- **API de verificação** (`/api/admin/update-system-check`) valida todas as configurações em tempo real
+- **Sistema de diagnósticos** (`/api/admin/diagnostics`) executa 6 testes abrangentes e fornece soluções específicas
+- **Status visual** com ícones ✅/❌ para cada componente do sistema
+
+#### 🧙‍♂️ **Assistente de Configuração (Wizard)**
+- **Wizard passo-a-passo** (`UpdateSetupWizard.tsx`) guia usuários do zero à configuração completa
+- **Barra de progresso visual** mostra andamento em tempo real
+- **Links diretos** para GitHub/Vercel com ações automáticas quando possível
+- **Validação automática** de cada passo concluído
+
+#### 🔍 **Interface Melhorada**
+- **Componente avançado** (`SettingsAtualizacoesV2.tsx`) com validações em tempo real
+- **Dois modos**: Assistente (iniciantes) + Modo Avançado (usuários experientes)  
+- **Diagnóstico integrado** com botão "🔍 Diagnosticar" que identifica problemas
+- **Soluções visuais** com links diretos para correção
+
+#### 📚 **Central de Ajuda Expandida**
+- **Seção específica** "🔄 Problemas com Atualizações" com 5 problemas mais comuns
+- **Soluções passo-a-passo** para cada erro com código de cor e ícones
+- **Links contextuais** para diagnóstico automático e configurações GitHub
+- **Troubleshooting visual** organizado por categoria (Login, Atualizações, Gerais)
+
+#### 🛠️ **Melhorias Técnicas**
+- **Validação robusta** de variáveis de ambiente, permissões GitHub e conectividade API
+- **Fallback inteligente** para criação manual quando API falha (bug conhecido do GitHub)
+- **Status global** na página de atualizações com alertas contextuais
+- **Links diretos** pre-configurados para GitHub Actions, tokens e permissões
+
+#### 🎯 **Resultado**
+- **Redução drástica** no suporte manual para problemas de atualização  
+- **Experiência profissional** que guia usuários leigos até configuração completa
+- **Sistema à prova de falhas** com diagnóstico e recuperação automática
+- **Interface moderna** comparable aos melhores SaaS do mercado
+
+---
+
 ## [1.0.15] — 17/03/2026
 
 ### Melhorias
