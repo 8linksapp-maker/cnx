@@ -35,6 +35,7 @@ function urlNode(base: string, path: string, lastmod?: string): string {
 export const GET: APIRoute = async ({ request }) => {
     const settings = await readSiteSettings();
     const generate = settings.generateSitemap !== false;
+    const siteMode = (settings.siteMode as string) || 'blog';
     let base = (settings.canonicalUrl as string)?.trim();
     if (!base) {
         try {
@@ -95,27 +96,29 @@ ${stylesheet}
         console.error('\x1b[31m✗ Erro ao coletar autores para sitemap:\x1b[0m', e);
     }
 
-    // Páginas locais: [location]/[service]
-    try {
-        const [locations, services] = await Promise.all([listLocations(), listServices()]);
-        const activeServices = services.filter(s => s.data.active !== false);
-        const validLocations = locations.filter(
-            l => l.data.active || l.data.type === 'cidade',
-        );
+    // Páginas locais: [location]/[service] - apenas no modo local
+    if (siteMode === 'local') {
+        try {
+            const [locations, services] = await Promise.all([listLocations(), listServices()]);
+            const activeServices = services.filter(s => s.data.active !== false);
+            const validLocations = locations.filter(
+                l => l.data.active || l.data.type === 'cidade',
+            );
 
-        if (validLocations.length > 0 && activeServices.length > 0) {
-            for (const loc of validLocations) {
+            if (validLocations.length > 0 && activeServices.length > 0) {
+                for (const loc of validLocations) {
+                    for (const svc of activeServices) {
+                        urls.push(urlNode(base, `/${loc.data.slug}/${svc.data.slug}`, today));
+                    }
+                }
+            } else if (activeServices.length > 0) {
                 for (const svc of activeServices) {
-                    urls.push(urlNode(base, `/${loc.data.slug}/${svc.data.slug}`, today));
+                    urls.push(urlNode(base, `/servicos/${svc.data.slug}`, today));
                 }
             }
-        } else if (activeServices.length > 0) {
-            for (const svc of activeServices) {
-                urls.push(urlNode(base, `/servicos/${svc.data.slug}`, today));
-            }
+        } catch (e) {
+            console.error('\x1b[31m✗ Erro ao coletar páginas locais para sitemap:\x1b[0m', e);
         }
-    } catch (e) {
-        console.error('\x1b[31m✗ Erro ao coletar páginas locais para sitemap:\x1b[0m', e);
     }
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>

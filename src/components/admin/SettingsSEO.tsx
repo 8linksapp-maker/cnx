@@ -144,54 +144,273 @@ export default function SettingsSEO() {
                 </p>
             </div>
 
-            <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#a3a3a3', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                    Estrutura de URLs dos posts
-                </label>
-                <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '0.5rem' }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.9rem', color: '#e5e5e5' }}>
-                        <input
-                            type="radio"
-                            name="blogUrlPrefix"
-                            checked={blogUrlPrefix === 'blog'}
-                            onChange={() => setBlogUrlPrefix('blog')}
-                            style={{ accentColor: 'var(--primary, #6366f1)' }}
-                        />
-                        Com /blog — /blog/slug-do-post
-                    </label>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.9rem', color: '#e5e5e5' }}>
-                        <input
-                            type="radio"
-                            name="blogUrlPrefix"
-                            checked={blogUrlPrefix === 'root'}
-                            onChange={() => setBlogUrlPrefix('root')}
-                            style={{ accentColor: 'var(--primary, #6366f1)' }}
-                        />
-                        Sem /blog — /slug-do-post
-                    </label>
+            {/* Seção destacada de URLs do Blog */}
+            <div style={{
+                padding: '1.5rem',
+                borderRadius: '12px',
+                background: 'linear-gradient(135deg, rgba(168,85,247,0.08) 0%, rgba(99,102,241,0.08) 100%)',
+                border: '2px solid rgba(168,85,247,0.2)',
+                position: 'relative',
+            }}>
+                {/* Badge de destaque */}
+                <div style={{
+                    position: 'absolute',
+                    top: '-10px',
+                    left: '20px',
+                    background: 'linear-gradient(135deg, #a855f7, #6366f1)',
+                    color: 'white',
+                    padding: '0.25rem 0.75rem',
+                    borderRadius: '12px',
+                    fontSize: '0.7rem',
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                }}>
+                    ⚡ Mais Solicitado
                 </div>
-                <select
-                    value={blogPermalinkStructure}
-                    onChange={e => setBlogPermalinkStructure(e.target.value as BlogPermalinkStructure)}
-                    style={{
-                        width: '100%',
-                        padding: '0.75rem 1rem',
-                        borderRadius: '8px',
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        background: 'rgba(255,255,255,0.04)',
-                        color: '#e5e5e5',
-                        fontSize: '0.9rem',
-                        boxSizing: 'border-box',
-                        marginBottom: '1rem',
-                    }}
-                >
-                    <option value="postname">Nome do post</option>
-                    <option value="year_month">Ano e mês — {blogUrlPrefix === 'root' ? '/2025/03/slug' : '/blog/2025/03/slug'}</option>
-                    <option value="year_month_day">Data completa — {blogUrlPrefix === 'root' ? '/2025/03/04/slug' : '/blog/2025/03/04/slug'}</option>
-                </select>
-                <p style={{ fontSize: '0.7rem', color: '#52525b', marginBottom: '1.25rem' }}>
-                    Define como as URLs dos artigos aparecem. Use data completa para organizar conteúdo por época.
-                </p>
+
+                <div style={{ marginBottom: '1rem' }}>
+                    <h3 style={{ 
+                        fontSize: '1.1rem', 
+                        fontWeight: 700, 
+                        color: '#e5e5e5', 
+                        marginBottom: '0.5rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem'
+                    }}>
+                        🔗 Estrutura de URLs dos Posts
+                    </h3>
+                    <p style={{ 
+                        fontSize: '0.85rem', 
+                        color: '#c7d2fe', 
+                        lineHeight: 1.5,
+                        margin: 0 
+                    }}>
+                        Escolha se quer URLs mais limpas removendo o "/blog" ou manter a estrutura tradicional do blog.
+                    </p>
+                </div>
+
+                {/* Opções de Prefixo com destaque visual */}
+                <div style={{ marginBottom: '1.5rem' }}>
+                    <label style={{ 
+                        display: 'block', 
+                        fontSize: '0.8rem', 
+                        fontWeight: 600, 
+                        color: '#d8b4fe', 
+                        marginBottom: '0.75rem',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em'
+                    }}>
+                        Prefixo das URLs
+                    </label>
+                    
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        {/* Opção COM /blog */}
+                        <label style={{ 
+                            display: 'flex', 
+                            alignItems: 'flex-start', 
+                            gap: '1rem', 
+                            cursor: 'pointer',
+                            padding: '1rem',
+                            borderRadius: '8px',
+                            background: blogUrlPrefix === 'blog' 
+                                ? 'rgba(99,102,241,0.15)' 
+                                : 'rgba(255,255,255,0.02)',
+                            border: `2px solid ${blogUrlPrefix === 'blog' 
+                                ? 'rgba(99,102,241,0.3)' 
+                                : 'rgba(255,255,255,0.08)'}`,
+                            transition: 'all 0.2s ease'
+                        }}>
+                            <input
+                                type="radio"
+                                name="blogUrlPrefix"
+                                checked={blogUrlPrefix === 'blog'}
+                                onChange={() => setBlogUrlPrefix('blog')}
+                                style={{ 
+                                    accentColor: 'var(--primary, #6366f1)',
+                                    marginTop: '0.125rem',
+                                    flexShrink: 0
+                                }}
+                            />
+                            <div style={{ flex: 1 }}>
+                                <div style={{ 
+                                    fontSize: '0.95rem', 
+                                    fontWeight: 600, 
+                                    color: '#e5e5e5',
+                                    marginBottom: '0.25rem'
+                                }}>
+                                    📁 Com /blog (Tradicional)
+                                </div>
+                                <div style={{ 
+                                    fontSize: '0.8rem', 
+                                    color: '#94a3b8',
+                                    marginBottom: '0.5rem'
+                                }}>
+                                    URLs ficam organizadas em uma seção dedicada
+                                </div>
+                                <div style={{
+                                    fontFamily: 'monospace',
+                                    fontSize: '0.8rem',
+                                    color: '#c7d2fe',
+                                    background: 'rgba(255,255,255,0.05)',
+                                    padding: '0.5rem 0.75rem',
+                                    borderRadius: '6px',
+                                    border: '1px solid rgba(255,255,255,0.1)'
+                                }}>
+                                    🌐 exemplo.com<strong>/blog</strong>/{blogPermalinkStructure === 'postname' ? 'nome-do-post' : blogPermalinkStructure === 'year_month' ? '2025/03/nome-do-post' : '2025/03/17/nome-do-post'}
+                                </div>
+                            </div>
+                        </label>
+
+                        {/* Opção SEM /blog */}
+                        <label style={{ 
+                            display: 'flex', 
+                            alignItems: 'flex-start', 
+                            gap: '1rem', 
+                            cursor: 'pointer',
+                            padding: '1rem',
+                            borderRadius: '8px',
+                            background: blogUrlPrefix === 'root' 
+                                ? 'rgba(34,197,94,0.15)' 
+                                : 'rgba(255,255,255,0.02)',
+                            border: `2px solid ${blogUrlPrefix === 'root' 
+                                ? 'rgba(34,197,94,0.3)' 
+                                : 'rgba(255,255,255,0.08)'}`,
+                            transition: 'all 0.2s ease'
+                        }}>
+                            <input
+                                type="radio"
+                                name="blogUrlPrefix"
+                                checked={blogUrlPrefix === 'root'}
+                                onChange={() => setBlogUrlPrefix('root')}
+                                style={{ 
+                                    accentColor: '#22c55e',
+                                    marginTop: '0.125rem',
+                                    flexShrink: 0
+                                }}
+                            />
+                            <div style={{ flex: 1 }}>
+                                <div style={{ 
+                                    fontSize: '0.95rem', 
+                                    fontWeight: 600, 
+                                    color: '#e5e5e5',
+                                    marginBottom: '0.25rem',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.5rem'
+                                }}>
+                                    ✨ Sem /blog (URLs Limpas)
+                                    <span style={{
+                                        background: '#22c55e',
+                                        color: 'white',
+                                        fontSize: '0.65rem',
+                                        padding: '0.125rem 0.375rem',
+                                        borderRadius: '8px',
+                                        fontWeight: 700,
+                                        textTransform: 'uppercase'
+                                    }}>
+                                        Popular
+                                    </span>
+                                </div>
+                                <div style={{ 
+                                    fontSize: '0.8rem', 
+                                    color: '#94a3b8',
+                                    marginBottom: '0.5rem'
+                                }}>
+                                    URLs mais limpas e amigáveis para SEO
+                                </div>
+                                <div style={{
+                                    fontFamily: 'monospace',
+                                    fontSize: '0.8rem',
+                                    color: '#86efac',
+                                    background: 'rgba(34,197,94,0.05)',
+                                    padding: '0.5rem 0.75rem',
+                                    borderRadius: '6px',
+                                    border: '1px solid rgba(34,197,94,0.2)'
+                                }}>
+                                    🌐 exemplo.com/{blogPermalinkStructure === 'postname' ? 'nome-do-post' : blogPermalinkStructure === 'year_month' ? '2025/03/nome-do-post' : '2025/03/17/nome-do-post'}
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                {/* Estrutura de Data */}
+                <div>
+                    <label style={{ 
+                        display: 'block', 
+                        fontSize: '0.8rem', 
+                        fontWeight: 600, 
+                        color: '#d8b4fe', 
+                        marginBottom: '0.75rem',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em'
+                    }}>
+                        📅 Incluir Data na URL
+                    </label>
+                    
+                    <select
+                        value={blogPermalinkStructure}
+                        onChange={e => setBlogPermalinkStructure(e.target.value as BlogPermalinkStructure)}
+                        style={{
+                            width: '100%',
+                            padding: '0.875rem 1rem',
+                            borderRadius: '8px',
+                            border: '2px solid rgba(168,85,247,0.2)',
+                            background: 'rgba(255,255,255,0.05)',
+                            color: '#e5e5e5',
+                            fontSize: '0.9rem',
+                            boxSizing: 'border-box',
+                            fontWeight: 500,
+                        }}
+                    >
+                        <option value="postname">
+                            📝 Apenas nome — {blogUrlPrefix === 'root' ? '/nome-do-post' : '/blog/nome-do-post'}
+                        </option>
+                        <option value="year_month">
+                            📆 Ano/mês — {blogUrlPrefix === 'root' ? '/2025/03/nome-do-post' : '/blog/2025/03/nome-do-post'}
+                        </option>
+                        <option value="year_month_day">
+                            📊 Data completa — {blogUrlPrefix === 'root' ? '/2025/03/17/nome-do-post' : '/blog/2025/03/17/nome-do-post'}
+                        </option>
+                    </select>
+                </div>
+
+                {/* Aviso importante */}
+                <div style={{
+                    marginTop: '1rem',
+                    padding: '0.875rem',
+                    borderRadius: '8px',
+                    background: 'rgba(251,191,36,0.08)',
+                    border: '1px solid rgba(251,191,36,0.25)',
+                }}>
+                    <div style={{ 
+                        display: 'flex', 
+                        alignItems: 'flex-start', 
+                        gap: '0.5rem'
+                    }}>
+                        <span style={{ fontSize: '1rem', flexShrink: 0 }}>⚠️</span>
+                        <div>
+                            <p style={{ 
+                                fontSize: '0.8rem', 
+                                color: '#fcd34d', 
+                                fontWeight: 600, 
+                                margin: '0 0 0.25rem' 
+                            }}>
+                                Atenção ao alterar URLs
+                            </p>
+                            <p style={{ 
+                                fontSize: '0.75rem', 
+                                color: '#e5e5e5', 
+                                margin: 0,
+                                lineHeight: 1.4 
+                            }}>
+                                Mudanças afetam posts já publicados. Configure antes de criar conteúdo ou use redirects para evitar links quebrados.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div>

@@ -4,6 +4,26 @@ Todas as mudanças relevantes do template são documentadas aqui.
 
 ---
 
+## [1.0.17] — 17/03/2026
+
+### 🔧 Correções de SEO
+
+#### 🗺️ **Sitemap Inteligente por Modo**
+- **Problema corrigido**: Sitemap incluía páginas locais desnecessárias no modo blog
+- **Solução**: Sitemap agora respeita `siteMode`:
+  - **Modo Blog**: Exclui páginas locais (`/bairro/servico`) para SEO mais limpo
+  - **Modo Local**: Inclui tudo (blog + páginas locais) para cobertura completa
+- **Benefício**: Google indexa apenas conteúdo relevante para cada modo
+
+#### ✨ **Interface de URLs Melhorada**
+- **Seção destacada** "🔗 Estrutura de URLs" no SettingsSEO com badge "⚡ Mais Solicitado"
+- **Previews visuais** das URLs em tempo real conforme configuração
+- **Documentação expandida** na Central de Ajuda com tutorial passo-a-passo
+- **Links diretos** da página Posts para configuração de URLs
+- **Tab renomeada** para "🔍 SEO & URLs" em Configurações
+
+---
+
 ## [1.0.16] — 17/03/2026
 
 ### 🚀 Novo: Sistema de Atualizações Inteligente

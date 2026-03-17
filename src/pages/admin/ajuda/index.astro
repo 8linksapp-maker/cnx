@@ -35,6 +35,9 @@ const isLocal = siteMode === 'local';
             <a href="#atualizacoes" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-[rgba(255,255,255,0.05)]" style="color: #a3a3a3; border: 1px solid rgba(255,255,255,0.1);">
                 🔄 Atualizações
             </a>
+            <a href="#urls" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-[rgba(255,255,255,0.05)]" style="color: #a3a3a3; border: 1px solid rgba(255,255,255,0.1);">
+                🔗 URLs do Blog
+            </a>
             <a href="#problemas" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-[rgba(255,255,255,0.05)]" style="color: #a3a3a3; border: 1px solid rgba(255,255,255,0.1);">
                 🔧 Solução de problemas
             </a>
@@ -112,7 +115,7 @@ const isLocal = siteMode === 'local';
                 </div>
                 <div>
                     <h3 class="font-semibold text-[#e5e5e5] mb-1">Configurações</h3>
-                    <p class="text-sm text-[#a3a3a3]">IA para gerar conteúdo, SEO (sitemap, robots.txt) e dados de contato (telefone e WhatsApp centralizados).</p>
+                    <p class="text-sm text-[#a3a3a3]">IA para gerar conteúdo, SEO (sitemap, robots.txt), estrutura de URLs do blog e dados de contato (telefone e WhatsApp centralizados).</p>
                 </div>
 
                 {isLocal && (
@@ -155,7 +158,82 @@ const isLocal = siteMode === 'local';
             </div>
         </section>
 
-        <!-- Seção 4: Solução de problemas -->
+        <!-- Seção 4: URLs do Blog -->
+        <section id="urls" class="admin-card p-6 mb-8">
+            <h2 class="text-xl font-bold text-[#e5e5e5] mb-4">🔗 Configuração de URLs do Blog</h2>
+            <p class="text-[#a3a3a3] text-sm mb-6">
+                Configure como as URLs dos seus posts são exibidas. Escolha entre estrutura tradicional com "/blog" ou URLs limpas.
+            </p>
+
+            <div class="p-4 rounded-lg mb-6" style="background: linear-gradient(135deg, rgba(168,85,247,0.08) 0%, rgba(99,102,241,0.08) 100%); border: 2px solid rgba(168,85,247,0.2);">
+                <div class="flex items-center gap-2 mb-3">
+                    <span style="background: linear-gradient(135deg, #a855f7, #6366f1); color: white; padding: 0.25rem 0.5rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700;">⚡ MAIS SOLICITADO</span>
+                    <h3 class="font-semibold text-[#e5e5e5]">Remover "/blog" da URL</h3>
+                </div>
+                <p class="text-sm text-[#c7d2fe] mb-4">
+                    Transforme <code class="bg-[rgba(255,255,255,0.1)] px-1.5 py-0.5 rounded text-xs">exemplo.com/blog/post</code> 
+                    em <code class="bg-[rgba(34,197,94,0.15)] px-1.5 py-0.5 rounded text-xs text-[#86efac]">exemplo.com/post</code>
+                </p>
+                
+                <div class="space-y-3">
+                    <h4 class="font-medium text-[#e5e5e5] text-sm">Como fazer:</h4>
+                    <ol class="text-sm text-[#a3a3a3] list-decimal list-inside space-y-2">
+                        <li>
+                            Acesse <a href="/admin/configuracoes/seo" class="text-[#c4b5fd] hover:underline font-medium">Configurações → SEO</a>
+                        </li>
+                        <li>
+                            Procure a seção <strong class="text-[#d8b4fe]">"🔗 Estrutura de URLs dos Posts"</strong> (destaque roxo)
+                        </li>
+                        <li>
+                            Selecione <strong class="text-[#86efac]">"✨ Sem /blog (URLs Limpas)"</strong>
+                        </li>
+                        <li>
+                            Clique em <strong class="text-[#e5e5e5]">"💾 Salvar Configurações"</strong>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="mt-4 p-3 rounded-lg" style="background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.25);">
+                    <div class="flex items-start gap-2">
+                        <span class="text-base mt-0.5">⚠️</span>
+                        <div>
+                            <p class="text-sm font-medium text-[#fcd34d] mb-1">Importante:</p>
+                            <p class="text-xs text-[#a3a3a3] leading-relaxed">
+                                Configure antes de publicar posts. Se já tem posts publicados, considere usar redirects 301 para evitar quebrar links existentes.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-lg" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);">
+                    <h4 class="font-semibold text-[#e5e5e5] mb-2 flex items-center gap-1">
+                        📁 Com /blog
+                        <span class="text-xs bg-[rgba(99,102,241,0.15)] text-[#c7d2fe] px-1.5 py-0.5 rounded">Tradicional</span>
+                    </h4>
+                    <p class="text-sm text-[#a3a3a3] mb-3">Posts organizados em seção específica</p>
+                    <div class="space-y-1 text-xs font-mono">
+                        <div class="text-[#c7d2fe]">exemplo.com<span class="text-[#6366f1]">/blog</span>/post</div>
+                        <div class="text-[#c7d2fe]">exemplo.com<span class="text-[#6366f1]">/blog</span>/2025/03/post</div>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-lg" style="background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.2);">
+                    <h4 class="font-semibold text-[#e5e5e5] mb-2 flex items-center gap-1">
+                        ✨ Sem /blog
+                        <span class="text-xs bg-[rgba(34,197,94,0.2)] text-[#86efac] px-1.5 py-0.5 rounded">Limpa</span>
+                    </h4>
+                    <p class="text-sm text-[#a3a3a3] mb-3">URLs diretas e amigáveis ao SEO</p>
+                    <div class="space-y-1 text-xs font-mono">
+                        <div class="text-[#86efac]">exemplo.com/post</div>
+                        <div class="text-[#86efac]">exemplo.com/2025/03/post</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 5: Solução de problemas -->
         <section id="problemas" class="admin-card p-6 mb-8">
             <h2 class="text-xl font-bold text-[#e5e5e5] mb-4">🔧 Solução de problemas</h2>
 
@@ -178,6 +256,41 @@ const isLocal = siteMode === 'local';
                             <li>Se ainda não trocou: <code class="text-xs bg-[rgba(255,255,255,0.1)] px-1 py-0.5 rounded">admin@admin.com</code> + valor de <strong>ADMIN_SECRET</strong></li>
                             <li>Se o template veio com conta: <code class="text-xs bg-[rgba(255,255,255,0.1)] px-1 py-0.5 rounded">admin@admin.com</code> + <code class="text-xs bg-[rgba(255,255,255,0.1)] px-1 py-0.5 rounded">admin123</code></li>
                             <li>Troque em <a href="/admin/authors" class="text-indigo-400 hover:underline">Autores</a> → Editar administrador</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- URLs do Blog -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-[#e5e5e5] mb-4 pb-2" style="border-bottom: 1px solid rgba(255,255,255,0.1);">🔗 URLs do Blog</h3>
+                
+                <div class="space-y-4">
+                    <div class="p-4 rounded-lg" style="background: rgba(168,85,247,0.08); border: 1px solid rgba(168,85,247,0.25);">
+                        <h4 class="font-semibold text-[#c4b5fd] mb-2">✨ Como remover "/blog" da URL (URLs limpas)</h4>
+                        <p class="text-sm text-[#a3a3a3] mb-3">
+                            Por padrão, posts ficam em <code class="text-xs bg-[rgba(255,255,255,0.1)] px-1 py-0.5 rounded">exemplo.com/blog/nome-post</code>. 
+                            Para URLs mais limpas como <code class="text-xs bg-[rgba(255,255,255,0.1)] px-1 py-0.5 rounded">exemplo.com/nome-post</code>:
+                        </p>
+                        <ol class="text-sm text-[#a3a3a3] list-decimal list-inside space-y-1 mb-3">
+                            <li>Vá em <a href="/admin/configuracoes/seo" class="text-indigo-400 hover:underline">Configurações → SEO</a></li>
+                            <li>Na seção "🔗 Estrutura de URLs dos Posts" (destacada em roxo)</li>
+                            <li>Marque "✨ Sem /blog (URLs Limpas)"</li>
+                            <li>Clique em "💾 Salvar Configurações"</li>
+                        </ol>
+                        <div class="bg-[rgba(251,191,36,0.08)] border border-[rgba(251,191,36,0.25)] rounded p-3 mt-3">
+                            <p class="text-sm text-[#fbbf24] font-medium mb-1">⚠️ Atenção:</p>
+                            <p class="text-xs text-[#a3a3a3]">Configure antes de criar posts ou use redirects para não quebrar links existentes.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-lg" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);">
+                        <h4 class="font-semibold text-[#e5e5e5] mb-2">📅 Estruturas de data nas URLs</h4>
+                        <p class="text-sm text-[#a3a3a3] mb-2">Você pode incluir data nas URLs para melhor organização:</p>
+                        <ul class="text-sm text-[#a3a3a3] list-disc list-inside space-y-1">
+                            <li><strong class="text-[#e5e5e5]">Apenas nome:</strong> <code class="text-xs bg-[rgba(255,255,255,0.1)] px-1 py-0.5 rounded">/nome-do-post</code></li>
+                            <li><strong class="text-[#e5e5e5]">Ano/mês:</strong> <code class="text-xs bg-[rgba(255,255,255,0.1)] px-1 py-0.5 rounded">/2025/03/nome-do-post</code></li>
+                            <li><strong class="text-[#e5e5e5]">Data completa:</strong> <code class="text-xs bg-[rgba(255,255,255,0.1)] px-1 py-0.5 rounded">/2025/03/17/nome-do-post</code></li>
                         </ul>
                     </div>
                 </div>
