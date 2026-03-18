@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex, nofollow" />
-    <title>Central de Ajuda — CNX CMS</title>
+    <meta name="description" content="CNX CMS - Guia completo para criar seu site profissional em 5 minutos. Do zero ao ar, sem complicação!" />
+    <title>CNX CMS — Seu Site Profissional em 5 Minutos</title>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://fav.farm/💜" />
+    
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -15,20 +21,27 @@
             --bg:         #0a0a0a;
             --surface:    #111111;
             --surface2:   #1a1a1a;
+            --surface3:   #222222;
             --border:     rgba(255,255,255,0.08);
+            --border2:    rgba(255,255,255,0.15);
             --text:       #e5e5e5;
+            --text2:      #d1d5db;
             --muted:      #a3a3a3;
-            --subtle:     #525252;
+            --subtle:     #737373;
             --accent:     #a855f7;
             --accent-dim: rgba(168,85,247,0.15);
+            --accent-bright: #c084fc;
             --green:      #4ade80;
             --green-dim:  rgba(74,222,128,0.1);
+            --green-bright: #86efac;
             --yellow:     #fbbf24;
             --yellow-dim: rgba(251,191,36,0.1);
             --red:        #f87171;
             --red-dim:    rgba(248,113,113,0.1);
             --blue:       #60a5fa;
             --blue-dim:   rgba(96,165,250,0.1);
+            --orange:     #fb923c;
+            --orange-dim: rgba(251,146,60,0.1);
         }
 
         html { scroll-behavior: smooth; }
@@ -42,835 +55,1082 @@
             min-height: 100vh;
         }
 
-        /* ── Header ── */
-        header {
-            border-bottom: 1px solid var(--border);
-            background: rgba(17,17,17,0.95);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        /* Typography */
+        h1, h2, h3 { font-family: 'Outfit', sans-serif; font-weight: 700; }
+        h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin-bottom: 1rem; }
+        h2 { font-size: clamp(1.5rem, 4vw, 2rem); line-height: 1.2; margin-bottom: 1rem; }
+        h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-bright), var(--blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .header-inner {
-            max-width: 900px;
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 1.5rem;
-            height: 60px;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(17,17,17,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 1rem;
+            padding: 1rem 0;
         }
+
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.625rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
             text-decoration: none;
         }
-        .logo-badge {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background: var(--accent-dim);
-            border: 1px solid rgba(168,85,247,0.3);
+
+        .nav-links {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Outfit', sans-serif;
-            font-size: 11px;
-            font-weight: 800;
-            color: var(--accent);
-            letter-spacing: -0.5px;
-        }
-        .logo-text {
-            font-family: 'Outfit', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--text);
-        }
-        .logo-sub {
-            font-size: 12px;
-            color: var(--subtle);
-            font-weight: 400;
-            font-family: 'Inter', sans-serif;
-        }
-        .header-badge {
-            font-size: 11px;
-            padding: 3px 10px;
-            border-radius: 999px;
-            background: var(--accent-dim);
-            border: 1px solid rgba(168,85,247,0.25);
-            color: var(--accent);
-            font-weight: 600;
-            white-space: nowrap;
+            gap: 2rem;
+            list-style: none;
         }
 
-        /* ── Hero ── */
-        .hero {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 3.5rem 1.5rem 2.5rem;
-            text-align: center;
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
         }
-        .hero-eyebrow {
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: radial-gradient(ellipse at center, rgba(168,85,247,0.1) 0%, transparent 50%);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
             display: inline-flex;
             align-items: center;
-            gap: 0.375rem;
-            font-size: 12px;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--blue));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
             font-weight: 600;
-            color: var(--accent);
-            background: var(--accent-dim);
-            border: 1px solid rgba(168,85,247,0.2);
-            padding: 4px 12px;
-            border-radius: 999px;
-            margin-bottom: 1.25rem;
-        }
-        .hero h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: clamp(1.75rem, 4vw, 2.5rem);
-            font-weight: 800;
-            color: #fff;
-            line-height: 1.2;
-            margin-bottom: 0.875rem;
-        }
-        .hero p {
-            font-size: 15px;
-            color: var(--muted);
-            max-width: 480px;
-            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 32px rgba(168,85,247,0.3);
+            transition: all 0.2s;
+            margin-bottom: 1rem;
         }
 
-        /* ── Search ── */
-        .search-wrap {
-            max-width: 480px;
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 48px rgba(168,85,247,0.4);
+        }
+
+        .time-badge {
+            background: var(--green-dim);
+            color: var(--green-bright);
+            padding: 0.5rem 1rem;
+            border-radius: 24px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+
+        /* Quick Start Section */
+        .quick-start {
+            padding: 4rem 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(17,17,17,0.5) 100%);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            max-width: 600px;
             margin: 0 auto;
-            position: relative;
         }
-        .search-wrap svg {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--subtle);
-            flex-shrink: 0;
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
-        #search {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.75rem;
+
+        .step-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text);
-            font-size: 14px;
-            font-family: 'Inter', sans-serif;
-            outline: none;
-            transition: border-color 0.15s;
-        }
-        #search::placeholder { color: var(--subtle); }
-        #search:focus { border-color: rgba(168,85,247,0.4); }
-
-        /* ── Category nav ── */
-        .cat-nav {
-            max-width: 900px;
-            margin: 2rem auto 0;
-            padding: 0 1.5rem;
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-        .cat-btn {
-            font-size: 12px;
-            font-weight: 600;
-            padding: 5px 14px;
-            border-radius: 999px;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--muted);
-            cursor: pointer;
-            transition: all 0.15s;
-            font-family: 'Inter', sans-serif;
-        }
-        .cat-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
-        .cat-btn.active {
-            background: var(--accent-dim);
-            border-color: rgba(168,85,247,0.35);
-            color: var(--accent);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* ── Main layout ── */
-        main {
-            max-width: 900px;
-            margin: 2rem auto 5rem;
-            padding: 0 1.5rem;
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--blue));
         }
 
-        /* ── Section ── */
-        .faq-section { margin-bottom: 2.5rem; }
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 0.625rem;
-            margin-bottom: 0.875rem;
+        .step-card:hover {
+            border-color: var(--border2);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.3);
         }
-        .section-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 7px;
-            display: flex;
+
+        .step-number {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-        .section-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 13px;
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(135deg, var(--accent), var(--blue));
+            color: white;
+            border-radius: 50%;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--subtle);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
         }
 
-        /* ── FAQ Item ── */
-        .faq-item {
+        .step-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .step-desc {
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-bright);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .step-action:hover {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        /* Features */
+        .features {
+            padding: 4rem 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem 1rem;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            margin-bottom: 6px;
-            overflow: hidden;
-            transition: border-color 0.15s;
+            border-radius: 16px;
         }
-        .faq-item:hover { border-color: rgba(255,255,255,0.12); }
-        .faq-item.open { border-color: rgba(168,85,247,0.25); }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-desc {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 4rem 0;
+            background: var(--surface);
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
 
         .faq-question {
             width: 100%;
+            background: none;
+            border: none;
+            padding: 1.5rem;
+            text-align: left;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 1rem;
-            padding: 1rem 1.125rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            text-align: left;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text);
-            line-height: 1.5;
+            transition: background 0.2s;
         }
-        .faq-question:hover { color: #fff; }
-        .faq-chevron {
-            flex-shrink: 0;
-            width: 18px;
-            height: 18px;
-            border-radius: 4px;
+
+        .faq-question:hover {
             background: var(--surface2);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            color: var(--subtle);
-            transition: transform 0.2s, background 0.15s;
-        }
-        .faq-item.open .faq-chevron {
-            transform: rotate(180deg);
-            background: var(--accent-dim);
-            border-color: rgba(168,85,247,0.25);
-            color: var(--accent);
         }
 
         .faq-answer {
-            display: none;
-            padding: 0 1.125rem 1.125rem;
-            border-top: 1px solid var(--border);
-        }
-        .faq-item.open .faq-answer { display: block; }
-
-        .faq-answer p {
-            font-size: 13.5px;
+            padding: 0 1.5rem 1.5rem;
             color: var(--muted);
-            margin-bottom: 0.75rem;
-            line-height: 1.7;
-        }
-        .faq-answer p:last-child { margin-bottom: 0; }
-        .faq-answer strong { color: var(--text); font-weight: 600; }
-
-        .faq-answer ol,
-        .faq-answer ul {
-            padding-left: 1.25rem;
-            margin-bottom: 0.75rem;
-        }
-        .faq-answer li {
-            font-size: 13.5px;
-            color: var(--muted);
-            margin-bottom: 0.35rem;
-            line-height: 1.65;
-        }
-        .faq-answer li strong { color: var(--text); }
-
-        .faq-answer code {
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 12px;
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            padding: 1px 6px;
-            border-radius: 4px;
-            color: #c084fc;
-        }
-
-        /* Callouts */
-        .tip, .warn, .info, .success {
-            display: flex;
-            gap: 0.625rem;
-            align-items: flex-start;
-            padding: 0.75rem 0.875rem;
-            border-radius: 8px;
-            margin-bottom: 0.75rem;
-            font-size: 13px;
             line-height: 1.6;
         }
-        .tip    { background: var(--green-dim);  border: 1px solid rgba(74,222,128,0.15);  color: #86efac; }
-        .warn   { background: var(--yellow-dim); border: 1px solid rgba(251,191,36,0.15);  color: #fcd34d; }
-        .info   { background: var(--blue-dim);   border: 1px solid rgba(96,165,250,0.15);  color: #93c5fd; }
-        .callout-icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
 
-        /* ── No results ── */
-        #no-results {
+        .faq-item:not(.active) .faq-answer {
             display: none;
-            text-align: center;
-            padding: 4rem 1rem;
-            color: var(--subtle);
         }
-        #no-results svg { margin: 0 auto 1rem; opacity: 0.3; }
-        #no-results p { font-size: 14px; }
 
-        /* ── Footer ── */
-        footer {
+        .faq-icon {
+            transition: transform 0.2s;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Code snippets */
+        .code {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--green-bright);
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .code:hover .copy-btn {
+            opacity: 1;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: var(--green-dim);
+            color: var(--green-bright);
+        }
+
+        .badge-warning {
+            background: var(--yellow-dim);
+            color: var(--yellow);
+        }
+
+        .badge-info {
+            background: var(--blue-dim);
+            color: var(--blue);
+        }
+
+        /* Alert boxes */
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+        }
+
+        .alert-tip {
+            background: var(--green-dim);
+            border-color: var(--green);
+            color: var(--green-bright);
+        }
+
+        .alert-warning {
+            background: var(--yellow-dim);
+            border-color: var(--yellow);
+            color: var(--yellow);
+        }
+
+        .alert-info {
+            background: var(--blue-dim);
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 3rem 0;
             border-top: 1px solid var(--border);
-            padding: 2rem 1.5rem;
             text-align: center;
-        }
-        footer p {
-            font-size: 12px;
             color: var(--subtle);
         }
-        footer a { color: var(--accent); text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
 
-        /* ── Responsive ── */
-        @media (max-width: 600px) {
-            .hero { padding: 2.5rem 1.25rem 1.5rem; }
-            main { padding: 0 1rem; }
-            .cat-nav { padding: 0 1rem; }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            .nav-links { display: none; }
+            .steps-grid { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .footer-links { flex-direction: column; gap: 1rem; }
+        }
+
+        /* Smooth animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--blue));
+            z-index: 100;
+            transition: width 0.2s;
         }
     </style>
 </head>
 <body>
+    <div class="progress-bar" id="progress"></div>
 
-<header>
-    <div class="header-inner">
-        <a class="logo" href="https://github.com/8linksapp-maker/cnx">
-            <div class="logo-badge">CNX</div>
-            <div>
-                <div class="logo-text">CNX CMS</div>
-            </div>
-        </a>
-        <span class="header-badge">🔒 Área de Suporte</span>
-    </div>
-</header>
-
-<section class="hero">
-    <div class="hero-eyebrow">📖 Central de Ajuda</div>
-    <h1>Dúvidas Frequentes</h1>
-    <p>Respostas detalhadas para as perguntas mais comuns sobre o CNX CMS.</p>
-    <div class="search-wrap">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input type="search" id="search" placeholder="Buscar pergunta..." autocomplete="off" />
-    </div>
-</section>
-
-<nav class="cat-nav" id="cat-nav">
-    <button class="cat-btn active" data-cat="all">Todas</button>
-    <button class="cat-btn" data-cat="token">🔗 Token e Variáveis</button>
-    <button class="cat-btn" data-cat="login">🔑 Login e Senha</button>
-    <button class="cat-btn" data-cat="conteudo">📝 Conteúdo</button>
-    <button class="cat-btn" data-cat="atualizacoes">🔄 Atualizações</button>
-    <button class="cat-btn" data-cat="dominio">🌐 Domínio e Hospedagem</button>
-    <button class="cat-btn" data-cat="actions">⚙️ GitHub Actions</button>
-</nav>
-
-<main>
-
-    <!-- ── Token e Variáveis ─────────────────────────────────── -->
-    <div class="faq-section" data-section="token">
-        <div class="section-header">
-            <div class="section-icon" style="background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.2);">🔗</div>
-            <span class="section-title">Token e Variáveis de Ambiente</span>
-        </div>
-
-        <div class="faq-item" data-cat="token">
-            <button class="faq-question">
-                Posso usar o mesmo token em vários projetos?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <div class="tip"><span class="callout-icon">✅</span> Sim! Você pode usar o mesmo token em quantos projetos quiser.</div>
-                <p>O token do GitHub funciona como uma <strong>"chave mestra" da sua conta</strong> — ele representa você como usuário, não está preso a um repositório específico.</p>
-                <p><strong>Exemplo prático:</strong> se você tem 3 sites na Vercel, pode colocar o mesmo <code>GITHUB_TOKEN</code> nos 3. Cada um tem seu próprio <code>GITHUB_REPO</code>, então cada site salva no repositório certo.</p>
-                <div class="warn"><span class="callout-icon">⚠️</span> Se o token for revogado, todos os projetos que o usam param de salvar ao mesmo tempo. Nesse caso, gere um novo e atualize em cada projeto na Vercel.</div>
-            </div>
-        </div>
-
-        <div class="faq-item" data-cat="token">
-            <button class="faq-question">
-                Meu token expirou — o que faço?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>Quando o token expira, você verá um erro ao tentar salvar posts ou páginas pelo painel. A solução é gerar um novo token e atualizar na Vercel:</p>
-                <ol>
-                    <li>Acesse <strong>github.com/settings/tokens</strong></li>
-                    <li>Clique em <strong>"Generate new token (classic)"</strong></li>
-                    <li>Em "Note", escreva: <code>CNX Token</code></li>
-                    <li>Marque a permissão <code>repo</code></li>
-                    <li>Clique em <strong>Generate token</strong> e <strong>copie o valor</strong> — você só verá uma vez</li>
-                    <li>Acesse <strong>Vercel → seu projeto → Settings → Environment Variables</strong></li>
-                    <li>Clique em <code>GITHUB_TOKEN</code> para editar e cole o novo valor</li>
-                    <li>Clique em <strong>Save</strong> e aguarde o redeploy (~1 min)</li>
-                </ol>
-                <div class="tip"><span class="callout-icon">💡</span> Para não expirar, ao criar o token deixe o campo "Expiration" como <strong>"No expiration"</strong>.</div>
-            </div>
-        </div>
-
-        <div class="faq-item" data-cat="token">
-            <button class="faq-question">
-                Onde encontro meu GITHUB_OWNER?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>É o seu <strong>nome de usuário do GitHub</strong> — aquele que aparece na URL quando você acessa seu perfil.</p>
-                <p>Exemplo: se a URL do seu perfil é <code>github.com/joao-silva</code>, então <code>GITHUB_OWNER=joao-silva</code>.</p>
-                <div class="info"><span class="callout-icon">💡</span> Você também vê seu usuário clicando na foto de perfil no canto superior direito do GitHub — aparece logo abaixo do seu nome.</div>
-            </div>
-        </div>
-
-        <div class="faq-item" data-cat="token">
-            <button class="faq-question">
-                Como sei qual é o GITHUB_REPO correto?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>É o <strong>nome exato do repositório</strong> que aparece na URL do GitHub — não o nome com espaços, mas o nome técnico.</p>
-                <p>Exemplo: se o repositório fica em <code>github.com/joao-silva/meu-site-cnx</code>, então <code>GITHUB_REPO=meu-site-cnx</code>.</p>
-                <div class="warn"><span class="callout-icon">⚠️</span> Atenção com maiúsculas e minúsculas. Se o repositório se chama <code>Meu-Site-CNX</code>, o valor precisa ser exatamente assim.</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ── Login e Senha ─────────────────────────────────────── -->
-    <div class="faq-section" data-section="login">
-        <div class="section-header">
-            <div class="section-icon" style="background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.2);">🔑</div>
-            <span class="section-title">Login e Senha</span>
-        </div>
-
-        <div class="faq-item" data-cat="login">
-            <button class="faq-question">
-                Qual é o login padrão depois do deploy?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>Logo após o deploy, as credenciais padrão são:</p>
-                <ul>
-                    <li><strong>E-mail:</strong> <code>admin@admin.com</code></li>
-                    <li><strong>Senha:</strong> o valor que você colocou em <code>ADMIN_SECRET</code> durante o deploy</li>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#inicio" class="logo">CNX CMS</a>
+                <ul class="nav-links">
+                    <li><a href="#inicio-rapido">🚀 Início Rápido</a></li>
+                    <li><a href="#guia-completo">📖 Guia Completo</a></li>
+                    <li><a href="#faq">❓ FAQ</a></li>
+                    <li><a href="#problemas">🔧 Ajuda</a></li>
                 </ul>
-                <div class="tip"><span class="callout-icon">✅</span> Após entrar, vá em <strong>Autores</strong> e altere o e-mail e a senha para os seus dados reais.</div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="inicio" class="hero">
+        <div class="container">
+            <h1 class="gradient-text fade-in">Seu Site Profissional em 5 Minutos</h1>
+            <p class="hero-subtitle fade-in">
+                Crie um site completo com blog, painel de administração e atualizações automáticas. 
+                <strong>Sem programação, sem complicação!</strong>
+            </p>
+            
+            <a href="#inicio-rapido" class="hero-cta fade-in">
+                🚀 Começar Agora
+            </a>
+            
+            <div class="time-badge fade-in">
+                ⏱️ 100% online • Deploy gratuito • 5 minutos
             </div>
         </div>
+    </section>
 
-        <div class="faq-item" data-cat="login">
-            <button class="faq-question">
-                Esqueci minha senha — como recupero o acesso?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>Você tem duas opções:</p>
-                <p><strong>Opção 1 — Mais fácil (trocar pelo ADMIN_SECRET):</strong></p>
-                <ol>
-                    <li>Acesse <strong>Vercel → seu projeto → Settings → Environment Variables</strong></li>
-                    <li>Edite <code>ADMIN_SECRET</code> com uma nova senha</li>
-                    <li>Clique em <strong>Save</strong> e aguarde o redeploy (~1 min)</li>
-                    <li>Faça login com <code>admin@admin.com</code> + a nova senha</li>
-                </ol>
-                <p><strong>Opção 2 — Pelo GitHub (para contas personalizadas):</strong></p>
-                <ol>
-                    <li>Acesse seu repositório no GitHub</li>
-                    <li>Navegue até <code>src/content/authors/</code></li>
-                    <li>Abra o arquivo <code>.yaml</code> do seu usuário</li>
-                    <li>Remova a linha <code>adminPasswordHash: ...</code></li>
-                    <li>Salve e faça commit</li>
-                    <li>Acesse <code>/admin/setup</code> para criar uma nova senha</li>
-                </ol>
+    <!-- Quick Start -->
+    <section id="inicio-rapido" class="quick-start">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="gradient-text">🚀 Início Rápido</h2>
+                <p class="section-subtitle">
+                    Para quem quer o site no ar <strong>agora!</strong> 
+                    Siga estes 3 passos simples e tenha seu site funcionando em 5 minutos.
+                </p>
+            </div>
+
+            <div class="steps-grid">
+                <div class="step-card fade-in">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Criar Contas Grátis</h3>
+                    <p class="step-desc">
+                        Você precisa de 2 contas gratuitas: <strong>GitHub</strong> (para guardar o código) 
+                        e <strong>Vercel</strong> (para publicar o site).
+                    </p>
+                    <div class="alert alert-tip">
+                        💡 <strong>Dica:</strong> Na Vercel, escolha "Continue with GitHub" para conectar as duas contas automaticamente!
+                    </div>
+                    <a href="#passo-1" class="step-action">
+                        📋 Ver instruções detalhadas →
+                    </a>
+                </div>
+
+                <div class="step-card fade-in" style="animation-delay: 0.1s;">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Gerar Token do GitHub</h3>
+                    <p class="step-desc">
+                        Você precisa de uma "chave de acesso" para que o sistema possa salvar as alterações no seu site. 
+                        É como uma senha especial.
+                    </p>
+                    <div class="code">
+                        <button class="copy-btn" onclick="copyToClipboard('https://github.com/settings/tokens/new?description=CNX+CMS&scopes=repo')">Copiar</button>
+                        https://github.com/settings/tokens/new?description=CNX+CMS&scopes=repo
+                    </div>
+                    <div class="alert alert-warning">
+                        ⚠️ <strong>Atenção:</strong> Você só verá o token uma vez! Copie e guarde em um bloco de notas.
+                    </div>
+                    <a href="#passo-2" class="step-action">
+                        🔑 Como gerar o token →
+                    </a>
+                </div>
+
+                <div class="step-card fade-in" style="animation-delay: 0.2s;">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Deploy com 1 Clique</h3>
+                    <p class="step-desc">
+                        Clique no botão mágico, preencha 4 campos simples e pronto! 
+                        Seu site estará no ar em 2 minutos.
+                    </p>
+                    
+                    <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2F8linksapp-maker%2Fcnx&env=ADMIN_SECRET,GITHUB_TOKEN,GITHUB_OWNER,GITHUB_REPO&envDescription=ADMIN_SECRET%3A%20sua%20senha%20(login%3A%20admin%40admin.com%20%2B%20este%20valor)%20%7C%20GITHUB_TOKEN%3A%20gere%20em%20github.com%2Fsettings%2Ftokens%20marcando%20%22repo%22%20%7C%20GITHUB_OWNER%3A%20seu%20usu%C3%A1rio%20do%20GitHub%20%7C%20GITHUB_REPO%3A%20nome%20do%20projeto%20escolhido%20acima&envLink=https%3A%2F%2F8linksapp-maker.github.io%2Fcnx&project-name=meu-site-cnx&repository-name=meu-site-cnx" 
+                       class="hero-cta" target="_blank" style="margin-bottom: 1rem; font-size: 1rem;">
+                        🚀 Deploy with Vercel
+                    </a>
+                    
+                    <div class="badge badge-success">
+                        ✅ Site no ar em 2 minutos
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info" style="margin-top: 3rem; text-align: center;">
+                🎉 <strong>Parabéns!</strong> Depois do deploy, acesse <code>SEU-SITE.vercel.app/admin</code> para gerenciar seu site!
             </div>
         </div>
+    </section>
 
-        <div class="faq-item" data-cat="login">
-            <button class="faq-question">
-                O login diz "credenciais inválidas" mesmo com a senha certa
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>Isso geralmente acontece por um desses motivos:</p>
-                <ul>
-                    <li>O <code>ADMIN_SECRET</code> foi configurado na Vercel mas o redeploy ainda não completou — aguarde 1-2 minutos e tente de novo</li>
-                    <li>Você está usando a senha antiga antes de ter alterado o <code>ADMIN_SECRET</code></li>
-                    <li>O e-mail não está exatamente como <code>admin@admin.com</code> (verifique espaços ou letras maiúsculas)</li>
-                </ul>
-                <div class="info"><span class="callout-icon">💡</span> Para confirmar se o redeploy completou, acesse <strong>Vercel → seu projeto → Deployments</strong> — o último deve mostrar "Ready" em verde.</div>
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>✨ O Que Você Vai Ter</h2>
+                <p class="section-subtitle">
+                    Um site profissional completo, sem precisar entender de programação
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature fade-in">
+                    <span class="feature-icon">🎨</span>
+                    <h3 class="feature-title">Visual Profissional</h3>
+                    <p class="feature-desc">Design moderno e responsivo que funciona perfeitamente em celular, tablet e desktop</p>
+                </div>
+
+                <div class="feature fade-in" style="animation-delay: 0.1s;">
+                    <span class="feature-icon">📝</span>
+                    <h3 class="feature-title">Blog Integrado</h3>
+                    <p class="feature-desc">Sistema de blog completo com categorias, autores e editor visual amigável</p>
+                </div>
+
+                <div class="feature fade-in" style="animation-delay: 0.2s;">
+                    <span class="feature-icon">⚡</span>
+                    <h3 class="feature-title">Super Rápido</h3>
+                    <p class="feature-desc">Site otimizado que carrega em menos de 1 segundo, melhor que 95% dos sites</p>
+                </div>
+
+                <div class="feature fade-in" style="animation-delay: 0.3s;">
+                    <span class="feature-icon">🛡️</span>
+                    <h3 class="feature-title">100% Seguro</h3>
+                    <p class="feature-desc">Sem banco de dados para hackear. Tudo fica no seu GitHub, você é dono de tudo</p>
+                </div>
+
+                <div class="feature fade-in" style="animation-delay: 0.4s;">
+                    <span class="feature-icon">🔄</span>
+                    <h3 class="feature-title">Atualizações Automáticas</h3>
+                    <p class="feature-desc">Receba melhorias e correções automaticamente, sem perder seu conteúdo</p>
+                </div>
+
+                <div class="feature fade-in" style="animation-delay: 0.5s;">
+                    <span class="feature-icon">💰</span>
+                    <h3 class="feature-title">Grátis Para Sempre</h3>
+                    <p class="feature-desc">Hospedagem gratuita na Vercel, sem limites de tráfego para sites normais</p>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="faq-item" data-cat="login">
-            <button class="faq-question">
-                Posso ter mais de um administrador?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>Sim! Você pode criar quantos usuários quiser. Existem dois níveis de acesso:</p>
-                <ul>
-                    <li><strong>Admin</strong> — acesso completo: posts, páginas, configurações, pixels, analytics</li>
-                    <li><strong>Editor</strong> — acesso apenas a posts e autores</li>
-                </ul>
-                <p>Para criar um novo usuário: <strong>Admin → Autores → Novo Autor</strong>. Preencha o e-mail, crie uma senha e escolha o nível de acesso.</p>
+    <!-- FAQ -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>❓ Perguntas Frequentes</h2>
+                <p class="section-subtitle">
+                    Respostas simples para as dúvidas mais comuns
+                </p>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        🤔 Preciso saber programar?
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <strong>Não!</strong> O CNX foi feito exatamente para quem não sabe programar. Você vai usar apenas cliques, formulários e um editor visual para escrever posts. É como usar o WordPress, mas mais simples e mais rápido.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        💰 É realmente gratuito?
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <strong>Sim, 100% gratuito!</strong> O GitHub e a Vercel oferecem planos gratuitos que são mais que suficientes para a maioria dos sites. Você só paga se tiver muito tráfego (centenas de milhares de visitantes por mês).
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        🔒 Meus dados ficam seguros?
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <strong>Mais seguros que no WordPress!</strong> Tudo fica no seu próprio GitHub, você é dono de 100% dos dados. Não há banco de dados para hackear, não há servidor para invadir. É a arquitetura mais segura que existe.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        ⏰ Quanto tempo leva para criar?
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <strong>5 minutos!</strong> 2 minutos para criar as contas, 1 minuto para gerar o token, 2 minutos para o deploy. Depois disso, você já pode acessar o painel e começar a personalizar.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        🎨 Posso personalizar o visual?
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <strong>Sim!</strong> Você pode mudar cores, logo, textos, imagens e criar páginas personalizadas pelo painel. Para mudanças mais avançadas, um desenvolvedor pode editar o código no GitHub.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        🆘 E se eu tiver problemas?
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <strong>Suporte completo!</strong> Temos esta documentação detalhada, uma central de ajuda no painel do site e diagnósticos automáticos que explicam exatamente o que fazer quando algo dá errado.
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- ── Conteúdo ──────────────────────────────────────────── -->
-    <div class="faq-section" data-section="conteudo">
-        <div class="section-header">
-            <div class="section-icon" style="background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.2);">📝</div>
-            <span class="section-title">Conteúdo e Posts</span>
-        </div>
+    <!-- Guia Completo -->
+    <section id="guia-completo" class="quick-start" style="background: linear-gradient(180deg, transparent 0%, rgba(17,17,17,0.8) 100%);">
+        <div class="container">
+            <div class="section-header">
+                <h2>📖 Guia Completo Passo-a-Passo</h2>
+                <p class="section-subtitle">
+                    Instruções detalhadas com screenshots para cada etapa. 
+                    Perfeito para quem quer fazer com calma e entender cada passo.
+                </p>
+            </div>
 
-        <div class="faq-item" data-cat="conteudo">
-            <button class="faq-question">
-                Salvei um post mas ele não apareceu no site
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>Isso é normal! O CNX salva o conteúdo no GitHub e a Vercel precisa reconstruir o site com os novos dados. <strong>Esse processo leva entre 1 e 2 minutos.</strong></p>
-                <p>O que fazer:</p>
-                <ol>
-                    <li>Aguarde 2 minutos após salvar</li>
-                    <li>Recarregue a página do blog (Ctrl+F5 ou Cmd+Shift+R para forçar sem cache)</li>
-                    <li>Se ainda não aparecer, acesse <strong>Vercel → Deployments</strong> e verifique se o último deploy está "Ready"</li>
-                </ol>
-                <div class="warn"><span class="callout-icon">⚠️</span> Se o post não aparecer após 5 minutos, verifique se as variáveis <code>GITHUB_TOKEN</code>, <code>GITHUB_OWNER</code> e <code>GITHUB_REPO</code> estão configuradas corretamente.</div>
+            <!-- Passo 1: Criar Contas -->
+            <div id="passo-1" class="step-card fade-in" style="margin-bottom: 2rem;">
+                <div class="step-number" style="background: linear-gradient(135deg, #4ade80, #22c55e);">1</div>
+                <h3 class="step-title">🎯 Criar Contas Gratuitas</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                    <div style="background: var(--surface2); padding: 1.5rem; border-radius: 12px;">
+                        <h4 style="color: var(--green-bright); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            🐙 GitHub Account
+                        </h4>
+                        <p style="color: var(--muted); margin-bottom: 1rem; font-size: 0.95rem;">
+                            O GitHub vai guardar o código do seu site (como um Google Drive para programadores).
+                        </p>
+                        <a href="https://github.com/signup" target="_blank" class="hero-cta" style="font-size: 0.9rem; padding: 0.75rem 1.5rem;">
+                            Criar conta GitHub
+                        </a>
+                    </div>
+
+                    <div style="background: var(--surface2); padding: 1.5rem; border-radius: 12px;">
+                        <h4 style="color: var(--blue); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            ▲ Vercel Account
+                        </h4>
+                        <p style="color: var(--muted); margin-bottom: 1rem; font-size: 0.95rem;">
+                            A Vercel vai publicar seu site na internet (gratuito para sites normais).
+                        </p>
+                        <a href="https://vercel.com/signup" target="_blank" class="hero-cta" style="font-size: 0.9rem; padding: 0.75rem 1.5rem;">
+                            Criar conta Vercel
+                        </a>
+                    </div>
+                </div>
+
+                <div class="alert alert-tip">
+                    <strong>💡 Super Dica:</strong> Na Vercel, clique em <strong>"Continue with GitHub"</strong> para conectar as duas contas automaticamente. Assim você só precisa fazer um login!
+                </div>
+            </div>
+
+            <!-- Passo 2: Token -->
+            <div id="passo-2" class="step-card fade-in" style="margin-bottom: 2rem;">
+                <div class="step-number" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">2</div>
+                <h3 class="step-title">🔑 Gerar Token do GitHub</h3>
+                
+                <p style="color: var(--muted); margin-bottom: 1.5rem; font-size: 1.05rem;">
+                    O token é como uma "chave especial" que permite ao CNX salvar alterações no seu site. 
+                    Você só precisa fazer isso uma vez.
+                </p>
+
+                <div style="background: var(--surface2); padding: 2rem; border-radius: 12px; margin: 1.5rem 0;">
+                    <h4 style="margin-bottom: 1rem; color: var(--text);">🎯 Passo-a-passo simples:</h4>
+                    <ol style="color: var(--muted); line-height: 1.8; padding-left: 1.5rem;">
+                        <li><strong>Clique neste link:</strong> 
+                            <div class="code" style="margin: 0.5rem 0; font-size: 0.85rem;">
+                                <button class="copy-btn" onclick="copyToClipboard('https://github.com/settings/tokens/new?description=CNX+CMS&scopes=repo')">Copiar</button>
+                                https://github.com/settings/tokens/new?description=CNX+CMS&scopes=repo
+                            </div>
+                            <em style="color: var(--subtle);">O link já abre com as opções certas marcadas!</em>
+                        </li>
+                        <li><strong>Deixe tudo como está</strong> e role até o final da página</li>
+                        <li>Clique no botão verde <strong>"Generate token"</strong></li>
+                        <li><strong>⚠️ IMPORTANTE:</strong> Copie o token que aparece (começa com <code>ghp_</code>)</li>
+                        <li>Cole o token em um <strong>bloco de notas</strong> - você vai precisar dele no próximo passo!</li>
+                    </ol>
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>⚠️ Cuidado:</strong> O GitHub só mostra o token UMA VEZ! Se você não copiar agora, terá que gerar outro. Guarde ele em um lugar seguro.
+                </div>
+
+                <div style="background: var(--surface2); padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem;">
+                    <h4 style="color: var(--yellow); margin-bottom: 0.5rem;">🤔 Por que preciso de um token?</h4>
+                    <p style="color: var(--muted); font-size: 0.95rem;">
+                        É uma questão de segurança! O token permite que apenas você (ou o CNX com sua autorização) 
+                        faça alterações no seu site. É como dar uma chave da casa para alguém de confiança.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Passo 3: Deploy -->
+            <div class="step-card fade-in" style="margin-bottom: 2rem;">
+                <div class="step-number" style="background: linear-gradient(135deg, #a855f7, #8b5cf6);">3</div>
+                <h3 class="step-title">🚀 Deploy com 1 Clique</h3>
+                
+                <p style="color: var(--muted); margin-bottom: 1.5rem; font-size: 1.05rem;">
+                    Agora é a parte mais fácil! Clique no botão e preencha 4 campos simples. 
+                    Em 2 minutos seu site estará online!
+                </p>
+
+                <div style="text-align: center; margin: 2rem 0;">
+                    <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2F8linksapp-maker%2Fcnx&env=ADMIN_SECRET,GITHUB_TOKEN,GITHUB_OWNER,GITHUB_REPO&envDescription=ADMIN_SECRET%3A%20sua%20senha%20(login%3A%20admin%40admin.com%20%2B%20este%20valor)%20%7C%20GITHUB_TOKEN%3A%20gere%20em%20github.com%2Fsettings%2Ftokens%20marcando%20%22repo%22%20%7C%20GITHUB_OWNER%3A%20seu%20usu%C3%A1rio%20do%20GitHub%20%7C%20GITHUB_REPO%3A%20nome%20do%20projeto%20escolhido%20acima&envLink=https%3A%2F%2F8linksapp-maker.github.io%2Fcnx&project-name=meu-site-cnx&repository-name=meu-site-cnx" 
+                       class="hero-cta" target="_blank" style="margin-bottom: 1rem; font-size: 1.1rem;">
+                        🚀 Deploy with Vercel
+                    </a>
+                </div>
+
+                <div style="background: var(--surface2); padding: 2rem; border-radius: 12px; margin: 1.5rem 0;">
+                    <h4 style="margin-bottom: 1.5rem; color: var(--text);">📝 Campos para preencher:</h4>
+                    
+                    <div style="display: grid; gap: 1rem;">
+                        <div style="display: flex; gap: 1rem; align-items: center; padding: 1rem; background: var(--surface3); border-radius: 8px;">
+                            <div style="background: var(--accent); color: white; padding: 0.5rem; border-radius: 6px; font-weight: bold; min-width: 140px; text-align: center; font-size: 0.85rem;">
+                                ADMIN_SECRET
+                            </div>
+                            <div>
+                                <strong>Uma senha que você escolhe</strong><br>
+                                <small style="color: var(--muted);">Exemplo: <code>minhasenha123</code> • Será usada para entrar no painel</small>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; align-items: center; padding: 1rem; background: var(--surface3); border-radius: 8px;">
+                            <div style="background: var(--green); color: white; padding: 0.5rem; border-radius: 6px; font-weight: bold; min-width: 140px; text-align: center; font-size: 0.85rem;">
+                                GITHUB_TOKEN
+                            </div>
+                            <div>
+                                <strong>O token que você copiou no passo anterior</strong><br>
+                                <small style="color: var(--muted);">Começa com <code>ghp_</code> • Cole aqui o que você guardou</small>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; align-items: center; padding: 1rem; background: var(--surface3); border-radius: 8px;">
+                            <div style="background: var(--blue); color: white; padding: 0.5rem; border-radius: 6px; font-weight: bold; min-width: 140px; text-align: center; font-size: 0.85rem;">
+                                GITHUB_OWNER
+                            </div>
+                            <div>
+                                <strong>Seu nome de usuário no GitHub</strong><br>
+                                <small style="color: var(--muted);">Exemplo: <code>joaosilva</code> • Clique na sua foto no GitHub para ver</small>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; align-items: center; padding: 1rem; background: var(--surface3); border-radius: 8px;">
+                            <div style="background: var(--orange); color: white; padding: 0.5rem; border-radius: 6px; font-weight: bold; min-width: 140px; text-align: center; font-size: 0.85rem;">
+                                GITHUB_REPO
+                            </div>
+                            <div>
+                                <strong>Nome do projeto (o mesmo que escolheu acima)</strong><br>
+                                <small style="color: var(--muted);">Exemplo: <code>meu-site-cnx</code> • Deve ser idêntico ao nome do projeto</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>🎉 Pronto!</strong> Depois que clicar em "Deploy", aguarde uns 2 minutos. 
+                    Quando aparecer "✅ Success", seu site já está no ar!
+                </div>
+            </div>
+
+            <!-- Passo 4: Acessar Painel -->
+            <div class="step-card fade-in">
+                <div class="step-number" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">4</div>
+                <h3 class="step-title">🎛️ Acessar o Painel Admin</h3>
+                
+                <p style="color: var(--muted); margin-bottom: 1.5rem; font-size: 1.05rem;">
+                    Agora você pode acessar o painel de controle do seu site e começar a personalizá-lo!
+                </p>
+
+                <div style="background: var(--surface2); padding: 2rem; border-radius: 12px; margin: 1.5rem 0;">
+                    <h4 style="margin-bottom: 1rem; color: var(--text);">🔗 Como acessar:</h4>
+                    <ol style="color: var(--muted); line-height: 1.8; padding-left: 1.5rem;">
+                        <li>Acesse: <code style="background: var(--surface3); padding: 0.25rem 0.5rem; border-radius: 4px;">SEU-SITE.vercel.app/admin</code></li>
+                        <li>Substitua <strong>SEU-SITE</strong> pelo nome que você deu no deploy</li>
+                        <li>Use o login: <strong>admin@admin.com</strong></li>
+                        <li>Use a senha que você colocou em <strong>ADMIN_SECRET</strong></li>
+                    </ol>
+                </div>
+
+                <div class="alert alert-tip">
+                    <strong>🔒 Segurança:</strong> Depois do primeiro login, vá em <strong>Autores</strong> e troque o e-mail e senha para os seus. É muito importante fazer isso!
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="faq-item" data-cat="conteudo">
-            <button class="faq-question">
-                Deletei um post mas ele voltou após um tempo
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>O mesmo processo de reconstrução se aplica. Após deletar, aguarde 1-2 minutos para o site ser reconstruído sem o post.</p>
-                <p>Se o post continuar aparecendo mesmo após 5 minutos, provavelmente as variáveis <code>GITHUB_TOKEN</code>, <code>GITHUB_OWNER</code> e <code>GITHUB_REPO</code> não estão configuradas — o sistema está salvando apenas localmente (memória temporária) sem gravar no GitHub.</p>
-                <div class="info"><span class="callout-icon">💡</span> Verifique o painel da Vercel → seu projeto → Settings → Environment Variables para confirmar que as 3 variáveis estão presentes.</div>
+    <!-- Resolução de Problemas -->
+    <section id="problemas" class="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>🔧 Resolução de Problemas</h2>
+                <p class="section-subtitle">
+                    Soluções rápidas para os problemas mais comuns, explicadas em linguagem simples
+                </p>
+            </div>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        🚫 O painel não aceita meu login
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <strong>Soluções por ordem de prioridade:</strong><br><br>
+                        
+                        <strong>1. Se você ainda não mudou a senha:</strong><br>
+                        • E-mail: <code>admin@admin.com</code><br>
+                        • Senha: o valor que você colocou em <strong>ADMIN_SECRET</strong> no deploy<br><br>
+                        
+                        <strong>2. Se o template veio com senha padrão:</strong><br>
+                        • E-mail: <code>admin@admin.com</code><br>
+                        • Senha: <code>admin123</code><br><br>
+                        
+                        <strong>3. Para trocar a senha:</strong><br>
+                        Depois de entrar, vá em <strong>Autores</strong> → clique no "Administrador" → altere e-mail e senha.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        🔐 Esqueci minha senha
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <strong>Solução simples:</strong><br><br>
+                        
+                        1. Vá para <a href="https://vercel.com" target="_blank" style="color: var(--accent);">vercel.com</a><br>
+                        2. Entre na sua conta → clique no seu projeto<br>
+                        3. Vá em <strong>Settings</strong> → <strong>Environment Variables</strong><br>
+                        4. Clique em <strong>ADMIN_SECRET</strong> e mude para uma nova senha<br>
+                        5. Clique em <strong>Save</strong> e aguarde o redeploy (~1 minuto)<br>
+                        6. Entre com <code>admin@admin.com</code> e a nova senha
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        💾 Não consigo salvar posts (erro ao publicar)
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <strong>Problema:</strong> As configurações do GitHub não estão corretas.<br><br>
+                        
+                        <strong>Solução passo-a-passo:</strong><br><br>
+                        
+                        1. Vá para <a href="https://vercel.com" target="_blank" style="color: var(--accent);">vercel.com</a> → seu projeto → <strong>Settings</strong> → <strong>Environment Variables</strong><br>
+                        2. Confira se estas 3 variáveis existem e estão corretas:<br>
+                        • <strong>GITHUB_TOKEN</strong> (começa com ghp_)<br>
+                        • <strong>GITHUB_OWNER</strong> (seu usuário do GitHub)<br>
+                        • <strong>GITHUB_REPO</strong> (nome do repositório)<br>
+                        3. Se alterou algo, faça <strong>Redeploy</strong> no painel da Vercel<br>
+                        4. Aguarde 2 minutos e tente salvar novamente
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        🔄 "Aplicar agora" dá erro
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <strong>Problema:</strong> As permissões do GitHub Actions não estão ativadas.<br><br>
+                        
+                        <strong>Solução (muito importante):</strong><br><br>
+                        
+                        1. Acesse <a href="https://github.com" target="_blank" style="color: var(--accent);">github.com</a><br>
+                        2. Clique no <strong>repositório</strong> que foi criado no deploy<br>
+                        3. Clique em <strong>Settings</strong> (última aba no topo)<br>
+                        4. No menu da esquerda: <strong>Actions</strong> → <strong>General</strong><br>
+                        5. Role até "Workflow permissions"<br>
+                        6. Marque ✅ <strong>"Read and write permissions"</strong><br>
+                        7. Marque ✅ <strong>"Allow GitHub Actions to create and approve pull requests"</strong><br>
+                        8. Clique em <strong>Save</strong><br><br>
+                        
+                        Agora o botão "Aplicar agora" vai funcionar!
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        ⚪ O site abre em branco ou erro 500
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <strong>Problema:</strong> Alguma variável de ambiente está faltando ou incorreta.<br><br>
+                        
+                        <strong>Como descobrir o problema:</strong><br><br>
+                        
+                        1. Vá para <a href="https://vercel.com" target="_blank" style="color: var(--accent);">vercel.com</a><br>
+                        2. Clique no seu projeto → <strong>Deployments</strong><br>
+                        3. Clique no último deploy (o primeiro da lista)<br>
+                        4. Clique em <strong>"View Build Logs"</strong><br>
+                        5. Procure por mensagens de erro em vermelho<br><br>
+                        
+                        <strong>Solução:</strong> Geralmente é uma variável ausente. 
+                        Vá em <strong>Settings</strong> → <strong>Environment Variables</strong> e confira se todas estão preenchidas.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        📡 Atualizações não chegam
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <strong>Duas coisas para verificar:</strong><br><br>
+                        
+                        <strong>1. Permissões do GitHub Actions (principal causa):</strong><br>
+                        • Siga os passos do problema "Aplicar agora dá erro" acima<br><br>
+                        
+                        <strong>2. Actions ativadas:</strong><br>
+                        • Vá no seu repositório no GitHub<br>
+                        • Clique na aba <strong>Actions</strong><br>
+                        • Se aparecer um botão para ativar, clique em <strong>"I understand my workflows, go ahead and enable them"</strong><br><br>
+                        
+                        Pronto! As atualizações vão começar a chegar automaticamente.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        🆘 Nada funciona, preciso de ajuda!
+                        <span class="faq-icon">▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        <strong>Não desista! Temos mais recursos para ajudar:</strong><br><br>
+                        
+                        <strong>1. Diagnóstico Automático:</strong><br>
+                        No painel do seu site, vá em <strong>Configurações</strong> → <strong>Atualizações</strong> → clique em <strong>"🔍 Diagnosticar"</strong>. 
+                        O sistema vai explicar exatamente qual é o problema e como resolver.<br><br>
+                        
+                        <strong>2. Central de Ajuda:</strong><br>
+                        No painel, clique em <strong>Ajuda</strong> no menu lateral para ver mais soluções.<br><br>
+                        
+                        <strong>3. GitHub:</strong><br>
+                        Se ainda tiver problemas, abra uma issue no <a href="https://github.com/8linksapp-maker/cnx/issues" target="_blank" style="color: var(--accent);">GitHub do projeto</a> 
+                        descrevendo o problema. A comunidade vai ajudar!
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info" style="margin-top: 3rem; text-align: center;">
+                <strong>💡 Lembre-se:</strong> 95% dos problemas são resolvidos verificando as configurações no Vercel (Environment Variables) 
+                e as permissões no GitHub (Actions). Se alguma coisa não funciona, comece por aí! 
             </div>
         </div>
+    </section>
 
-        <div class="faq-item" data-cat="conteudo">
-            <button class="faq-question">
-                Como faço upload de imagens?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>Acesse <strong>Admin → Mídia</strong>. Você pode arrastar arquivos ou clicar para selecionar.</p>
-                <p>As imagens são salvas na pasta <code>public/images/</code> do repositório via GitHub API. Após o upload, a URL da imagem estará disponível para usar em posts e páginas.</p>
-                <div class="tip"><span class="callout-icon">💡</span> Formatos suportados: JPG, PNG, WebP, GIF, SVG. Para melhor performance, prefira WebP e imagens com menos de 500KB.</div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com/8linksapp-maker/cnx">GitHub</a>
+                <a href="#inicio-rapido">Começar</a>
+                <a href="#faq">FAQ</a>
+                <a href="#problemas">Ajuda</a>
             </div>
+            <p>&copy; 2026 CNX CMS • Feito com 💜 para simplificar sua vida digital</p>
         </div>
+    </footer>
 
-        <div class="faq-item" data-cat="conteudo">
-            <button class="faq-question">
-                Posso importar posts do WordPress?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>Sim! Acesse <strong>Admin → Importar WordPress</strong>.</p>
-                <p>O processo é:</p>
-                <ol>
-                    <li>No seu WordPress, vá em <strong>Ferramentas → Exportar → Posts</strong> e baixe o arquivo XML</li>
-                    <li>No painel CNX, acesse <strong>Importar WordPress</strong> e faça o upload do arquivo</li>
-                    <li>O sistema converte os posts automaticamente para o formato Markdown do CNX</li>
-                </ol>
-                <div class="warn"><span class="callout-icon">⚠️</span> Imagens hospedadas no WordPress precisam ser re-enviadas pelo painel de Mídia — elas não são importadas automaticamente.</div>
-            </div>
-        </div>
-
-        <div class="faq-item" data-cat="conteudo">
-            <button class="faq-question">
-                Tem limite de posts ou de visitantes?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p><strong>Posts:</strong> sem limite. Você pode criar quantos posts quiser — o conteúdo fica no GitHub que tem armazenamento generoso no plano gratuito.</p>
-                <p><strong>Visitantes:</strong> o plano gratuito da Vercel inclui <strong>100 GB de banda por mês</strong>, o que é suficiente para a maioria dos sites com até dezenas de milhares de visitas mensais.</p>
-                <div class="info"><span class="callout-icon">💡</span> Se você ultrapassar o limite de banda, a Vercel notifica por e-mail antes de suspender o site. Nesse caso, o plano Pro custa $20/mês.</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ── Atualizações ──────────────────────────────────────── -->
-    <div class="faq-section" data-section="atualizacoes">
-        <div class="section-header">
-            <div class="section-icon" style="background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2);">🔄</div>
-            <span class="section-title">Atualizações do Template</span>
-        </div>
-
-        <div class="faq-item" data-cat="atualizacoes">
-            <button class="faq-question">
-                O que muda quando aplico uma atualização?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <div class="tip"><span class="callout-icon">✅</span> Seus posts, páginas, imagens e configurações <strong>nunca são alterados</strong>. Apenas os arquivos de código do template são atualizados.</div>
-                <p>O que pode ser atualizado:</p>
-                <ul>
-                    <li>Componentes do painel admin (melhorias visuais, novos recursos)</li>
-                    <li>Correções de bugs</li>
-                    <li>Novos temas disponíveis</li>
-                    <li>Melhorias de performance</li>
-                </ul>
-                <p>O que <strong>nunca é tocado</strong>:</p>
-                <ul>
-                    <li><code>src/content/</code> — seus posts, autores, categorias e páginas</li>
-                    <li><code>public/images/</code> — suas imagens</li>
-                    <li>Suas variáveis de ambiente na Vercel</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="faq-item" data-cat="atualizacoes">
-            <button class="faq-question">
-                Como aplico uma atualização pelo painel?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>É simples — você não precisa abrir o GitHub:</p>
-                <ol>
-                    <li>Acesse <strong>Admin → Dashboard</strong></li>
-                    <li>Se houver atualização disponível, aparecerá um banner amarelo no topo</li>
-                    <li>Clique no botão <strong>"🔄 Aplicar agora"</strong></li>
-                    <li>Aguarde ~2 minutos — o site será reconstruído automaticamente</li>
-                </ol>
-                <div class="info"><span class="callout-icon">💡</span> As atualizações também são aplicadas automaticamente toda segunda-feira às 9h (horário de Brasília).</div>
-            </div>
-        </div>
-
-        <div class="faq-item" data-cat="atualizacoes">
-            <button class="faq-question">
-                Posso reverter uma atualização que deu errado?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>Sim! O GitHub guarda todo o histórico de alterações. Para reverter:</p>
-                <ol>
-                    <li>Acesse seu repositório no GitHub</li>
-                    <li>Clique em <strong>"Commits"</strong> (histórico de alterações)</li>
-                    <li>Encontre o commit <em>anterior</em> à atualização</li>
-                    <li>Clique nos três pontos <strong>→ Revert</strong></li>
-                    <li>Confirme — a Vercel rebuild automaticamente com a versão anterior</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-
-    <!-- ── Domínio e Hospedagem ──────────────────────────────── -->
-    <div class="faq-section" data-section="dominio">
-        <div class="section-header">
-            <div class="section-icon" style="background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.2);">🌐</div>
-            <span class="section-title">Domínio e Hospedagem</span>
-        </div>
-
-        <div class="faq-item" data-cat="dominio">
-            <button class="faq-question">
-                Posso usar meu próprio domínio (ex: meusite.com.br)?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>Sim! A Vercel suporta domínios personalizados gratuitamente:</p>
-                <ol>
-                    <li>Acesse <strong>Vercel → seu projeto → Settings → Domains</strong></li>
-                    <li>Clique em <strong>"Add Domain"</strong> e digite seu domínio</li>
-                    <li>A Vercel mostrará um registro DNS para você adicionar no seu provedor de domínio</li>
-                    <li>Adicione o registro DNS no painel de onde você comprou o domínio (Registro.br, GoDaddy, etc.)</li>
-                    <li>Aguarde a propagação DNS — pode levar de 5 minutos a 48 horas</li>
-                </ol>
-                <div class="tip"><span class="callout-icon">✅</span> HTTPS (cadeado verde) é configurado automaticamente pela Vercel sem custo adicional.</div>
-            </div>
-        </div>
-
-        <div class="faq-item" data-cat="dominio">
-            <button class="faq-question">
-                O site fica fora do ar durante uma atualização ou rebuild?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <div class="tip"><span class="callout-icon">✅</span> Não! A Vercel mantém a versão anterior no ar até o novo build ser concluído com sucesso. Seus visitantes nunca veem o site fora do ar durante rebuilds.</div>
-                <p>Só há indisponibilidade se o novo build <strong>falhar</strong> — nesse caso a Vercel mantém a versão anterior e você recebe um e-mail de erro.</p>
-            </div>
-        </div>
-
-        <div class="faq-item" data-cat="dominio">
-            <button class="faq-question">
-                Posso mudar o nome do subdomínio .vercel.app?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>O subdomínio <code>.vercel.app</code> é baseado no nome do projeto que você escolheu no deploy. Para mudar:</p>
-                <ol>
-                    <li>Acesse <strong>Vercel → seu projeto → Settings → General</strong></li>
-                    <li>Edite o campo <strong>"Project Name"</strong></li>
-                    <li>O novo subdomínio será <code>nome-escolhido.vercel.app</code></li>
-                </ol>
-                <div class="warn"><span class="callout-icon">⚠️</span> A URL antiga deixa de funcionar imediatamente. Atualize qualquer link que você tenha compartilhado.</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ── GitHub Actions ────────────────────────────────────── -->
-    <div class="faq-section" data-section="actions">
-        <div class="section-header">
-            <div class="section-icon" style="background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.2);">⚙️</div>
-            <span class="section-title">GitHub Actions</span>
-        </div>
-
-        <div class="faq-item" data-cat="actions">
-            <button class="faq-question">
-                A atualização automática falhou com erro de permissão
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>Esse é o erro mais comum. O GitHub Actions precisa de permissão para criar Pull Requests no seu repositório. Para corrigir:</p>
-                <ol>
-                    <li>Acesse seu repositório no GitHub</li>
-                    <li>Clique em <strong>Settings</strong> (aba no menu superior)</li>
-                    <li>No menu lateral, clique em <strong>Actions → General</strong></li>
-                    <li>Role até <strong>"Workflow permissions"</strong></li>
-                    <li>Marque <strong>"Read and write permissions"</strong></li>
-                    <li>Marque <strong>"Allow GitHub Actions to create and approve pull requests"</strong></li>
-                    <li>Clique em <strong>Save</strong></li>
-                </ol>
-                <div class="tip"><span class="callout-icon">✅</span> Após salvar, a próxima atualização funcionará normalmente.</div>
-            </div>
-        </div>
-
-        <div class="faq-item" data-cat="actions">
-            <button class="faq-question">
-                As Actions estão desabilitadas no meu repositório
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>Em alguns casos o GitHub pede confirmação para ativar Actions em repositórios criados a partir de templates:</p>
-                <ol>
-                    <li>Acesse seu repositório no GitHub</li>
-                    <li>Clique na aba <strong>"Actions"</strong></li>
-                    <li>Se aparecer uma mensagem pedindo para ativar, clique em <strong>"I understand my workflows, go ahead and enable them"</strong></li>
-                </ol>
-            </div>
-        </div>
-
-        <div class="faq-item" data-cat="actions">
-            <button class="faq-question">
-                Posso desativar as atualizações automáticas?
-                <span class="faq-chevron">▼</span>
-            </button>
-            <div class="faq-answer">
-                <p>Sim. Para desativar:</p>
-                <ol>
-                    <li>Acesse seu repositório no GitHub</li>
-                    <li>Clique na aba <strong>Actions</strong></li>
-                    <li>No menu lateral, clique em <strong>"🔄 Atualizar Template CNX"</strong></li>
-                    <li>Clique nos três pontos <strong>→ Disable workflow</strong></li>
-                </ol>
-                <p>Para reativar, siga os mesmos passos e clique em <strong>"Enable workflow"</strong>.</p>
-            </div>
-        </div>
-
-    </div>
-
-    <div id="no-results">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <p>Nenhuma pergunta encontrada para "<span id="search-term"></span>".</p>
-    </div>
-
-</main>
-
-<footer>
-    <p>CNX CMS — Central de Ajuda &nbsp;·&nbsp; <a href="https://github.com/8linksapp-maker/cnx">GitHub</a> &nbsp;·&nbsp; <a href="https://github.com/8linksapp-maker/cnx/blob/main/README.md">Documentação</a></p>
-</footer>
-
-<script>
-(function () {
-    /* ── Accordion ── */
-    document.querySelectorAll('.faq-question').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            var item = btn.closest('.faq-item');
-            var isOpen = item.classList.contains('open');
-            document.querySelectorAll('.faq-item.open').forEach(function (el) { el.classList.remove('open'); });
-            if (!isOpen) item.classList.add('open');
+    <script>
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const progress = document.getElementById('progress');
+            const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+            progress.style.width = scrolled + '%';
         });
-    });
 
-    /* ── Filtro por categoria ── */
-    document.querySelectorAll('.cat-btn').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-            document.querySelectorAll('.cat-btn').forEach(function (b) { b.classList.remove('active'); });
-            btn.classList.add('active');
-            var cat = btn.dataset.cat;
-            document.querySelectorAll('.faq-item').forEach(function (item) {
-                item.style.display = (cat === 'all' || item.dataset.cat === cat) ? '' : 'none';
+        // FAQ toggle
+        function toggleFaq(button) {
+            const item = button.parentElement;
+            item.classList.toggle('active');
+        }
+
+        // Copy to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Link copiado! 📋');
             });
-            document.querySelectorAll('.faq-section').forEach(function (section) {
-                var visible = Array.from(section.querySelectorAll('.faq-item')).some(function (i) { return i.style.display !== 'none'; });
-                section.style.display = visible ? '' : 'none';
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
-            document.getElementById('no-results').style.display = 'none';
-        });
-    });
-
-    /* ── Busca ── */
-    document.getElementById('search').addEventListener('input', function () {
-        var q = this.value.toLowerCase().trim();
-        var found = 0;
-        document.querySelectorAll('.cat-btn').forEach(function (b) { b.classList.remove('active'); });
-        document.querySelector('.cat-btn[data-cat="all"]').classList.add('active');
-
-        document.querySelectorAll('.faq-item').forEach(function (item) {
-            var text = item.textContent.toLowerCase();
-            var match = !q || text.includes(q);
-            item.style.display = match ? '' : 'none';
-            if (match) found++;
         });
 
-        document.querySelectorAll('.faq-section').forEach(function (section) {
-            var visible = Array.from(section.querySelectorAll('.faq-item')).some(function (i) { return i.style.display !== 'none'; });
-            section.style.display = visible ? '' : 'none';
-        });
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
 
-        var noRes = document.getElementById('no-results');
-        document.getElementById('search-term').textContent = this.value;
-        noRes.style.display = (q && found === 0) ? 'block' : 'none';
-    });
-})();
-</script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeIn 0.6s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
