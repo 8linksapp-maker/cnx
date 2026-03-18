@@ -34,7 +34,7 @@ export async function ensureWorkflow(): Promise<EnsureWorkflowResult> {
   if (!owner || !repo || !token) {
     return {
       ok: false,
-      error: 'Configure GITHUB_TOKEN, GITHUB_OWNER e GITHUB_REPO nas variáveis de ambiente da Vercel.',
+      error: '🔧 Configuração necessária: Para ativar as atualizações automáticas, você precisa configurar as informações de conexão com o GitHub na Vercel (GITHUB_TOKEN, GITHUB_OWNER e GITHUB_REPO). É um processo simples e seguro.',
     };
   }
 
@@ -57,7 +57,7 @@ export async function ensureWorkflow(): Promise<EnsureWorkflowResult> {
       console.error('\x1b[31m✗ [X] Erro ao verificar workflow:\x1b[0m', checkRes.status, errBody);
       return {
         ok: false,
-        error: `GitHub retornou ${checkRes.status}. Verifique o token e as permissões do repositório.`,
+        error: `🔍 Problema de acesso: Não foi possível verificar o repositório (código ${checkRes.status}). Verifique se o token do GitHub está correto e tem permissões para acessar o repositório.`,
       };
     }
 
@@ -67,7 +67,7 @@ export async function ensureWorkflow(): Promise<EnsureWorkflowResult> {
       console.error('\x1b[31m✗ [X] Erro ao buscar template:\x1b[0m', contentRes.status);
       return {
         ok: false,
-        error: 'Não foi possível baixar o template do workflow.',
+        error: '📄 Problema temporário: Não foi possível baixar o arquivo de atualização. Tente novamente em alguns minutos.',
       };
     }
     const content = await contentRes.text();
@@ -97,16 +97,25 @@ export async function ensureWorkflow(): Promise<EnsureWorkflowResult> {
     const errBody = await putRes.text();
     console.error('\x1b[31m✗ [X] Erro ao criar workflow:\x1b[0m', putRes.status, errBody);
 
-    let errorMsg = `GitHub retornou ${putRes.status}.`;
+    let errorMsg = `🚫 Erro do GitHub: O sistema retornou um erro (código ${putRes.status})`;
     try {
       const parsed = JSON.parse(errBody) as { message?: string };
-      if (parsed?.message) errorMsg += ` ${parsed.message}`;
+      if (parsed?.message) {
+        // Traduzir mensagens comuns do GitHub
+        if (parsed.message.includes('Bad credentials')) {
+          errorMsg = '🔑 Token inválido: O token do GitHub está incorreto ou expirado. Crie um novo token.';
+        } else if (parsed.message.includes('Not Found')) {
+          errorMsg = '📂 Repositório não encontrado: Verifique se GITHUB_OWNER e GITHUB_REPO estão corretos.';
+        } else {
+          errorMsg += `. Detalhes: ${parsed.message}`;
+        }
+      }
     } catch {}
     return { ok: false, error: errorMsg };
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     console.error('\x1b[31m✗ [X] Erro no ensure-workflow:\x1b[0m', e);
-    return { ok: false, error: msg };
+    return { ok: false, error: `🌐 Problema de conexão: ${msg.includes('network') || msg.includes('fetch') ? 'Verifique sua conexão com a internet e tente novamente.' : 'Ocorreu um erro inesperado. Tente novamente em alguns minutos.'}` };
   }
 }
 
@@ -127,7 +136,7 @@ async function ensureWorkflowViaGitData(
     if (!refRes.ok) {
       const t = await refRes.text();
       console.error('\x1b[31m✗ [X] Git Data: ref não encontrada:\x1b[0m', refRes.status, t);
-      return { ok: false, error: `Branch '${branch}' não encontrada. GitHub retornou ${refRes.status}.` };
+      return { ok: false, error: `🌿 Problema com a branch: A branch '${branch}' não foi encontrada no repositório (código ${refRes.status}). Verifique se ela existe.` };
     }
     const refJson = (await refRes.json()) as { object?: { sha?: string } };
     const headSha = refJson?.object?.sha;
@@ -190,7 +199,7 @@ async function ensureWorkflowViaGitData(
       console.error('\x1b[31m✗ [X] Git Data: tree:\x1b[0m', treeRes.status, t);
       return {
         ok: false,
-        error: `Erro ao criar árvore. GitHub retornou ${treeRes.status}.`,
+        error: `🌳 Problema ao organizar arquivos: O GitHub não conseguiu criar a estrutura necessária (código ${treeRes.status}). ${treeRes.status === 404 ? 'Este é um problema conhecido do GitHub com pastas .github.' : 'Tente novamente em alguns minutos.'}`,
         manualFallback: treeRes.status === 404,
       };
     }
@@ -242,6 +251,6 @@ async function ensureWorkflowViaGitData(
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
     console.error('\x1b[31m✗ [X] Erro no ensure-workflow (Git Data):\x1b[0m', e);
-    return { ok: false, error: msg };
+    return { ok: false, error: `🔧 Problema técnico: ${msg.includes('network') || msg.includes('fetch') ? 'Erro de conexão. Verifique sua internet e tente novamente.' : 'Ocorreu um erro inesperado durante a configuração. Tente novamente em alguns minutos.'}` };
   }
 }

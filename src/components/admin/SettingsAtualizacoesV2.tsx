@@ -133,7 +133,7 @@ export default function SettingsAtualizacoesV2() {
         }
       } else {
         setSaveStatus('error');
-        const err = data.error || 'Não foi possível ativar.';
+        const err = data.error || '❌ Não foi possível ativar as atualizações automáticas. Verifique as configurações do GitHub na Vercel.';
         setErrorMessage(err);
         setAutoUpdateEnabled(false);
         
@@ -151,7 +151,7 @@ export default function SettingsAtualizacoesV2() {
       }
     } catch (e) {
       setSaveStatus('error');
-      setErrorMessage('Erro de conexão. Verifique a internet e tente novamente.');
+      setErrorMessage('🌐 Problema de conexão: Verifique sua internet e tente novamente em alguns minutos.');
       setAutoUpdateEnabled(false);
     } finally {
       setLoading(false);

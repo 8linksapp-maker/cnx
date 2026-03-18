@@ -62,7 +62,7 @@ export default function SettingsAtualizacoes() {
         data = await res.json();
       } catch {
         setSaveStatus('error');
-        setErrorMessage('Resposta inválida. Tente novamente.');
+        setErrorMessage('📡 Resposta inválida do servidor. Tente novamente em alguns minutos.');
         setAutoUpdateEnabled(false);
         setLoading(false);
         return;
@@ -74,10 +74,10 @@ export default function SettingsAtualizacoes() {
         await saveSettings(true);
       } else {
         setSaveStatus('error');
-        const err = data.error || 'Não foi possível ativar.';
+        const err = data.error || '❌ Não foi possível ativar as atualizações automáticas. Verifique as configurações do GitHub na Vercel.';
         setErrorMessage(
-          err.includes('GITHUB') || err.includes('variáveis')
-            ? 'Configure a conexão com o GitHub. Vá em Ajuda → Primeiros passos.'
+          err.includes('GITHUB') || err.includes('variáveis') || err.includes('Configure') || err.includes('🔧')
+            ? '🔧 Configuração necessária: Configure a conexão com o GitHub na Vercel. Vá em Ajuda → Primeiros passos para o passo-a-passo.'
             : err
         );
         setAutoUpdateEnabled(false);
@@ -96,7 +96,7 @@ export default function SettingsAtualizacoes() {
       }
     } catch (e) {
       setSaveStatus('error');
-      setErrorMessage('Erro de conexão. Verifique a internet e tente novamente.');
+      setErrorMessage('🌐 Problema de conexão: Verifique sua internet e tente novamente em alguns minutos.');
       setAutoUpdateEnabled(false);
     } finally {
       setLoading(false);

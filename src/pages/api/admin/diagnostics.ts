@@ -132,11 +132,11 @@ async function testEnvironmentVariables(
 
   if (issues.length > 0) {
     test.status = 'fail';
-    test.details = `Problemas encontrados: ${issues.join(', ')}`;
+    test.details = getEnvironmentErrorMessage(issues);
     test.solution = {
-      title: 'Configurar variáveis de ambiente',
-      description: 'Configure as variáveis necessárias na Vercel',
-      action: 'Ir para configurações da Vercel',
+      title: 'Como resolver: Configurar conexão com o GitHub',
+      description: getEnvironmentSolutionMessage(issues),
+      action: 'Abrir configurações da Vercel',
       link: 'https://vercel.com/dashboard'
     };
     test.technical = 'Configure em Vercel → Projeto → Settings → Environment Variables';
@@ -168,30 +168,55 @@ async function testGitHubConnection(
 
     if (!response.ok) {
       test.status = 'fail';
-      if (response.status === 401) {
-        test.details = 'Token inválido ou expirado';
-        test.technical = `GitHub API retornou 401: ${await response.text()}`;
-      } else if (response.status === 403) {
-        test.details = 'Token sem permissão para acessar o repositório';
-        test.technical = `GitHub API retornou 403: ${await response.text()}`;
-      } else if (response.status === 404) {
-        test.details = 'Repositório não encontrado ou token sem acesso';
-        test.technical = `GitHub API retornou 404: ${await response.text()}`;
-      } else {
-        test.details = `Erro na API do GitHub (${response.status})`;
-        test.technical = await response.text();
-      }
+      const errorInfo = await response.text();
       
-      test.solution = {
-        title: 'Renovar token do GitHub',
-        description: 'Criar um novo token com permissões adequadas',
-        action: 'Gerar novo token',
-        link: 'https://github.com/settings/tokens/new?description=CNX+CMS&scopes=repo'
-      };
+      if (response.status === 401) {
+        test.details = '🔑 Token expirado ou inválido: O GitHub não reconhece o token de acesso atual. Isso acontece quando o token expira ou foi deletado.';
+        test.solution = {
+          title: 'Como resolver: Renovar token do GitHub',
+          description: 'O token de acesso precisa ser renovado. É um processo simples: crie um novo token no GitHub e atualize na Vercel.',
+          action: 'Criar novo token agora',
+          link: 'https://github.com/settings/tokens/new?description=CNX+CMS&scopes=repo'
+        };
+        test.technical = `GitHub API retornou 401: ${errorInfo}`;
+      } else if (response.status === 403) {
+        test.details = '⛔ Permissão negada: O token existe, mas não tem permissão para acessar este repositório. Verifique se o token foi criado com as permissões corretas.';
+        test.solution = {
+          title: 'Como resolver: Verificar permissões do token',
+          description: 'O token precisa ter permissão total no repositório (escopo "repo"). Crie um novo token com as permissões corretas.',
+          action: 'Criar token com permissões',
+          link: 'https://github.com/settings/tokens/new?description=CNX+CMS&scopes=repo'
+        };
+        test.technical = `GitHub API retornou 403: ${errorInfo}`;
+      } else if (response.status === 404) {
+        test.details = '📂 Repositório não encontrado: O GitHub não encontra o repositório ou o token não tem acesso a ele. Verifique se as informações GITHUB_OWNER e GITHUB_REPO estão corretas.';
+        test.solution = {
+          title: 'Como resolver: Verificar informações do repositório',
+          description: 'Confirme se GITHUB_OWNER (seu usuário) e GITHUB_REPO (nome do repositório) estão corretos na Vercel.',
+          action: 'Verificar configurações',
+          link: 'https://vercel.com/dashboard'
+        };
+        test.technical = `GitHub API retornou 404: ${errorInfo}`;
+      } else {
+        test.details = `🌐 Erro de comunicação: O GitHub retornou um erro inesperado (código ${response.status}). Isso pode ser um problema temporário.`;
+        test.solution = {
+          title: 'Como resolver: Tentar novamente',
+          description: 'Aguarde alguns minutos e tente novamente. Se persistir, pode ser um problema temporário do GitHub.',
+          action: 'Tentar diagnóstico novamente',
+          link: '/admin/configuracoes/atualizacoes'
+        };
+        test.technical = `GitHub API retornou ${response.status}: ${errorInfo}`;
+      }
     }
   } catch (error) {
     test.status = 'fail';
-    test.details = 'Erro de rede ao conectar com o GitHub';
+    test.details = '🌐 Problema de conexão: Não foi possível conectar com o GitHub. Verifique sua conexão com a internet ou tente novamente em alguns minutos.';
+    test.solution = {
+      title: 'Como resolver: Verificar conexão',
+      description: 'Problemas de rede são temporários. Verifique se sua internet está funcionando e tente novamente.',
+      action: 'Tentar novamente',
+      link: '/admin/configuracoes/atualizacoes'
+    };
     test.technical = error instanceof Error ? error.message : String(error);
   }
 
@@ -224,18 +249,24 @@ async function testWorkflowExists(
 
     if (!response.ok) {
       test.status = 'fail';
-      test.details = 'Arquivo de workflow não encontrado';
+      test.details = '📄 Arquivo de atualização não encontrado: O sistema precisa de um arquivo especial no seu repositório para fazer atualizações automáticas, mas ele não existe ainda.';
       test.solution = {
-        title: 'Criar arquivo de workflow',
-        description: 'Criar .github/workflows/sync-cnx.yml no repositório',
-        action: 'Criar automaticamente',
+        title: 'Como resolver: Criar arquivo de atualizações',
+        description: 'Este arquivo será criado automaticamente quando você ativar as atualizações. É um processo seguro e necessário.',
+        action: 'Ativar atualizações automáticas',
         link: `/admin/configuracoes/atualizacoes`
       };
       test.technical = `GitHub API retornou ${response.status}`;
     }
   } catch (error) {
     test.status = 'fail';
-    test.details = 'Erro ao verificar arquivo de workflow';
+    test.details = '🔍 Problema ao verificar configuração: Não foi possível verificar se os arquivos de atualização existem. Isso pode ser temporário.';
+    test.solution = {
+      title: 'Como resolver: Tentar novamente',
+      description: 'Aguarde alguns minutos e execute o diagnóstico novamente.',
+      action: 'Executar diagnóstico',
+      link: '/admin/configuracoes/atualizacoes'
+    };
     test.technical = error instanceof Error ? error.message : String(error);
   }
 
@@ -269,11 +300,11 @@ async function testRepositoryPermissions(
 
     if (!actionsRes.ok) {
       test.status = 'warning';
-      test.details = 'Não foi possível verificar permissões do Actions';
+      test.details = '⚙️ Permissões não verificadas: Não foi possível confirmar se as permissões do GitHub Actions estão configuradas. Isso é importante para as atualizações funcionarem.';
       test.solution = {
-        title: 'Configurar permissões do GitHub Actions',
-        description: 'Ative "Read and write permissions" nas configurações',
-        action: 'Abrir configurações',
+        title: 'Como resolver: Verificar permissões do GitHub Actions',
+        description: 'Acesse as configurações do seu repositório e ative "Read and write permissions" para permitir atualizações automáticas.',
+        action: 'Abrir configurações do repositório',
         link: `https://github.com/${owner}/${repo}/settings/actions`
       };
     }
@@ -290,18 +321,24 @@ async function testRepositoryPermissions(
       const repoData = await repoRes.json();
       if (!repoData.permissions?.push) {
         test.status = 'fail';
-        test.details = 'Token sem permissões de escrita no repositório';
+        test.details = '🔒 Token sem permissão de escrita: O token pode acessar o repositório, mas não tem permissão para fazer alterações (escrever). Atualizações automáticas precisam dessa permissão.';
         test.solution = {
-          title: 'Token sem permissões adequadas',
-          description: 'Crie um token com escopo "repo" completo',
-          action: 'Renovar token',
+          title: 'Como resolver: Criar token com permissões completas',
+          description: 'Crie um novo token no GitHub selecionando o escopo "repo" (que inclui permissões de leitura e escrita).',
+          action: 'Criar novo token com permissões',
           link: 'https://github.com/settings/tokens/new?description=CNX+CMS&scopes=repo'
         };
       }
     }
   } catch (error) {
     test.status = 'warning';
-    test.details = 'Erro ao verificar permissões';
+    test.details = '🔍 Não foi possível verificar permissões: Houve um problema temporário ao verificar as permissões do repositório.';
+    test.solution = {
+      title: 'Como resolver: Tentar novamente',
+      description: 'Execute o diagnóstico novamente em alguns minutos.',
+      action: 'Executar diagnóstico',
+      link: '/admin/configuracoes/atualizacoes'
+    };
     test.technical = error instanceof Error ? error.message : String(error);
   }
 
@@ -338,35 +375,49 @@ async function testWorkflowHistory(
       
       if (runs.length === 0) {
         test.status = 'warning';
-        test.details = 'Workflow nunca foi executado';
+        test.details = '🚀 Sistema nunca foi testado: As atualizações automáticas ainda não foram executadas. É recomendado fazer um teste para garantir que tudo funciona.';
         test.solution = {
-          title: 'Executar teste do workflow',
-          description: 'Execute manualmente para testar o funcionamento',
-          action: 'Testar agora',
+          title: 'Como resolver: Fazer um teste',
+          description: 'Execute uma atualização manual para verificar se o sistema está funcionando corretamente.',
+          action: 'Fazer teste agora',
           link: `https://github.com/${owner}/${repo}/actions/workflows/sync-cnx.yml`
         };
       } else {
         const lastRun = runs[0];
+        const runDate = new Date(lastRun.created_at).toLocaleDateString('pt-BR');
+        
         if (lastRun.conclusion === 'failure') {
           test.status = 'fail';
-          test.details = `Última execução falhou (${lastRun.created_at})`;
+          test.details = `❌ Última atualização falhou: A execução do dia ${runDate} não funcionou. Isso impede que novas atualizações sejam aplicadas.`;
           test.solution = {
-            title: 'Verificar logs da falha',
-            description: 'Analise os logs para identificar o problema',
-            action: 'Ver logs',
+            title: 'Como resolver: Verificar o que deu errado',
+            description: 'Veja os detalhes do erro para entender o que precisa ser corrigido.',
+            action: 'Ver detalhes do erro',
             link: lastRun.html_url
           };
         } else if (lastRun.conclusion === 'success') {
-          test.details = `Última execução bem-sucedida (${lastRun.created_at})`;
+          test.details = `✅ Sistema funcionando: Última execução bem-sucedida em ${runDate}`;
         }
       }
     } else {
       test.status = 'warning';
-      test.details = 'Não foi possível verificar histórico de execuções';
+      test.details = '📊 Histórico não disponível: Não foi possível verificar se as atualizações automáticas já foram executadas.';
+      test.solution = {
+        title: 'Como resolver: Tentar novamente',
+        description: 'Execute o diagnóstico novamente em alguns minutos.',
+        action: 'Executar diagnóstico',
+        link: '/admin/configuracoes/atualizacoes'
+      };
     }
   } catch (error) {
     test.status = 'warning';
-    test.details = 'Erro ao verificar histórico';
+    test.details = '🔍 Problema temporário: Não foi possível verificar o histórico de atualizações devido a um problema de conexão.';
+    test.solution = {
+      title: 'Como resolver: Tentar novamente',
+      description: 'Execute o diagnóstico novamente em alguns minutos.',
+      action: 'Executar diagnóstico',
+      link: '/admin/configuracoes/atualizacoes'
+    };
     test.technical = error instanceof Error ? error.message : String(error);
   }
 
@@ -397,23 +448,35 @@ async function testVersionCheck(
 
     if (!templateVersion || !currentVersion) {
       test.status = 'warning';
-      test.details = 'Não foi possível verificar versões';
+      test.details = '📦 Não foi possível verificar versões: Não conseguimos comparar a versão do seu site com a mais recente disponível.';
+      test.solution = {
+        title: 'Como resolver: Tentar novamente',
+        description: 'Execute o diagnóstico novamente em alguns minutos.',
+        action: 'Executar diagnóstico',
+        link: '/admin/configuracoes/atualizacoes'
+      };
       test.technical = `Template: ${templateVersion || 'não encontrado'}, Atual: ${currentVersion || 'não encontrado'}`;
     } else if (templateVersion !== currentVersion) {
       test.status = 'warning';
-      test.details = `Atualização disponível: v${currentVersion} → v${templateVersion}`;
+      test.details = `🆕 Nova versão disponível: Seu site está na versão ${currentVersion}, mas já existe a versão ${templateVersion} com melhorias e correções.`;
       test.solution = {
-        title: 'Atualizar para versão mais recente',
-        description: 'Execute uma atualização para obter as melhorias',
+        title: 'Como resolver: Atualizar para a versão mais recente',
+        description: 'As atualizações trazem melhorias, correções de bugs e novos recursos. Seu conteúdo não será alterado.',
         action: 'Atualizar agora',
         link: '/admin/configuracoes/atualizacoes'
       };
     } else {
-      test.details = `Site está na versão mais recente (v${currentVersion})`;
+      test.details = `✅ Versão atualizada: Seu site está na versão mais recente (v${currentVersion})`;
     }
   } catch (error) {
     test.status = 'warning';
-    test.details = 'Erro ao verificar versões';
+    test.details = '🔍 Problema ao verificar versões: Não foi possível comparar as versões devido a um problema de conexão.';
+    test.solution = {
+      title: 'Como resolver: Tentar novamente',
+      description: 'Execute o diagnóstico novamente em alguns minutos.',
+      action: 'Executar diagnóstico',
+      link: '/admin/configuracoes/atualizacoes'
+    };
     test.technical = error instanceof Error ? error.message : String(error);
   }
 
@@ -440,24 +503,71 @@ function generateQuickFixes(tests: DiagnosticTest[], owner: string, repo: string
   const failedTests = tests.filter(t => t.status === 'fail');
   
   if (failedTests.some(t => t.id === 'env_vars')) {
-    fixes.push('Configure as variáveis de ambiente na Vercel');
+    fixes.push('🔧 Configurar as informações de conexão com o GitHub na Vercel (token, usuário e repositório)');
   }
   
   if (failedTests.some(t => t.id === 'github_connection')) {
-    fixes.push('Renove o token do GitHub com permissões adequadas');
+    fixes.push('🔑 Criar um novo token do GitHub com permissões adequadas para acessar o repositório');
   }
   
   if (failedTests.some(t => t.id === 'workflow_exists')) {
-    fixes.push('Crie o arquivo de workflow manualmente ou pelo painel');
+    fixes.push('📄 Ativar as atualizações automáticas para criar os arquivos necessários');
   }
   
   if (failedTests.some(t => t.id === 'repo_permissions')) {
-    fixes.push('Ative "Read and write permissions" nas configurações do Actions');
+    fixes.push('⚙️ Configurar as permissões do GitHub Actions para permitir alterações automáticas');
   }
   
   if (tests.some(t => t.id === 'workflow_history' && t.status === 'fail')) {
-    fixes.push('Verifique os logs da última execução que falhou');
+    fixes.push('📊 Verificar os detalhes da última execução que falhou para identificar o problema');
   }
   
   return fixes;
+}
+
+// ═══ Mensagens de erro explicativas para usuários leigos ═══
+
+function getEnvironmentErrorMessage(issues: string[]): string {
+  const hasToken = issues.some(i => i.includes('GITHUB_TOKEN'));
+  const hasOwner = issues.some(i => i.includes('GITHUB_OWNER'));
+  const hasRepo = issues.some(i => i.includes('GITHUB_REPO'));
+  const hasFormat = issues.some(i => i.includes('formato inválido'));
+
+  if (hasFormat) {
+    return '🔑 Problema com o token do GitHub: O token foi configurado mas está no formato incorreto. Tokens válidos começam com "ghp_".';
+  }
+
+  if (hasToken && hasOwner && hasRepo) {
+    return '❌ Configuração incompleta: O sistema não consegue conectar com o GitHub porque as informações de acesso não foram configuradas na Vercel.';
+  }
+
+  if (hasToken) {
+    return '🔑 Token do GitHub não encontrado: É necessário um "token de acesso" para que o sistema possa fazer atualizações automáticas no seu repositório.';
+  }
+
+  if (hasOwner || hasRepo) {
+    return '📂 Informações do repositório incompletas: O sistema precisa saber qual é o seu usuário e repositório no GitHub.';
+  }
+
+  return `⚠️ Configuração necessária: ${issues.join(', ')}`;
+}
+
+function getEnvironmentSolutionMessage(issues: string[]): string {
+  const hasToken = issues.some(i => i.includes('GITHUB_TOKEN'));
+  const hasOwner = issues.some(i => i.includes('GITHUB_OWNER'));
+  const hasFormat = issues.some(i => i.includes('formato inválido'));
+
+  if (hasFormat) {
+    return 'O token atual está incorreto. Crie um novo token no GitHub (deve começar com "ghp_") e substitua na Vercel.';
+  }
+
+  if (hasToken) {
+    return 'Você precisa criar um "token" no GitHub e colocá-lo na Vercel. É como uma senha especial que permite atualizações automáticas.';
+  }
+
+  if (hasOwner) {
+    return 'Configure seu nome de usuário e repositório do GitHub nas variáveis GITHUB_OWNER e GITHUB_REPO da Vercel.';
+  }
+
+  return 'Configure todas as variáveis necessárias na Vercel para conectar com o GitHub.';
 }

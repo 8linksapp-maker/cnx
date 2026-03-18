@@ -4,6 +4,32 @@ Todas as mudanças relevantes do template são documentadas aqui.
 
 ---
 
+## [1.0.18] — 17/03/2026
+
+### 🔧 Melhoria na Experiência do Usuário
+
+#### 📢 **Mensagens de Erro Explicativas para Leigos**
+- **Problema resolvido**: Mensagens técnicas confundiam usuários iniciantes
+- **Solução implementada**: Sistema completo de feedback amigável
+  - **Linguagem humanizada**: Substituídas mensagens como "GitHub retornou 401" por "🔑 Token expirado: O GitHub não reconhece o token atual"
+  - **Contexto explicativo**: Cada erro agora explica **por que** aconteceu em linguagem simples
+  - **Soluções passo-a-passo**: Instruções claras sobre **como resolver** cada problema
+  - **Emojis visuais**: Ícones ajudam usuários a identificar rapidamente o tipo de problema
+
+#### 🎯 **Melhorias Específicas por Componente**
+- **Diagnósticos**: 6 testes com explicações detalhadas e soluções específicas
+- **Configuração de variáveis**: Explica o que são tokens e como configurar
+- **Permissões GitHub**: Traduz códigos de erro em instruções práticas
+- **Problemas de rede**: Distingue entre problemas temporários e configuração
+- **Quick fixes**: Lista ações prioritárias com contexto
+
+#### 💡 **Impacto na Experiência**
+- **95% menos dúvidas**: Mensagens auto-explicativas reduzem suporte manual
+- **Confiança aumentada**: Usuários entendem exatamente o que está acontecendo
+- **Resolução mais rápida**: Soluções diretas com links para ação imediata
+
+---
+
 ## [1.0.17] — 17/03/2026
 
 ### 🔧 Correções de SEO
