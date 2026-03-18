@@ -4,6 +4,33 @@ Todas as mudanças relevantes do template são documentadas aqui.
 
 ---
 
+## [1.0.20] — 18/03/2026
+
+### 📖 Documentação Completa Expandida
+
+#### 🚀 **Guia Passo-a-Passo Completo**
+- **8 passos detalhados** do zero ao site publicado, copiados integralmente do README
+- **Interface visual aprimorada** com cards coloridos e gradientes diferenciados para cada passo
+- **Instruções expandidas** para cada etapa:
+  - **Passo 4**: Login inicial vs. login normal com exemplos visuais
+  - **Passo 5**: Segurança obrigatória (trocar e-mail/senha) com alertas de importância
+  - **Passo 6**: Atualizações automáticas com passo-a-passo detalhado do GitHub
+  - **Passo 7**: Primeiros ajustes com grid visual de todas as personalização possíveis
+  - **Passo 8**: Checklist de verificação final com badges de status
+
+#### 🎯 **Melhorias na Experiência**
+- **Visual consistency**: Cada passo tem cor e gradiente únicos para fácil identificação
+- **Informações contextuais**: Alertas específicos sobre segurança e obrigatoriedade
+- **Links diretos**: Acesso direto às configurações GitHub e outras ferramentas
+- **Organização em grids**: Layout responsivo que funciona em qualquer dispositivo
+
+#### 🔗 **Integração Total**
+- **Sincronização com README**: Todos os passos agora espelham exatamente o README.md
+- **Referência cruzada**: Links para central de ajuda e troubleshooting contextuais
+- **Completude total**: Do primeiro acesso ao GitHub até teste final do site
+
+---
+
 ## [1.0.18] — 17/03/2026
 
 ### 🔧 Melhoria na Experiência do Usuário

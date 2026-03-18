@@ -879,7 +879,7 @@
             </div>
 
             <!-- Passo 4: Acessar Painel -->
-            <div class="step-card fade-in">
+            <div class="step-card fade-in" style="margin-bottom: 2rem;">
                 <div class="step-number" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">4</div>
                 <h3 class="step-title">🎛️ Acessar o Painel Admin</h3>
                 
@@ -897,8 +897,211 @@
                     </ol>
                 </div>
 
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                    <div style="background: var(--surface3); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--green);">
+                        <h5 style="color: var(--green-bright); margin-bottom: 0.75rem;">🆕 Primeira vez (Configuração Inicial)</h5>
+                        <ul style="color: var(--muted); line-height: 1.6; padding-left: 1rem;">
+                            <li>Preencha: Nome, E-mail, Senha e Confirme</li>
+                            <li>Clique em <strong>"Criar conta e entrar"</strong></li>
+                            <li>Pronto! Você já está logado</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: var(--surface3); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--blue);">
+                        <h5 style="color: var(--blue); margin-bottom: 0.75rem;">🔄 Login normal</h5>
+                        <ul style="color: var(--muted); line-height: 1.6; padding-left: 1rem;">
+                            <li>E-mail: <code>admin@admin.com</code></li>
+                            <li>Senha: valor do <strong>ADMIN_SECRET</strong></li>
+                            <li>Clique em <strong>"Entrar"</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
                 <div class="alert alert-tip">
                     <strong>🔒 Segurança:</strong> Depois do primeiro login, vá em <strong>Autores</strong> e troque o e-mail e senha para os seus. É muito importante fazer isso!
+                </div>
+            </div>
+
+            <!-- Passo 5: Trocar E-mail e Senha -->
+            <div class="step-card fade-in" style="margin-bottom: 2rem;">
+                <div class="step-number" style="background: linear-gradient(135deg, #ef4444, #dc2626);">5</div>
+                <h3 class="step-title">🔒 Trocar E-mail e Senha (Segurança)</h3>
+                
+                <div class="alert alert-warning" style="margin-bottom: 1.5rem;">
+                    <strong>⚠️ OBRIGATÓRIO:</strong> Faça isso logo após o primeiro acesso por questões de segurança!
+                </div>
+
+                <div style="background: var(--surface2); padding: 2rem; border-radius: 12px; margin: 1.5rem 0;">
+                    <h4 style="margin-bottom: 1rem; color: var(--text);">🛡️ Passo-a-passo:</h4>
+                    <ol style="color: var(--muted); line-height: 1.8; padding-left: 1.5rem;">
+                        <li>No painel, clique em <strong>Autores</strong> no menu lateral</li>
+                        <li>Clique no usuário <strong>"Administrador"</strong></li>
+                        <li>Altere <strong>E-mail</strong>, <strong>Senha</strong> e <strong>Nome</strong> para os seus</li>
+                        <li>Clique em <strong>Salvar</strong></li>
+                    </ol>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>✅ A partir daí:</strong> Use seu e-mail e senha pessoais para entrar no painel.
+                </div>
+            </div>
+
+            <!-- Passo 6: Ativar Atualizações -->
+            <div class="step-card fade-in" style="margin-bottom: 2rem;">
+                <div class="step-number" style="background: linear-gradient(135deg, #f59e0b, #d97706);">6</div>
+                <h3 class="step-title">🔄 Ativar Atualizações Automáticas</h3>
+                
+                <div class="alert alert-warning" style="margin-bottom: 1.5rem;">
+                    <strong>⚠️ OBRIGATÓRIO:</strong> Sem este passo, o botão "Aplicar agora" não funciona e você não receberá melhorias do template!
+                </div>
+
+                <div style="background: var(--surface2); padding: 2rem; border-radius: 12px; margin: 1.5rem 0;">
+                    <h4 style="margin-bottom: 1rem; color: var(--text);">⚡ Configurar permissões no GitHub:</h4>
+                    <ol style="color: var(--muted); line-height: 1.8; padding-left: 1.5rem;">
+                        <li>Acesse <a href="https://github.com" target="_blank" style="color: var(--accent);">github.com</a> e clique no <strong>repositório</strong> que foi criado no deploy</li>
+                        <li>Clique em <strong>Settings</strong> (Configurações) — aba no topo</li>
+                        <li>No menu da esquerda: <strong>Actions</strong> → <strong>General</strong></li>
+                        <li>Role até <strong>"Workflow permissions"</strong></li>
+                        <li>Marque ✅ <strong>"Read and write permissions"</strong></li>
+                        <li>Marque ✅ <strong>"Allow GitHub Actions to create and approve pull requests"</strong></li>
+                        <li>Clique em <strong>Save</strong></li>
+                    </ol>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>📖 Guia detalhado:</strong> No painel admin, vá em <strong>Ajuda</strong> → <strong>Primeiros passos</strong> (passo 3) para ver imagens e mais detalhes.
+                </div>
+            </div>
+
+            <!-- Passo 7: Primeiros Ajustes -->
+            <div class="step-card fade-in" style="margin-bottom: 2rem;">
+                <div class="step-number" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">7</div>
+                <h3 class="step-title">🎨 Primeiros Ajustes no Site</h3>
+                
+                <p style="color: var(--muted); margin-bottom: 1.5rem; font-size: 1.05rem;">
+                    Agora vamos personalizar seu site! Estas são as principais alterações que você pode fazer:
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                    <div style="background: var(--surface3); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--accent);">
+                        <h5 style="color: var(--accent-bright); margin-bottom: 1rem;">✏️ Alterar nome do site</h5>
+                        <p style="color: var(--muted); font-size: 0.9rem;">
+                            <strong>Páginas</strong> → <strong>Rodapé</strong><br>
+                            <small>Campo "Nome do site"</small>
+                        </p>
+                    </div>
+
+                    <div style="background: var(--surface3); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--green);">
+                        <h5 style="color: var(--green-bright); margin-bottom: 1rem;">🖼️ Adicionar logo</h5>
+                        <p style="color: var(--muted); font-size: 0.9rem;">
+                            <strong>Páginas</strong> → <strong>Menu</strong><br>
+                            <small>Faça upload da sua logo</small>
+                        </p>
+                    </div>
+
+                    <div style="background: var(--surface3); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--blue);">
+                        <h5 style="color: var(--blue); margin-bottom: 1rem;">🏠 Editar página inicial</h5>
+                        <p style="color: var(--muted); font-size: 0.9rem;">
+                            <strong>Páginas</strong> → <strong>Home</strong><br>
+                            <small>Personalize o conteúdo</small>
+                        </p>
+                    </div>
+
+                    <div style="background: var(--surface3); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--yellow);">
+                        <h5 style="color: var(--yellow); margin-bottom: 1rem;">📝 Criar primeiro post</h5>
+                        <p style="color: var(--muted); font-size: 0.9rem;">
+                            <strong>Posts</strong> → <strong>Novo Post</strong><br>
+                            <small>Escreva seu primeiro artigo</small>
+                        </p>
+                    </div>
+
+                    <div style="background: var(--surface3); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--orange);">
+                        <h5 style="color: var(--orange); margin-bottom: 1rem;">🏷️ Criar categorias</h5>
+                        <p style="color: var(--muted); font-size: 0.9rem;">
+                            <strong>Categorias</strong><br>
+                            <small>Organize seus posts por temas</small>
+                        </p>
+                    </div>
+
+                    <div style="background: var(--surface3); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--red);">
+                        <h5 style="color: var(--red); margin-bottom: 1rem;">👁️ Ver site público</h5>
+                        <p style="color: var(--muted); font-size: 0.9rem;">
+                            <code>SEU-SITE.vercel.app</code><br>
+                            <small>Veja como ficou para visitantes</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passo 8: Teste Final -->
+            <div class="step-card fade-in" style="margin-bottom: 2rem;">
+                <div class="step-number" style="background: linear-gradient(135deg, #10b981, #059669);">8</div>
+                <h3 class="step-title">✅ Conferir se Tudo Funciona</h3>
+                
+                <p style="color: var(--muted); margin-bottom: 1.5rem; font-size: 1.05rem;">
+                    Último passo! Vamos testar se tudo está funcionando perfeitamente:
+                </p>
+
+                <div style="background: var(--surface2); padding: 2rem; border-radius: 12px; margin: 1.5rem 0;">
+                    <h4 style="margin-bottom: 1.5rem; color: var(--text);">🧪 Lista de verificação:</h4>
+                    
+                    <div style="display: grid; gap: 1rem;">
+                        <div style="display: flex; gap: 1rem; align-items: center; padding: 1rem; background: var(--surface3); border-radius: 8px;">
+                            <div style="background: var(--green); color: white; padding: 0.5rem; border-radius: 6px; font-weight: bold; min-width: 100px; text-align: center; font-size: 0.85rem;">
+                                ✅ Site abre
+                            </div>
+                            <div>
+                                <strong>Acesse <code>SEU-SITE.vercel.app</code></strong><br>
+                                <small style="color: var(--muted);">Deve carregar normalmente</small>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; align-items: center; padding: 1rem; background: var(--surface3); border-radius: 8px;">
+                            <div style="background: var(--blue); color: white; padding: 0.5rem; border-radius: 6px; font-weight: bold; min-width: 100px; text-align: center; font-size: 0.85rem;">
+                                🎛️ Painel abre
+                            </div>
+                            <div>
+                                <strong>Acesse <code>SEU-SITE.vercel.app/admin</code></strong><br>
+                                <small style="color: var(--muted);">Deve mostrar a tela de login</small>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; align-items: center; padding: 1rem; background: var(--surface3); border-radius: 8px;">
+                            <div style="background: var(--accent); color: white; padding: 0.5rem; border-radius: 6px; font-weight: bold; min-width: 100px; text-align: center; font-size: 0.85rem;">
+                                🔐 Login funciona
+                            </div>
+                            <div>
+                                <strong>Use seu e-mail e senha</strong><br>
+                                <small style="color: var(--muted);">Deve entrar no dashboard</small>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; align-items: center; padding: 1rem; background: var(--surface3); border-radius: 8px;">
+                            <div style="background: var(--yellow); color: white; padding: 0.5rem; border-radius: 6px; font-weight: bold; min-width: 100px; text-align: center; font-size: 0.85rem;">
+                                📝 Criar post
+                            </div>
+                            <div>
+                                <strong>Posts → Novo Post → Salvar</strong><br>
+                                <small style="color: var(--muted);">Deve salvar sem erro</small>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; align-items: center; padding: 1rem; background: var(--surface3); border-radius: 8px;">
+                            <div style="background: var(--orange); color: white; padding: 0.5rem; border-radius: 6px; font-weight: bold; min-width: 100px; text-align: center; font-size: 0.85rem;">
+                                🌐 Post no blog
+                            </div>
+                            <div>
+                                <strong>Acesse o blog após salvar</strong><br>
+                                <small style="color: var(--muted);">O post deve aparecer online</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <div class="badge badge-success" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                        🎉 <strong>Parabéns! Seu site está funcionando perfeitamente!</strong>
+                    </div>
                 </div>
             </div>
         </div>
