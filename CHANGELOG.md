@@ -4,6 +4,37 @@ Todas as mudanças relevantes do template são documentadas aqui.
 
 ---
 
+## [1.0.21] — 19/03/2026
+
+### ⭐ Bloco de Review de Produto no Editor
+
+#### 🆕 **Novo componente: Review de Produto**
+- **Botão "⭐ Review" na toolbar** do editor WYSIWYG para inserir blocos de review estruturados
+- **Modal de inserção** com campos: nome do produto, imagem, review (com quebras de parágrafo), pontos positivos, pontos negativos e botão CTA
+- **Pros e Contras em 2 colunas** lado a lado — padrão de mercado para blogs de afiliado
+- **Botão CTA personalizável**: texto, link e cor (seletor nativo + 10 chips de cor predefinidas + input hex)
+- **Cor padrão vermelha** para o botão CTA
+
+#### ✏️ **Edição inline do review**
+- **Botão "✏️ Editar"** aparece diretamente no bloco inserido no editor
+- **Modal pré-preenchido** com todos os dados atuais para edição
+- **Botão "✕"** para remover o bloco com confirmação
+- **Biblioteca de mídia integrada** no modo de edição
+
+#### 🔧 **Correções de UX**
+- **Bug da Biblioteca corrigido**: ao abrir a biblioteca de mídia dentro do modal de review, o modal agora fecha temporariamente e reabre ao selecionar/cancelar, evitando conflito de sobreposição
+- **Quebras de parágrafo preservadas**: cada linha do review vira um `<p>` separado no HTML final — sem mais texto corrido
+- **Modal redesenhado**: layout mais limpo com seções bem separadas, pros/contras em 2 colunas dentro do modal espelhando a saída real
+- **Experiência simplificada** para usuários não-técnicos: labels neutros, sem excesso de cores, linguagem clara ("Pontos positivos" / "Pontos negativos")
+
+#### ⚙️ **Infraestrutura**
+- `astro.config.mjs`: `markdoc({ allowHTML: true })` para renderizar o HTML do review no blog público
+- `PostEditor.tsx`: regra Turndown que preserva `<div class="product-review">` como HTML raw no arquivo `.mdoc`
+- Custom TipTap Node Extension (`productReview`) com atom node — evita que o TipTap quebre a estrutura HTML ao inserir
+- CSS no editor (`tiptap.css`) e no blog público (`global.css`) com suporte a dark/light mode e layout responsivo mobile
+
+---
+
 ## [1.0.20] — 18/03/2026
 
 ### 📖 Documentação Completa Expandida

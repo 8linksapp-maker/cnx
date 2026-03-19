@@ -15,7 +15,7 @@ export default defineConfig({
             jsxRuntime: 'classic',
         }),
         tailwind(), 
-        markdoc()
+        markdoc({ allowHTML: true })
     ],
     // Reset Trigger: 2026-02-07 11:40
 });

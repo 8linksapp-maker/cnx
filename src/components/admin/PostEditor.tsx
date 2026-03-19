@@ -84,6 +84,12 @@ export default function PostEditor({ post, authors, categories }: Props) {
         headingStyle: 'atx',
         codeBlockStyle: 'fenced',
     });
+
+    // Preservar bloco de review como HTML raw (não converter para Markdown)
+    turndownService.addRule('product-review', {
+        filter: (node) => node.nodeName === 'DIV' && (node as HTMLElement).classList.contains('product-review'),
+        replacement: (_content: string, node: Node) => '\n\n' + (node as HTMLElement).outerHTML + '\n\n',
+    });
     
     // Proteção contra problemas de hidratação
     useEffect(() => {
