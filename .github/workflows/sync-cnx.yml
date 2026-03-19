@@ -104,7 +104,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: cnx-atualizacao
           base: main
-          delete-branch: false
+          delete-branch: true
           title: '🔄 Atualização CNX v${{ steps.version.outputs.new_version }} disponível'
           body: |
             ## 🔄 Atualização do Template CNX — v${{ steps.version.outputs.new_version }}
@@ -135,9 +135,19 @@ jobs:
         run: |
           PR_NUMBER="${{ steps.create_pr.outputs.pull-request-number }}"
           echo "🔀 Aplicando PR #${PR_NUMBER} automaticamente..."
-          gh pr merge "${PR_NUMBER}" --merge --auto --delete-branch \
+          # Aguarda o PR estar mergeável (até 30s)
+          for i in $(seq 1 6); do
+            STATE=$(gh pr view "${PR_NUMBER}" --json mergeStateStatus -q '.mergeStateStatus')
+            echo "Estado do PR: ${STATE}"
+            if [ "${STATE}" = "MERGEABLE" ] || [ "${STATE}" = "CLEAN" ]; then
+              break
+            fi
+            sleep 5
+          done
+          gh pr merge "${PR_NUMBER}" --merge --delete-branch \
             --body "✅ Aplicado automaticamente pelo CNX Updater" \
-            || echo "⚠️ Auto-merge não disponível agora — o PR permanece aberto para revisão manual."
+            && echo "✅ PR mergeado com sucesso." \
+            || echo "⚠️ Merge não disponível agora — o PR permanece aberto para revisão manual no GitHub."
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
