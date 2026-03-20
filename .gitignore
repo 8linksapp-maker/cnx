@@ -41,3 +41,6 @@ public/images/posts/
 
 # posts excluídos em ambiente local (soft delete)
 src/content/posts/_deleted/
+
+# resumo local para contexto de desenvolvimento
+resumo.md
