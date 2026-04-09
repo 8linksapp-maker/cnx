@@ -45,3 +45,16 @@ featuredServices:
   - aluguel-escada-aluminio
   - montagem-de-andaime
 activeTemplateId: aluguel-andaime
+formTitle: Orçamento Gratuito
+formSubtitle: Resposta em minutos · Sem compromisso
+formNamePlaceholder: Seu nome
+formPhonePlaceholder: Seu telefone / WhatsApp
+formMessagePlaceholder: Descreva o que você precisa
+formButtonText: Enviar pelo WhatsApp
+trustBadges:
+  - "✅ Orçamento gratuito"
+  - "⚡ Resposta rápida"
+  - "🔒 Sem spam"
+  - "⭐ Atendimento local"
+ctaFooterTitle: Orçamento gratuito em
+ctaFooterSubtitle: Atendemos rápido. Resposta em minutos, sem compromisso.
