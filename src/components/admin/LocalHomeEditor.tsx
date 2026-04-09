@@ -603,9 +603,9 @@ export default function LocalHomeEditor({ initialData, availableServices = [] }:
                                 className="text-xs admin-btn admin-btn-secondary py-1 px-3"
                             >+ Adicionar</button>
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-3">
                             {(data.aboutStats || []).map((stat, idx) => (
-                                <div key={idx} className="flex gap-2 items-center">
+                                <div key={idx} className="grid gap-2" style={{ gridTemplateColumns: '100px 1fr 30px' }}>
                                     <input
                                         type="text"
                                         value={stat.number}
@@ -614,7 +614,7 @@ export default function LocalHomeEditor({ initialData, availableServices = [] }:
                                             updated[idx] = { ...updated[idx], number: e.target.value };
                                             set('aboutStats', updated);
                                         }}
-                                        className="admin-input w-24 text-center font-bold"
+                                        className="admin-input text-center font-bold"
                                         placeholder="10+"
                                     />
                                     <input
@@ -625,15 +625,15 @@ export default function LocalHomeEditor({ initialData, availableServices = [] }:
                                             updated[idx] = { ...updated[idx], label: e.target.value };
                                             set('aboutStats', updated);
                                         }}
-                                        className="admin-input flex-1 text-sm"
+                                        className="admin-input text-sm"
                                         placeholder="Anos de experiência"
                                     />
-                                    {(data.aboutStats || []).length > 1 && (
+                                    {(data.aboutStats || []).length > 1 ? (
                                         <button
                                             onClick={() => set('aboutStats', (data.aboutStats || []).filter((_, i) => i !== idx))}
-                                            className="text-red-400 hover:text-red-300 text-lg"
+                                            className="text-red-400 hover:text-red-300 text-lg flex items-center justify-center"
                                         >×</button>
-                                    )}
+                                    ) : <span />}
                                 </div>
                             ))}
                         </div>
