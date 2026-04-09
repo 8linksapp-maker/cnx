@@ -641,7 +641,7 @@ const accentRgb = hexToRgb(nicheColor.startsWith('#') ? nicheColor : '#2563eb');
     serviceTitle: service?.title || '',
     locationName: location?.name || '',
 }}>
-    async function submitSidebarForm() {
+    window.submitSidebarForm = async function() {
         const name  = (document.getElementById('sf-name')?.value ?? '').toString().trim();
         const phone = (document.getElementById('sf-phone')?.value ?? '').toString().trim();
         const msg   = (document.getElementById('sf-msg')?.value ?? '').toString().trim();
