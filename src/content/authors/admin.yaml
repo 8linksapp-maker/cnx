@@ -2,6 +2,6 @@ name: Admin
 slug: admin
 email: admin@admin.com
 role: Administrador
-bio: Conta padrão do sistema. Altere a senha após o primeiro acesso.
+bio: ""
 adminRole: admin
 adminPasswordHash: efe05eaaa707c5a137ed3572b683806d67d9693893e575eee8aeec22a490f5cd

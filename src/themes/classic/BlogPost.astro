@@ -142,7 +142,9 @@ const pageTitle = post.data.metaTitle || post.data.title;
                                 {author.data.role && (
                                     <p class="text-primary mb-4 font-semibold">{author.data.role}</p>
                                 )}
-                                <p class="text-lg mb-6 italic leading-relaxed" style="color: var(--blog-text-muted);">"{author.data.bio}"</p>
+                                {author.data.bio && (
+                                    <p class="text-lg mb-6 italic leading-relaxed" style="color: var(--blog-text-muted);">"{author.data.bio}"</p>
+                                )}
                                 <a 
                                     href={`/authors/${author.id}`} 
                                     class="inline-flex items-center gap-2 px-6 py-3 bg-primary/20 text-primary border border-primary/30 rounded-xl font-bold hover:bg-primary hover:text-white transition-all"
